@@ -2,13 +2,13 @@ package it.unibo.michelito.util.hitbox;
 
 import it.unibo.michelito.util.position.Position;
 
-import java.awt.*;
+import java.util.Set;
+
 
 public interface HitBox {
 
-    public Position getCenter();
+    Position getCenter();
 
 
-
-    public boolean collision(HitBox hitBox);
+    boolean collision(HitBox hitBox);
 }
