@@ -1,7 +1,6 @@
-package it.unibo.michelito.util.hitbox;
+package it.unibo.michelito.util.hitbox.api;
 
 import it.unibo.michelito.util.Position;
-
 
 /**
  *  An interface modelling factories of various kinds of HitBox.

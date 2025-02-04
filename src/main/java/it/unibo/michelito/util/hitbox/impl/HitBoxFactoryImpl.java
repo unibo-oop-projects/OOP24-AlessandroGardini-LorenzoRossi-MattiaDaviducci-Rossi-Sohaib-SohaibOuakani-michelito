@@ -1,11 +1,18 @@
-package it.unibo.michelito.util.hitbox;
+package it.unibo.michelito.util.hitbox.impl;
 
 import it.unibo.michelito.util.Position;
+import it.unibo.michelito.util.hitbox.api.HitBox;
+import it.unibo.michelito.util.hitbox.api.HitBoxFactory;
+
+
 
 /**
- * a factory implementation.
+ * a hitbox is a feature of every maze object that rappresent his physicality.
  */
 public final class HitBoxFactoryImpl implements HitBoxFactory {
+    private static final double X_DIMENSION_ENTITY = 1;
+    private static final double Y_DIMENSION_ENTITY = 1.5;
+    private static final double DIMENSION_SQUARE = 2;
 
     private abstract static class HitBoxImpl implements HitBox {
 
@@ -50,27 +57,28 @@ public final class HitBoxFactoryImpl implements HitBoxFactory {
         return new HitBoxImpl(position) {
             @Override
             Position topRight() {
-                return new Position(position.x() + 2, position.y() - 2);
+                return new Position(position.x() + DIMENSION_SQUARE, position.y() - DIMENSION_SQUARE);
             }
 
             @Override
             Position downleft() {
-                return new Position(position.x() - 2, position.y() + 2);
+                return new Position(position.x() - DIMENSION_SQUARE, position.y() + DIMENSION_SQUARE);
             }
         };
     }
 
     @Override
     public HitBox entityeHitBox(final Position position) {
+
         return new HitBoxImpl(position) {
             @Override
             Position topRight() {
-                return new Position(position.x() + 1, position.y() - 1.5);
+                return new Position(position.x() + X_DIMENSION_ENTITY, position.y() - Y_DIMENSION_ENTITY);
             }
 
             @Override
             Position downleft() {
-                return new Position(position.x() - 1, position.y() + 1.5);
+                return new Position(position.x() - X_DIMENSION_ENTITY, position.y() + Y_DIMENSION_ENTITY);
             }
         };
     }

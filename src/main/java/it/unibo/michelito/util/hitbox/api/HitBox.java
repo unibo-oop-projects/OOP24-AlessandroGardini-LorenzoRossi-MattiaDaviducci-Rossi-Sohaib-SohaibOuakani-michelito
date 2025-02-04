@@ -1,7 +1,6 @@
-package it.unibo.michelito.util.hitbox;
+package it.unibo.michelito.util.hitbox.api;
 
 import it.unibo.michelito.util.Position;
-
 
 /**
  *Interface to manage the dimension of the objet in the maze to avoid to overlap in space.

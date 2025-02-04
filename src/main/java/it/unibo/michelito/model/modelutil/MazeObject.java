@@ -1,7 +1,7 @@
 package it.unibo.michelito.model.modelutil;
 
 import it.unibo.michelito.util.Type;
-import it.unibo.michelito.util.hitbox.HitBox;
+import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.Position;
 
 /**
