@@ -11,7 +11,7 @@ import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
  */
 public class BoxImpl implements Box {
 
-    final private Position position;
+    private final Position position;
 
     /**
      * Initializes a Box at a specified position.
@@ -23,17 +23,17 @@ public class BoxImpl implements Box {
     }
 
     @Override
-    public Position getPosition() {
+    public final Position getPosition() {
         return this.position;
     }
 
     @Override
-    public HitBox getHitBox() {
+    public final HitBox getHitBox() {
         return new HitBoxFactoryImpl().squareHitBox(this.position);
     }
 
     @Override
-    public Type getType() {
+    public final Type getType() {
         return Type.BOX;
     }
 }
