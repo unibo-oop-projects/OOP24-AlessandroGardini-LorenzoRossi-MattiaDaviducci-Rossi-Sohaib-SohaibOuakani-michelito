@@ -37,13 +37,13 @@ dependencies {
     // implementation("com.google.guava:guava:28.1-jre")
 
     // JavaFX: comment out if you do not need them
-    val javaFxVersion = "23.0.1"
-    implementation("org.openjfx:javafx:$javaFxVersion")
-    for (platform in supportedPlatforms) {
-        for (module in javaFXModules) {
-            implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
-        }
-    }
+    //    val javaFxVersion = "23.0.1"
+    //    implementation("org.openjfx:javafx:$javaFxVersion")
+    //    for (platform in supportedPlatforms) {
+    //        for (module in javaFXModules) {
+    //            implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
+    //        }
+    //    }
 
     val jUnitVersion = "5.11.4"
     // JUnit API and testing engine
