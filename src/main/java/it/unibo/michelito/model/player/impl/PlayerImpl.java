@@ -59,19 +59,28 @@ public class PlayerImpl implements Player {
         return Type.PLAYER;
     }
 
+    @Override
     public long getLastUpdateTime() {
         return this.lastUpdate;
     }
 
+    @Override
     public void increaseBombLimit() {
         this.currentBombLimit = this.currentBombLimit + STANDARD_BOMB_LIMIT_UPGRADE;
     }
 
+    @Override
     public void increaseSpeed() {
         this.currentSpeed = this.currentSpeed + STANDARD_SPEED_UPGRADE;
     }
 
+    @Override
     public void setPosition(final Position newPosition) {
         this.currentPosition = newPosition;
+    }
+
+    @Override
+    public void placeBomb(Maze maze) {
+        
     }
 }
