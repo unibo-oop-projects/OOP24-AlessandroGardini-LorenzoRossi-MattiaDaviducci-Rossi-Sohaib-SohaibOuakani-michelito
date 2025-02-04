@@ -1,8 +1,6 @@
 package it.unibo.michelito.util.hitbox;
 
-import it.unibo.michelito.util.position.Position;
-
-import java.util.Set;
+import it.unibo.michelito.util.Position;
 
 
 public interface HitBox {
