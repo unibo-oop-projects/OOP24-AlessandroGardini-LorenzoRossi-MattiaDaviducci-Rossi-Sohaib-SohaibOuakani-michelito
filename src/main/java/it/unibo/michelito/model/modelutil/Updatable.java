@@ -1,6 +1,6 @@
 package it.unibo.michelito.model.modelutil;
 
-import it.unibo.michelito.model.maze.Maze;
+import it.unibo.michelito.model.maze.api.Maze;
 
 public interface Updatable extends MazeObject {
     /**

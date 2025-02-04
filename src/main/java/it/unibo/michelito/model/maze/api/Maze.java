@@ -1,4 +1,4 @@
-package it.unibo.michelito.model.maze;
+package it.unibo.michelito.model.maze.api;
 
 /**
  * Interface that rapresent a maze.
