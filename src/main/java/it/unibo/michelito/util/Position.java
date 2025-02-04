@@ -1,4 +1,4 @@
-package it.unibo.michelito.util.position;
+package it.unibo.michelito.util;
 
 /**
  * A record to manage positions in game space.
