@@ -5,5 +5,7 @@ package it.unibo.michelito.util;
  * Used for possible view implementation.
  */
 public enum Type {
-    PLAYER
+    PLAYER,
+    BOX,
+    WALL
 }

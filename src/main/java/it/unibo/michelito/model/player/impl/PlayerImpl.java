@@ -7,7 +7,7 @@ import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.model.player.api.PlayerCommand;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.Type;
-import it.unibo.michelito.util.hitbox.HitBox;
+import it.unibo.michelito.util.hitbox.api.HitBox;
 
 public class PlayerImpl implements Player {
     private static final int STANDARD_BOMB_LIMIT = 1;
