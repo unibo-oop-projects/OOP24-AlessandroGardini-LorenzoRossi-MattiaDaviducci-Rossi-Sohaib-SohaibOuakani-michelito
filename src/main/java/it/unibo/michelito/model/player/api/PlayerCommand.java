@@ -9,5 +9,5 @@ public interface PlayerCommand {
      * method that executes the command.
      * @param player the player who has to execute the command.
      */
-    void execute (Player player);
+    void execute(Player player);
 }
