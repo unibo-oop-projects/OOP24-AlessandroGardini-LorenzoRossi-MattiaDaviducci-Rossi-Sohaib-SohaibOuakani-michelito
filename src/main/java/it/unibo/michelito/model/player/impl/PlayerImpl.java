@@ -51,6 +51,11 @@ public class PlayerImpl implements Player {
     }
 
     @Override
+    public Optional<PlayerCommand> getCommand() {
+        return  this.command;
+    }
+
+    @Override
     public final void update(final long time, final Maze maze) {
         if (this.command.isPresent()) {
             this.command.get().execute(this);
@@ -97,6 +102,6 @@ public class PlayerImpl implements Player {
 
     @Override
     public final void placeBomb(final Maze maze) {
-
+        //maze.addMazeObject();
     }
 }

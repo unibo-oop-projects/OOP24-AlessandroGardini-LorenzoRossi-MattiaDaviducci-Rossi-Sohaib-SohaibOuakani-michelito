@@ -4,6 +4,8 @@ import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.modelutil.Updatable;
 import it.unibo.michelito.util.Position;
 
+import java.util.Optional;
+
 /**
  * Interface for Player.
  */
@@ -13,6 +15,12 @@ public interface Player extends Updatable {
      * @param command is the command to be executed.
      */
     void setCommand(PlayerCommand command);
+
+    /**
+     * Gets the next command for the player, if there
+     * @return Return the next command.
+     */
+    Optional<PlayerCommand> getCommand();
 
     /**
      * Get the last time the player recived an update.
