@@ -52,11 +52,6 @@ public class PlayerImpl implements Player {
     }
 
     @Override
-    public Optional<PlayerCommand> getCommand() {
-        return  this.command;
-    }
-
-    @Override
     public final void update(final long time, final Maze maze) {
         if (this.command.isPresent()) {
             this.command.get().execute(this);
@@ -82,11 +77,6 @@ public class PlayerImpl implements Player {
     }
 
     @Override
-    public final long getLastUpdateTime() {
-        return this.lastUpdate;
-    }
-
-    @Override
     public final void increaseBombLimit() {
         this.currentBombLimit = this.currentBombLimit + STANDARD_BOMB_LIMIT_UPGRADE;
     }
@@ -94,16 +84,6 @@ public class PlayerImpl implements Player {
     @Override
     public final void increaseSpeed() {
         this.currentSpeed = this.currentSpeed + STANDARD_SPEED_UPGRADE;
-    }
-
-    @Override
-    public double getSpeed() {
-        return  this.currentSpeed;
-    }
-
-    @Override
-    public int getBombLimit() {
-        return this.currentBombLimit;
     }
 
     @Override

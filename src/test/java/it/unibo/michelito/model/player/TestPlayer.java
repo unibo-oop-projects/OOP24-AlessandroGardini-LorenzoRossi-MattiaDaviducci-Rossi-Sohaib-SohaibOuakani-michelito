@@ -25,31 +25,4 @@ public class TestPlayer {
         assertEquals(new Position(5, 5), player.getPosition());
     }
 
-    @Test
-    void testGetCommand() {
-        assertTrue(player.getCommand().isEmpty());
-    }
-
-    @Test
-    void testGetLastUpdateTime() {
-        Maze maze;
-        assertEquals(0, player.getLastUpdateTime());
-    }
-
-    @Test
-    void testIncreaseSpeed() {
-        assertEquals(1, player.getSpeed());
-        player.increaseSpeed();
-        assertEquals(1.1, player.getSpeed());
-    }
-    @Test
-    void testIncreaseBombLimit() {
-        assertEquals(1, player.getBombLimit());
-        player.increaseBombLimit();
-        assertEquals(2, player.getBombLimit());
-        player.increaseBombLimit();
-        player.increaseBombLimit();
-        player.increaseBombLimit();
-        assertEquals(5, player.getBombLimit());
-    }
 }
