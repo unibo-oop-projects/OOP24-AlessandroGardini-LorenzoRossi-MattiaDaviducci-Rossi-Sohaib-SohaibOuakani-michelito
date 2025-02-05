@@ -39,7 +39,7 @@ public class PlayerImpl implements Player {
 
     private void updateHitbox() {
         final HitBoxFactory hitBoxFactory = new HitBoxFactoryImpl();
-        this.hitbox = hitBoxFactory.entityeHitBox(this.getPosition());
+        this.hitbox = hitBoxFactory.entityeHitBox(this.position());
     }
 
     private void emptyCommand() {
@@ -62,13 +62,13 @@ public class PlayerImpl implements Player {
     }
 
     @Override
-    public final HitBox getHitBox() {
-        return this.hitbox;
+    public Position position() {
+        return this.currentPosition;
     }
 
     @Override
-    public final Position getPosition() {
-        return new Position(this.currentPosition.x(), this.currentPosition.y());
+    public final HitBox getHitBox() {
+        return this.hitbox;
     }
 
     @Override
