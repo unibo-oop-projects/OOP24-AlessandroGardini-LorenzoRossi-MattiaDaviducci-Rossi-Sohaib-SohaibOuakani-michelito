@@ -62,6 +62,6 @@ public class TestMaze {
         assertNotNull(maze);
         assertThrows(NullPointerException.class, () -> maze.addMazeObject(null));
         assertThrows(NullPointerException.class, () -> maze.removeMazeObject(null));
-        assertFalse(maze.re(null));
+        assertFalse(maze.removeMazeObject(null));
     }
 }
