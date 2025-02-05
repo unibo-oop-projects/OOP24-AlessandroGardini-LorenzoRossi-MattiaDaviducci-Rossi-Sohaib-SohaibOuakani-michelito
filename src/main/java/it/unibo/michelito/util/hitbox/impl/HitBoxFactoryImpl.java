@@ -4,10 +4,10 @@ import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.api.HitBoxFactory;
 
-
+import java.util.Objects;
 
 /**
- * a hitbox is a feature of every maze object that rappresent his physicality.
+ * A hitbox is a feature of every maze object that represent his physicality.
  */
 public final class HitBoxFactoryImpl implements HitBoxFactory {
     private static final double X_DIMENSION_ENTITY = 1;
@@ -15,7 +15,6 @@ public final class HitBoxFactoryImpl implements HitBoxFactory {
     private static final double DIMENSION_SQUARE = 2;
 
     private abstract static class HitBoxImpl implements HitBox {
-
         private final Position center;
 
         HitBoxImpl(final Position center) {
@@ -34,23 +33,39 @@ public final class HitBoxFactoryImpl implements HitBoxFactory {
 
         @Override
         public boolean collision(final HitBox hitBox) {
-            return hitBox.inner(topRight()) || hitBox.inner(downleft())
-                                            || hitBox.inner(new Position(downleft().x(), topRight().y()))
-                                            || hitBox.inner(new Position(topRight().x(), downleft().y()));
+            return hitBox.inner(topRight()) || hitBox.inner(downLeft())
+                                            || hitBox.inner(new Position(downLeft().x(), topRight().y()))
+                                            || hitBox.inner(new Position(topRight().x(), downLeft().y()));
         }
 
         @Override
         public boolean inner(final Position position) {
             return topRight().x() >= position.x() && topRight().y() <= position.y()
-                                                  && downleft().x() <= position.x()
-                                                  && downleft().y() >= position.y();
+                                                  && downLeft().x() <= position.x()
+                                                  && downLeft().y() >= position.y();
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null || getClass() != obj.getClass()) {
+                return false;
+            }
+            HitBox other = (HitBox) obj;
+            return other.getCenter().equals(center);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.center);
         }
 
         abstract Position topRight();
 
-        abstract Position downleft();
+        abstract Position downLeft();
     }
-
 
     @Override
     public HitBox squareHitBox(final Position position) {
@@ -61,7 +76,7 @@ public final class HitBoxFactoryImpl implements HitBoxFactory {
             }
 
             @Override
-            Position downleft() {
+            Position downLeft() {
                 return new Position(position.x() - DIMENSION_SQUARE, position.y() + DIMENSION_SQUARE);
             }
         };
@@ -69,7 +84,6 @@ public final class HitBoxFactoryImpl implements HitBoxFactory {
 
     @Override
     public HitBox entityeHitBox(final Position position) {
-
         return new HitBoxImpl(position) {
             @Override
             Position topRight() {
@@ -77,7 +91,7 @@ public final class HitBoxFactoryImpl implements HitBoxFactory {
             }
 
             @Override
-            Position downleft() {
+            Position downLeft() {
                 return new Position(position.x() - X_DIMENSION_ENTITY, position.y() + Y_DIMENSION_ENTITY);
             }
         };
