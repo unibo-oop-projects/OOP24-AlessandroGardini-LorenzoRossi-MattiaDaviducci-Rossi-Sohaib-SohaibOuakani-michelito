@@ -16,15 +16,15 @@ import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
  */
 public class PlayerImpl implements Player {
     private static final int STANDARD_BOMB_LIMIT = 1;
-    private static final long STANDARD_SPEED = 1;
-    private static final long STANDARD_SPEED_UPGRADE = (long) 0.1;
+    private static final double STANDARD_SPEED = 1;
+    private static final double STANDARD_SPEED_UPGRADE = 0.1;
     private static final int STANDARD_BOMB_LIMIT_UPGRADE = 1;
     private HitBox hitbox;
     private Optional<PlayerCommand> command;
     private Position currentPosition;
     private long lastUpdate;
     private int currentBombLimit = STANDARD_BOMB_LIMIT;
-    private long currentSpeed = STANDARD_SPEED;
+    private double currentSpeed = STANDARD_SPEED;
 
     /**
      * Constructor for PlayerImpl.
@@ -32,6 +32,7 @@ public class PlayerImpl implements Player {
      */
     public PlayerImpl(final Position position) {
         this.currentPosition = position;
+        this.lastUpdate = 0;
         this.emptyCommand();
         this.updateHitbox();
     }
@@ -93,6 +94,16 @@ public class PlayerImpl implements Player {
     @Override
     public final void increaseSpeed() {
         this.currentSpeed = this.currentSpeed + STANDARD_SPEED_UPGRADE;
+    }
+
+    @Override
+    public double getSpeed() {
+        return  this.currentSpeed;
+    }
+
+    @Override
+    public int getBombLimit() {
+        return this.currentBombLimit;
     }
 
     @Override

@@ -23,13 +23,13 @@ public interface Player extends Updatable {
     Optional<PlayerCommand> getCommand();
 
     /**
-     * Get the last time the player recived an update.
+     * Get the last time the player received an update.
      * @return the last time the player is updated.
      */
     long getLastUpdateTime();
 
     /**
-     * Increases the number of placeble bombs by the player.
+     * Increases the number of placeable bombs by the player.
      */
     void increaseBombLimit();
 
@@ -37,6 +37,18 @@ public interface Player extends Updatable {
      * Increases the speed of the player.
      */
     void increaseSpeed();
+
+    /**
+     * Gets the current speed of the player.
+     * @return The current speed of the player.
+     */
+    double getSpeed();
+
+    /**
+     * Gets the current limit of placeable bombs by the player.
+     * @return Max number of bombs placeable.
+     */
+    int getBombLimit();
 
     /**
      * Sets a new psoition for the player.
