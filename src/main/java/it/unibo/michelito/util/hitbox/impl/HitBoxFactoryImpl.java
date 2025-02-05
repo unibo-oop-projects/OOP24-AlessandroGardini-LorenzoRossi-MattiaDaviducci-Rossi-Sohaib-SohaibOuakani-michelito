@@ -10,9 +10,9 @@ import java.util.Objects;
  * A hitbox is a feature of every maze object that represent his physicality.
  */
 public final class HitBoxFactoryImpl implements HitBoxFactory {
-    private static final double X_DIMENSION_ENTITY = 1;
-    private static final double Y_DIMENSION_ENTITY = 1.5;
-    private static final double DIMENSION_SQUARE = 2;
+    private static final double X_DIMENSION_ENTITY = 1.5;
+    private static final double Y_DIMENSION_ENTITY = 2;
+    private static final double DIMENSION_SQUARE = 2.5;
 
     private abstract static class HitBoxImpl implements HitBox {
         private final Position center;
