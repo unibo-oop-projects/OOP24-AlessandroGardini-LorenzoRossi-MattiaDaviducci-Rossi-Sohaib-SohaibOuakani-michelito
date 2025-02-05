@@ -24,30 +24,56 @@ class TestPlayer {
     }
 
     @Test
-    void testUpdate() {
+    void testMovement() {
         assertEquals(new Position(0, 0), player.position());
-        player.update(10, new MazeImpl(Set.of()));
-        assertEquals(new Position(0, 0), player.position());
-        player.setDirection(Direction.RIGHT);
-        player.update(10, new MazeImpl(Set.of()));
-        assertEquals(new Position(10, 0), player.position());
-        player.update(10, new MazeImpl(Set.of()));
-        assertEquals(new Position(10, 0), player.position());
-        player.setDirection(Direction.LEFT);
         player.update(10, new MazeImpl(Set.of()));
         assertEquals(new Position(0, 0), player.position());
 
+        player.setDirection(Direction.RIGHT);
+        player.update(20, new MazeImpl(Set.of()));
+        assertEquals(new Position(10, 0), player.position());
+
+        player.update(30, new MazeImpl(Set.of()));
+        assertEquals(new Position(10, 0), player.position());
+
+        player.setDirection(Direction.LEFT);
+        player.update(40, new MazeImpl(Set.of()));
+        assertEquals(new Position(0, 0), player.position());
+
+        player.setDirection(Direction.DOWN);
+        player.update(50, new MazeImpl(Set.of()));
+        assertEquals(new Position(0, 10), player.position());
+
+        player.setDirection(Direction.UP);
+        player.update(60, new MazeImpl(Set.of()));
+        assertEquals(new Position(0, 0), player.position());
+    }
+
+    @Test
+    void testBumpInToWall() {
         player.setDirection(Direction.RIGHT);
         player.update(1, new MazeImpl(Set.of(new WallImpl(new Position(1, 0)))));
         assertEquals(new Position(0, 0), player.position());
 
+        player.setDirection(Direction.DOWN);
+        player.update(6, new MazeImpl(Set.of(new WallImpl(new Position(0, 5)))));
+        assertEquals(new Position(0, 0), player.position());
+    }
+
+    @Test
+    void testIncreaseSpeed() {
         player.setDirection(Direction.RIGHT);
-        player.increaseSpeed();
-        player.increaseSpeed();
-        player.increaseSpeed();
-        player.increaseSpeed();
-        player.increaseSpeed();
         player.update(1, new MazeImpl(Set.of()));
-        assertEquals(new Position(1.5, 0), player.position());
+        assertEquals(new Position(1, 0), player.position());
+
+        player.setDirection(Direction.DOWN);
+        player.setDirection(Direction.DOWN);
+        player.increaseSpeed();
+        player.increaseSpeed();
+        player.increaseSpeed();
+        player.increaseSpeed();
+        player.increaseSpeed();
+        player.update(2, new MazeImpl(Set.of()));
+        assertEquals(new Position(1, 1.5), player.position());
     }
 }
