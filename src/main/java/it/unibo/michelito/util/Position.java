@@ -5,6 +5,5 @@ package it.unibo.michelito.util;
  * @param x
  * @param y
  */
-
 public record Position(double x, double y) {
 }

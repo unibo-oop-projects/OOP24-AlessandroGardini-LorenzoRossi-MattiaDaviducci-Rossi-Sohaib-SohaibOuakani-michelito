@@ -7,26 +7,27 @@ import it.unibo.michelito.util.Position;
  */
 public interface HitBox {
     /**
-     * @return the center of the Hitbox.
+     * @return the center of the hitbox.
      */
     Position getCenter();
 
     /**
-     * @return the Hitbox.
+     * @return the hitbox.
      */
     HitBox getHitBox();
 
     /**
      * @param hitBox the hitbox with which verify collision.
      *
-     * @return if two hitbox are colliding eachother.
+     * @return if two hitbox are colliding each other.
      */
     boolean collision(HitBox hitBox);
 
     /**
-     * @param position the posizion with which verify overlapping whith the object
+     * @param position the position with which verify overlapping with the object
      *
-     * @return if a position is inside the Hitbox.
+     * @return if a position is inside the hitbox.
      */
     boolean inner(Position position);
+
 }
