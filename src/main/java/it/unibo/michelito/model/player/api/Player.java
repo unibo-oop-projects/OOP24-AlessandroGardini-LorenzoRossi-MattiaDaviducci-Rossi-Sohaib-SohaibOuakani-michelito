@@ -17,19 +17,7 @@ public interface Player extends Updatable {
     void setCommand(PlayerCommand command);
 
     /**
-     * Gets the next command for the player, if there
-     * @return Return the next command.
-     */
-    Optional<PlayerCommand> getCommand();
-
-    /**
-     * Get the last time the player recived an update.
-     * @return the last time the player is updated.
-     */
-    long getLastUpdateTime();
-
-    /**
-     * Increases the number of placeble bombs by the player.
+     * Increases the number of placeable bombs by the player.
      */
     void increaseBombLimit();
 
@@ -39,7 +27,7 @@ public interface Player extends Updatable {
     void increaseSpeed();
 
     /**
-     * Sets a new psoition for the player.
+     * Sets a new position for the player.
      * @param newPosition is the new position of the player.
      */
     void setPosition(Position newPosition);
