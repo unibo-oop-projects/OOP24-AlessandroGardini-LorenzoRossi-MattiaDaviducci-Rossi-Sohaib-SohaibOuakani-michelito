@@ -40,5 +40,14 @@ class TestPlayer {
         player.setDirection(Direction.RIGHT);
         player.update(1, new MazeImpl(Set.of(new WallImpl(new Position(1, 0)))));
         assertEquals(new Position(0, 0), player.position());
+
+        player.setDirection(Direction.RIGHT);
+        player.increaseSpeed();
+        player.increaseSpeed();
+        player.increaseSpeed();
+        player.increaseSpeed();
+        player.increaseSpeed();
+        player.update(1, new MazeImpl(Set.of()));
+        assertEquals(new Position(1.5, 0), player.position());
     }
 }

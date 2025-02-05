@@ -1,10 +1,9 @@
 package it.unibo.michelito.model.player.impl;
 
-import java.util.Optional;
+import java.math.BigDecimal;
 
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.player.api.Player;
-import it.unibo.michelito.model.player.api.PlayerCommand;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.Type;
@@ -46,8 +45,9 @@ public class PlayerImpl implements Player {
 
     @Override
     public final void update(final long time, final Maze maze) {
+        long deltaTime = time - this.lastUpdate;
         if (!this.direction.equals(Direction.NONE)) {
-            this.move(time, maze);
+            this.move(deltaTime, maze);
             this.setDirection(Direction.NONE);
             this.updateHitbox();
         }
@@ -67,8 +67,13 @@ public class PlayerImpl implements Player {
 
     private void move(final long time, Maze maze) {
         final Position oldPosition = this.position();
-        final Position movement = new Position(this.direction.toPosition().x() * STANDARD_SPEED * time, this.direction.toPosition().y() * STANDARD_SPEED * time);
-        this.setPosition(new Position(this.position().x() + movement.x(), this.position().y() + movement.y()));
+        final BigDecimal move = BigDecimal.valueOf(this.currentSpeed).multiply(BigDecimal.valueOf(time));
+        final BigDecimal xDisplacement = move.multiply(BigDecimal.valueOf(this.direction.toPosition().x()));
+        final BigDecimal yDisplacement = move.multiply(BigDecimal.valueOf(this.direction.toPosition().y()));
+
+        final BigDecimal newX = BigDecimal.valueOf(this.position().x()).add(xDisplacement);
+        final BigDecimal newY = BigDecimal.valueOf(this.position().y()).add(yDisplacement);
+        this.setPosition(new Position(newX.doubleValue(), newY.doubleValue()));
         this.updateHitbox();
 
         if (maze.getWalls().stream()
@@ -103,7 +108,7 @@ public class PlayerImpl implements Player {
 
     @Override
     public final void increaseSpeed() {
-        this.currentSpeed = this.currentSpeed + STANDARD_SPEED_UPGRADE;
+        this.currentSpeed = BigDecimal.valueOf(this.currentSpeed).add(BigDecimal.valueOf(STANDARD_SPEED_UPGRADE)).doubleValue();
     }
 
     private void setPosition(final Position newPosition) {
