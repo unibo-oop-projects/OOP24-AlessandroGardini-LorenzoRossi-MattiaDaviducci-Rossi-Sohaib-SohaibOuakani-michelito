@@ -6,6 +6,13 @@ package it.unibo.michelito.util;
  */
 public enum Type {
     PLAYER,
+    /**
+     * A box.
+     */
     BOX,
+
+    /**
+     * A wall.
+     */
     WALL
 }
