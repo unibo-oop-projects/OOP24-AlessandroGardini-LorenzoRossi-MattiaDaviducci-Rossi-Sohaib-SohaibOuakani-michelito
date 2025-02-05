@@ -9,15 +9,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * TestWall test.
+ * Test class for Wall Impl.
  */
-class TestWall {
+final class TestWall {
     /**
-     * Tests the Wall.
+     * Tests WallImpl.
      */
-    @Test void testWall() {
-        Position position = new Position(0, 0);
-        Wall wall = new WallImpl(position);
+    @Test
+    void testWall() {
+        final Position position = new Position(0, 0);
+        final Wall wall = new WallImpl(position);
         assertNotNull(wall);
         assertEquals(wall.getHitBox(), new HitBoxFactoryImpl().squareHitBox(position));
         assertEquals(wall.position(), position);

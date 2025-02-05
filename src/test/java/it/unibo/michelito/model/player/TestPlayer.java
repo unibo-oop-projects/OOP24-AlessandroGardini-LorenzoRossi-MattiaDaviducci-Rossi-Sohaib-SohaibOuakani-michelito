@@ -20,9 +20,9 @@ public class TestPlayer {
 
     @Test
     void testSetPosition() {
-        assertEquals(new Position(0, 0), player.getPosition());
+        assertEquals(new Position(0, 0), player.position());
         player.setPosition(new Position(5, 5));
-        assertEquals(new Position(5, 5), player.getPosition());
+        assertEquals(new Position(5, 5), player.position());
     }
 
 }

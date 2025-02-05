@@ -10,23 +10,23 @@ import it.unibo.michelito.util.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
+import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * TestBox test.
+ * TestMaze implementation.
  */
-public class TestMaze {
+final class TestMaze {
+    Set<MazeObject> setOfObjects;
 
-    private Set<MazeObject> setOfObjects;
-
-
+    /**
+     * Creates a Set of MazeObjects to be used in each test.
+     */
     @BeforeEach
-    public void setUp() {
-        setOfObjects = Set.of(
+    void setUp() {
+        setOfObjects = new HashSet<>(Set.of(
                 new WallImpl(new Position(0, 0)),
                 new WallImpl(new Position(1, 1)),
                 new WallImpl(new Position(2, 2)),
@@ -35,17 +35,17 @@ public class TestMaze {
                 new BoxImpl(new Position(1, 1)),
                 new BoxImpl(new Position(2, 2)),
                 new BoxImpl(new Position(3, 3)),
-                new PlayerImpl(new Position(0, 0)),
-                new PlayerImpl(new Position(1, 1)),
-                new PlayerImpl(new Position(2, 2)),
-                new PlayerImpl(new Position(3, 3))
-        );
+                new PlayerImpl(new Position(0, 0))
+        ));
     }
 
+    /**
+     * Tests add and remove feature of maze.
+     */
     @Test
-    public void testAddAndRemove() {
-        var mazeObject = new WallImpl(new Position(4, 4));
-        Maze maze = new MazeImpl(setOfObjects);
+    void testAddAndRemove() {
+        final MazeObject mazeObject = new WallImpl(new Position(4, 4));
+        final Maze maze = new MazeImpl(setOfObjects);
         assertNotNull(maze);
         assertFalse(maze.getAllObjects().isEmpty());
         assertFalse(maze.getAllObjects().contains(mazeObject));
@@ -56,12 +56,26 @@ public class TestMaze {
         assertFalse(maze.getWalls().contains(mazeObject));
     }
 
+    /**
+     * Tests that both add and remove throw exception.
+     */
     @Test
-    public void testConsistency() {
-        Maze maze = new MazeImpl(setOfObjects);
-        assertNotNull(maze);
+    void testConsistency() {
+        final Maze maze = new MazeImpl(setOfObjects);
         assertThrows(NullPointerException.class, () -> maze.addMazeObject(null));
         assertThrows(NullPointerException.class, () -> maze.removeMazeObject(null));
         assertFalse(maze.removeMazeObject(new WallImpl(new Position(4, 4))));
+    }
+
+    /**
+     * Tests that the filter function
+     */
+    @Test
+    void testFilter() {
+        final Maze maze = new MazeImpl(setOfObjects);
+        assertFalse(maze.getAllObjects().isEmpty());
+        assertFalse(maze.getWalls().isEmpty());
+        assertFalse(maze.getBoxes().isEmpty());
+        assertTrue(maze.getPowerup().isEmpty());
     }
 }

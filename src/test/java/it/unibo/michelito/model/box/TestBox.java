@@ -9,15 +9,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * TestBox test.
+ * Test class for Box Impl.
  */
-class TestBox {
+final class TestBox {
     /**
-     * Tests the Box.
+     * Tests BoxImpl.
      */
-    @Test void testBox() {
-        Position position = new Position(0, 0);
-        Box box = new BoxImpl(position);
+    @Test
+    void testBox() {
+        final Position position = new Position(0, 0);
+        final Box box = new BoxImpl(position);
         assertNotNull(box);
         assertEquals(box.getHitBox(), new HitBoxFactoryImpl().squareHitBox(position));
         assertEquals(box.position(), position);
