@@ -1,11 +1,7 @@
 package it.unibo.michelito.model.player.api;
 
-import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.modelutil.Updatable;
 import it.unibo.michelito.util.Direction;
-import it.unibo.michelito.util.Position;
-
-import java.util.Optional;
 
 /**
  * Interface for Player.

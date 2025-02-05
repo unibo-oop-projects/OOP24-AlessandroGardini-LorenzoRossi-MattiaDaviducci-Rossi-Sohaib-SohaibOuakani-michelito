@@ -45,7 +45,7 @@ public class PlayerImpl implements Player {
 
     @Override
     public final void update(final long time, final Maze maze) {
-        long deltaTime = time - this.lastUpdate;
+        final long deltaTime = time - this.lastUpdate;
         if (!this.direction.equals(Direction.NONE)) {
             this.move(deltaTime, maze);
             this.setDirection(Direction.NONE);
@@ -65,7 +65,7 @@ public class PlayerImpl implements Player {
         return false;
     }
 
-    private void move(final long time, Maze maze) {
+    private void move(final long time, final Maze maze) {
         final Position oldPosition = this.position();
         final BigDecimal move = BigDecimal.valueOf(this.currentSpeed).multiply(BigDecimal.valueOf(time));
         final BigDecimal xDisplacement = move.multiply(BigDecimal.valueOf(this.direction.toPosition().x()));
