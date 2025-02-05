@@ -13,7 +13,7 @@ public interface MazeObject {
      *
      * @return the position of the MazeObject.
      */
-    Position getPosition();
+    Position position();
 
     /**
      * Get the HitBox of the MazeObject.

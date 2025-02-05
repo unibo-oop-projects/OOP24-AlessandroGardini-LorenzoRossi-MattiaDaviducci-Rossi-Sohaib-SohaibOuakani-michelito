@@ -20,6 +20,6 @@ class TestWall {
         Wall wall = new WallImpl(position);
         assertNotNull(wall);
         assertEquals(wall.getHitBox(), new HitBoxFactoryImpl().squareHitBox(position));
-        assertEquals(wall.getPosition(), position);
+        assertEquals(wall.position(), position);
     }
 }

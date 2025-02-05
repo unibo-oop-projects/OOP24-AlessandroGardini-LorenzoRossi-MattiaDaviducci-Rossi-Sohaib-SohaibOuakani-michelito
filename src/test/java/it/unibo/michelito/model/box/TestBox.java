@@ -20,6 +20,6 @@ class TestBox {
         Box box = new BoxImpl(position);
         assertNotNull(box);
         assertEquals(box.getHitBox(), new HitBoxFactoryImpl().squareHitBox(position));
-        assertEquals(box.getPosition(), position);
+        assertEquals(box.position(), position);
     }
 }
