@@ -24,10 +24,14 @@ public interface HitBox {
     boolean collision(HitBox hitBox);
 
     /**
-     * @param position the position with which verify overlapping with the object
      *
-     * @return if a position is inside the hitbox.
+     * @return
      */
-    boolean inner(Position position);
+    double getWidth();
 
+    /**
+     *
+     * @return
+     */
+    double getHeight();
 }

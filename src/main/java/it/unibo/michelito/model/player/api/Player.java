@@ -1,52 +1,30 @@
 package it.unibo.michelito.model.player.api;
 
-import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.modelutil.Updatable;
-import it.unibo.michelito.util.Position;
-
-import java.util.Optional;
+import it.unibo.michelito.util.Direction;
 
 /**
  * Interface for Player.
  */
 public interface Player extends Updatable {
     /**
-     * Set the next command of the player.
-     * @param command is the command to be executed.
-     */
-    void setCommand(PlayerCommand command);
-
-    /**
-     * Gets the next command for the player, if there
-     * @return Return the next command.
-     */
-    Optional<PlayerCommand> getCommand();
-
-    /**
-     * Get the last time the player recived an update.
-     * @return the last time the player is updated.
-     */
-    long getLastUpdateTime();
-
-    /**
-     * Increases the number of placeble bombs by the player.
+     * Increases the number of placeable bombs by the {@link Player}.
      */
     void increaseBombLimit();
 
     /**
-     * Increases the speed of the player.
+     * Increases the speed of the {@link Player}.
      */
     void increaseSpeed();
 
     /**
-     * Sets a new psoition for the player.
-     * @param newPosition is the new position of the player.
+     * Sets the direction for the next move of the {@link Player}.
+     * @param direction is the {@link Direction} of the next move.
      */
-    void setPosition(Position newPosition);
+    void setDirection(Direction direction);
 
     /**
-     * Method to make the player place a Bomb.
-     * @param maze where the bomb is placed.
+     * Makes the player place a {Bomb}.
      */
-    void placeBomb(Maze maze);
+    void notifyToPlace();
 }

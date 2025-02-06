@@ -6,18 +6,20 @@ import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- * TestWall test.
+ *  Test class for {@link WallImpl}.
  */
-class TestWall {
+final class TestWall {
     /**
-     * Tests the Wall.
+     * Tests {@link WallImpl}.
      */
-    @Test void testWall() {
-        Position position = new Position(0, 0);
-        Wall wall = new WallImpl(position);
+    @Test
+    void testWall() {
+        final Position position = new Position(0, 0);
+        final Wall wall = new WallImpl(position);
         assertNotNull(wall);
         assertEquals(wall.getHitBox(), new HitBoxFactoryImpl().squareHitBox(position));
         assertEquals(wall.position(), position);

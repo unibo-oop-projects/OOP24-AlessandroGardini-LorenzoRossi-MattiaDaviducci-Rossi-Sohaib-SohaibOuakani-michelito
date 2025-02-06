@@ -5,6 +5,9 @@ package it.unibo.michelito.util;
  * Used for possible view implementation.
  */
 public enum Type {
+    /**
+     * A player.
+     */
     PLAYER,
     /**
      * A box.
@@ -19,5 +22,15 @@ public enum Type {
     /**
      * An enemy.
      */
-    ENEMY
+    ENEMY,
+
+    /**
+     * A powerUp.
+     */
+    POWERUP,
+
+    /**
+     * A Door
+     */
+    DOOR
 }
