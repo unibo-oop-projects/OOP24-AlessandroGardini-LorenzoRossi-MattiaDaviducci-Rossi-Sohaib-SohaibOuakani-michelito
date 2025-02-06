@@ -1,7 +1,6 @@
 package it.unibo.michelito.model.modelutil;
 
 import it.unibo.michelito.model.maze.api.Maze;
-import it.unibo.michelito.util.Type;
 
 /**
  * Interface that represent all {@link MazeObject}  that could be updated.
