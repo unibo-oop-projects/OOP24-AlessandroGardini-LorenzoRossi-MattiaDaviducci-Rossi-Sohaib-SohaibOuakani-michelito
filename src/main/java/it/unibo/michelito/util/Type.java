@@ -14,5 +14,10 @@ public enum Type {
     /**
      * A wall.
      */
-    WALL
+    WALL,
+
+    /**
+     * An enemy.
+     */
+    ENEMY
 }
