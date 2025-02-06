@@ -13,6 +13,6 @@ public class MoveCommand implements PlayerCommand {
 
     @Override
     public void execute(Player player) {
-
+        player.setDirection(this.direction);
     }
 }

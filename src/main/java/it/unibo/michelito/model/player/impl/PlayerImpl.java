@@ -1,6 +1,7 @@
 package it.unibo.michelito.model.player.impl;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.player.api.Player;
@@ -10,6 +11,7 @@ import it.unibo.michelito.util.Type;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.api.HitBoxFactory;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
+import it.unibo.michelito.model.powerups.api.Powerup;
 
 /**
  * implementation of Player.
@@ -83,6 +85,17 @@ public class PlayerImpl implements Player {
         ) {
             this.setPosition(oldPosition);
             this.updateHitbox();
+        }
+    }
+
+    private void checkPowerUp(final Maze maze) {
+        Optional<Powerup> powerUp = maze.getPowerup().stream()
+                .filter(p -> p.getHitBox().collision(this.hitbox))
+                .findAny();
+
+        if (powerUp.isPresent()) {
+            powerUp.get().applyEffect(this);
+            maze.removeMazeObject(powerUp.get());
         }
     }
 
