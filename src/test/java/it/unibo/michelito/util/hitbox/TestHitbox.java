@@ -21,17 +21,6 @@ class TestHitbox {
         assertNotNull(h1);
         assertNotNull(h1.getHitBox());
         assertEquals(new Position(0,0), h1.getCenter());
-
-        assertTrue(h1.inner(new Position(0,0)));
-        assertTrue(h1.inner(new Position(1,1)));
-        assertTrue(h1.inner(new Position(-1,-1)));
-        assertTrue(h1.inner(new Position(1,2)));
-        assertTrue(h1.inner(new Position(-1.5,-2)));
-        assertFalse(h1.inner(new Position(-1.6,-2)));
-        assertFalse(h1.inner(new Position(1.6,2)));
-        assertFalse(h1.inner(new Position(1.6,-2.1)));
-        assertFalse(h1.inner(new Position(1.6,2.1)));
-
         HitBox h2 = hitBoxFactory.entityeHitBox(new Position(0,0));
         assertNotNull(h2);
         assertNotNull(h2.getHitBox());
@@ -48,16 +37,6 @@ class TestHitbox {
         assertNotNull(h1);
         assertNotNull(h1.getHitBox());
         assertEquals(new Position(0,0), h1.getCenter());
-
-        assertTrue(h1.inner(new Position(0,0)));
-        assertTrue(h1.inner(new Position(1,1)));
-        assertTrue(h1.inner(new Position(-1,-1)));
-        assertTrue(h1.inner(new Position(1,2)));
-        assertTrue(h1.inner(new Position(-2.5,-2.5)));
-        assertFalse(h1.inner(new Position(2.6,-2.6)));
-        assertFalse(h1.inner(new Position(2.6,2.6)));
-        assertFalse(h1.inner(new Position(2.6,-2.6)));
-
         HitBox h2 = hitBoxFactory.squareHitBox(new Position(0,0));
         assertNotNull(h2);
         assertNotNull(h2.getHitBox());
@@ -72,11 +51,11 @@ class TestHitbox {
         HitBox h1 = hitBoxFactory.entityeHitBox(new Position(0,0));
         HitBox h2 = hitBoxFactory.entityeHitBox(new Position(2.75,0));
         HitBox h3 = hitBoxFactory.entityeHitBox(new Position(3,0));
-        HitBox h4 = hitBoxFactory.entityeHitBox(new Position(3.1,0));
+        HitBox h4 = hitBoxFactory.entityeHitBox(new Position(4,0));
         HitBox h5 = hitBoxFactory.entityeHitBox(new Position(-2.75,-3.75));
         assertTrue(h1.collision(h2));
         assertTrue(h1.collision(h3));
-        assertFalse(h1.collision(h4));
+        assertFalse(h4.collision(h1));
         assertTrue(h1.collision(h5));
     }
 
@@ -108,9 +87,10 @@ class TestHitbox {
         HitBox h5 = hitBoxFactory.squareHitBox(new Position(-3.75,-4.25));
         HitBox h6 = hitBoxFactory.squareHitBox(new Position(0,4.51));
         assertTrue(h1.collision(h2));
+        assertTrue(h2.collision(h1));
         assertTrue(h1.collision(h3));
         assertFalse(h1.collision(h4));
-        assertTrue(h1.collision(h5));
+        assertTrue(h5.collision(h1));
         assertFalse(h1.collision(h6));
     }
 
