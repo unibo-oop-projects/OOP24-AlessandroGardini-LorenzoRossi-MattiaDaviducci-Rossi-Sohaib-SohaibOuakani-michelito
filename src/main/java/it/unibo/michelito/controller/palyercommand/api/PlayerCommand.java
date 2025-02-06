@@ -1,4 +1,6 @@
-package it.unibo.michelito.model.player.api;
+package it.unibo.michelito.controller.palyercommand.api;
+
+import it.unibo.michelito.model.player.api.Player;
 
 /**
  * Interface for commands that can be executed by the {@link Player}.

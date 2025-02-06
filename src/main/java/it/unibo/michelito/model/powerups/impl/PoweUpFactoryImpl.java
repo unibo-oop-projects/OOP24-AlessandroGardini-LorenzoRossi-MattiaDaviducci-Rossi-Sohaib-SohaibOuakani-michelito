@@ -24,8 +24,7 @@ public class PoweUpFactoryImpl implements PowerUpFactory {
 
     @Override
     public Optional<PowerUp> generateRandomPowerUp(final Position position) {
-        final Random random = new Random();
-        final double chance = random.nextDouble();
+        final double chance = new Random().nextDouble();
 
         if (chance <= BOMB_CHANCE) {
             return Optional.of(new BombPowerUp(position));
