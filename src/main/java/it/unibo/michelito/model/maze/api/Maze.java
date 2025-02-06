@@ -6,7 +6,7 @@ import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.model.modelutil.Temporary;
 import it.unibo.michelito.model.modelutil.Updatable;
 import it.unibo.michelito.model.player.api.Player;
-import it.unibo.michelito.model.powerups.api.Powerup;
+import it.unibo.michelito.model.powerups.api.PowerUp;
 import it.unibo.michelito.model.wall.api.Wall;
 
 import java.util.Set;
@@ -79,11 +79,11 @@ public interface Maze {
     Player getPlayer();
 
     /**
-     * Getter for all the {@link Powerup} Objects in the maze.
+     * Getter for all the {@link PowerUp} Objects in the maze.
      *
-     * @return all {@link Powerup} Objects.
+     * @return all {@link PowerUp} Objects.
      */
-    Set<Powerup> getPowerup();
+    Set<PowerUp> getPowerUp();
 
     /**
      * Getter the {@link Door} within this maze.

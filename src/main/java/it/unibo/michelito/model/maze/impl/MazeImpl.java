@@ -72,7 +72,7 @@ public record MazeImpl(Set<MazeObject> mazeObjectsSet, Runnable michelitoDeathHa
     }
 
     @Override
-    public Set<PowerUp> getPowerup() {
+    public Set<PowerUp> getPowerUp() {
         return this.getObjectsOfType(PowerUp.class);
     }
 

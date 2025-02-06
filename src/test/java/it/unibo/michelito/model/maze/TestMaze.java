@@ -80,6 +80,6 @@ final class TestMaze {
         assertFalse(maze.getAllObjects().isEmpty());
         assertFalse(maze.getWalls().isEmpty());
         assertFalse(maze.getBoxes().isEmpty());
-        assertTrue(maze.getPowerup().isEmpty());
+        assertTrue(maze.getPowerUp().isEmpty());
     }
 }
