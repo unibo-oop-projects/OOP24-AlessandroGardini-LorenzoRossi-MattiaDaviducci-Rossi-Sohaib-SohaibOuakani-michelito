@@ -2,6 +2,7 @@ package it.unibo.michelito.model.player.api;
 
 import it.unibo.michelito.model.modelutil.Updatable;
 import it.unibo.michelito.util.Direction;
+import it.unibo.michelito.util.Position;
 
 /**
  * Interface for Player.
