@@ -32,7 +32,7 @@ final class TestPowerUp {
         final Set<MazeObject> mazeObjects = new HashSet<>();
         mazeObjects.add(speed);
         mazeObjects.add(player);
-        final MazeImpl maze = new MazeImpl(mazeObjects, () -> {}, () -> {});
+        final MazeImpl maze = new MazeImpl(mazeObjects, () -> { }, () -> { });
 
         player.setDirection(Direction.RIGHT);
         player.update(5, maze);

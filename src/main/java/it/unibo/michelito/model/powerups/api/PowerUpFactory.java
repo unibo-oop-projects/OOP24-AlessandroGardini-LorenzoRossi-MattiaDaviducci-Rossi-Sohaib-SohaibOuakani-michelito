@@ -5,7 +5,7 @@ import it.unibo.michelito.util.Position;
 import java.util.Optional;
 
 /**
- * Interface for a factory that creates {@link PowerUp}
+ * Interface for a factory that creates {@link PowerUp}.
  */
 public interface PowerUpFactory {
     /**

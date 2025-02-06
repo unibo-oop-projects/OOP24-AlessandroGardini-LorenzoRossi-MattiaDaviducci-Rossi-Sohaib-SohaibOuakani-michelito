@@ -13,17 +13,17 @@ public class PowerUpFactoryImpl implements PowerUpFactory {
 
 
     @Override
-    public PowerUp generateSpeedPowerUp(final Position position) {
+    public final PowerUp generateSpeedPowerUp(final Position position) {
         return new SpeedPowerUp(position);
     }
 
     @Override
-    public PowerUp generateBombPowerUp(final Position position) {
+    public final PowerUp generateBombPowerUp(final Position position) {
         return new BombPowerUp(position);
     }
 
     @Override
-    public Optional<PowerUp> generateRandomPowerUp(final Position position) {
+    public final Optional<PowerUp> generateRandomPowerUp(final Position position) {
         final double chance = new Random().nextDouble();
 
         if (chance <= BOMB_CHANCE) {

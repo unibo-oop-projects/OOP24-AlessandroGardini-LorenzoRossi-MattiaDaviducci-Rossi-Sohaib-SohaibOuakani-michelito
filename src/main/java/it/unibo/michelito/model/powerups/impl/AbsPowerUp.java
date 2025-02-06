@@ -12,7 +12,7 @@ abstract class AbsPowerUp implements PowerUp {
     private final Position position;
     private final HitBox hitBox;
 
-    public AbsPowerUp(final Position position) {
+    AbsPowerUp(final Position position) {
         this.position = position;
         this.hitBox = createHitBox();
     }
