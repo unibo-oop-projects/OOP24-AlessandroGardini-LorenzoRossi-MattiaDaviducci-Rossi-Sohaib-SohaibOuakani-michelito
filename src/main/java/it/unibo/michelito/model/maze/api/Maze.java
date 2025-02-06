@@ -1,7 +1,9 @@
 package it.unibo.michelito.model.maze.api;
 
 import it.unibo.michelito.model.box.api.Box;
+import it.unibo.michelito.model.door.api.Door;
 import it.unibo.michelito.model.modelutil.MazeObject;
+import it.unibo.michelito.model.modelutil.Temporary;
 import it.unibo.michelito.model.modelutil.Updatable;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.model.powerups.api.Powerup;
@@ -11,7 +13,8 @@ import java.util.Set;
 
 /**
  * Interface that represent a maze and where all {@link MazeObject} are contained.
- * It provides a method for each interface that extend {@link MazeObject}.
+ * Provides a method for each interface that extend {@link MazeObject}.
+ * Provides methods to be called once the level is won and for the eventual death of michelito.
  */
 public interface Maze {
     /**
@@ -23,12 +26,22 @@ public interface Maze {
     boolean addMazeObject(MazeObject mazeObject);
 
     /**
-     * Remove a {@link MazeObject} from the maze.
+     * Remove a {@link Temporary} from the maze.
      *
-     * @param mazeObject to be removed.
+     * @param temporaryObject to be removed.
      * @return whether the operation as been successful.
      */
-    boolean removeMazeObject(MazeObject mazeObject);
+    boolean removeMazeObject(Temporary temporaryObject);
+
+    /**
+     * Method to be called to kill michelito.
+     */
+    void killMichelito();
+
+    /**
+     * Method to be called one michelito enters the door.
+     */
+    void enterTheDoor();
 
     /**
      * Getter for all the {@link MazeObject} in the maze.
@@ -71,4 +84,11 @@ public interface Maze {
      * @return all {@link Powerup} Objects.
      */
     Set<Powerup> getPowerup();
+
+    /**
+     * Getter the {@link Door} within this maze.
+     *
+     * @return the {@link Door}.
+     */
+    Door getDoor();
 }

@@ -1,8 +1,10 @@
 package it.unibo.michelito.model.maze.impl;
 
 import it.unibo.michelito.model.box.api.Box;
+import it.unibo.michelito.model.door.api.Door;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.modelutil.MazeObject;
+import it.unibo.michelito.model.modelutil.Temporary;
 import it.unibo.michelito.model.modelutil.Updatable;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.model.powerups.api.Powerup;
@@ -18,7 +20,7 @@ import java.util.stream.Collectors;
  * @param mazeObjectsSet the initial set of {@link MazeObject} instances.
  * @param michelitoDeathHandler the action to be executed when Michelito dies.
  */
-public record MazeImpl(Set<MazeObject> mazeObjectsSet, Runnable michelitoDeathHandler) implements Maze {
+public record MazeImpl(Set<MazeObject> mazeObjectsSet, Runnable michelitoDeathHandler, Runnable michelitoWonMaze) implements Maze {
     @Override
     public boolean addMazeObject(final MazeObject mazeObject) {
         Objects.requireNonNull(mazeObject);
@@ -26,13 +28,19 @@ public record MazeImpl(Set<MazeObject> mazeObjectsSet, Runnable michelitoDeathHa
     }
 
     @Override
-    public boolean removeMazeObject(final MazeObject mazeObject) {
-        Objects.requireNonNull(mazeObject);
-        if (mazeObject.equals(this.getPlayer())) {
-            michelitoDeathHandler.run();
-            return true;
-        }
-        return this.mazeObjectsSet.remove(mazeObject);
+    public boolean removeMazeObject(final Temporary temporaryObject) {
+        Objects.requireNonNull(temporaryObject);
+        return this.mazeObjectsSet.remove(temporaryObject);
+    }
+
+    @Override
+    public void killMichelito() {
+        this.michelitoDeathHandler.run();
+    }
+
+    @Override
+    public void enterTheDoor() {
+        this.michelitoWonMaze.run();
     }
 
     @Override
@@ -66,6 +74,14 @@ public record MazeImpl(Set<MazeObject> mazeObjectsSet, Runnable michelitoDeathHa
     @Override
     public Set<Powerup> getPowerup() {
         return this.getObjectsOfType(Powerup.class);
+    }
+
+    @Override
+    public Door getDoor() {
+        return this.getObjectsOfType(Door.class)
+                .stream()
+                .findAny()
+                .orElseThrow(IllegalStateException::new);
     }
 
     /**

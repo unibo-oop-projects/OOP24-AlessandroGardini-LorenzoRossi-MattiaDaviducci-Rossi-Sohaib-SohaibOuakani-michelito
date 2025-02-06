@@ -4,6 +4,7 @@ import it.unibo.michelito.model.box.impl.BoxImpl;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.maze.impl.MazeImpl;
 import it.unibo.michelito.model.modelutil.MazeObject;
+import it.unibo.michelito.model.modelutil.Temporary;
 import it.unibo.michelito.model.player.impl.PlayerImpl;
 import it.unibo.michelito.model.wall.impl.WallImpl;
 import it.unibo.michelito.util.Position;
@@ -47,16 +48,16 @@ final class TestMaze {
      */
     @Test
     void testAddAndRemove() {
-        final MazeObject mazeObject = new WallImpl(new Position(4, 4));
-        final Maze maze = new MazeImpl(setOfObjects, () -> { });
+        final Temporary temporaryObject = new BoxImpl(new Position(4, 4));
+        final Maze maze = new MazeImpl(setOfObjects, () -> { }, () -> { });
         assertNotNull(maze);
         assertFalse(maze.getAllObjects().isEmpty());
-        assertFalse(maze.getAllObjects().contains(mazeObject));
-        assertTrue(maze.addMazeObject(mazeObject));
-        assertTrue(maze.getWalls().contains(mazeObject));
-        assertTrue(maze.getAllObjects().contains(mazeObject));
-        assertTrue(maze.removeMazeObject(mazeObject));
-        assertFalse(maze.getWalls().contains(mazeObject));
+        assertFalse(maze.getAllObjects().contains(temporaryObject));
+        assertTrue(maze.addMazeObject(temporaryObject));
+        assertTrue(maze.getBoxes().contains(temporaryObject));
+        assertTrue(maze.getAllObjects().contains(temporaryObject));
+        assertTrue(maze.removeMazeObject(temporaryObject));
+        assertFalse(maze.getBoxes().contains(temporaryObject));
     }
 
     /**
@@ -64,11 +65,10 @@ final class TestMaze {
      */
     @Test
     void testConsistency() {
-        final Maze maze = new MazeImpl(setOfObjects, () -> { });
+        final Maze maze = new MazeImpl(setOfObjects, () -> { }, () -> {});
         assertThrows(NullPointerException.class, () -> maze.addMazeObject(null));
         assertThrows(NullPointerException.class, () -> maze.removeMazeObject(null));
-        assertFalse(maze.removeMazeObject(null));
-        assertFalse(maze.removeMazeObject(new WallImpl(new Position(4, 4))));
+        assertFalse(maze.removeMazeObject(new BoxImpl(new Position(4, 4))));
     }
 
     /**
@@ -76,7 +76,7 @@ final class TestMaze {
      */
     @Test
     void testFilter() {
-        final Maze maze = new MazeImpl(setOfObjects, () -> { });
+        final Maze maze = new MazeImpl(setOfObjects, () -> { }, () -> {});
         assertFalse(maze.getAllObjects().isEmpty());
         assertFalse(maze.getWalls().isEmpty());
         assertFalse(maze.getBoxes().isEmpty());

@@ -34,10 +34,10 @@ final class TestPowerUp {
         mazeObjects.add(player);
 
         player.setDirection(Direction.RIGHT);
-        player.update(1, new MazeImpl(mazeObjects));
+        player.update(1, new MazeImpl(mazeObjects, () -> {}, () -> {}));
 
         player.setDirection(Direction.RIGHT);
-        player.update(2, new MazeImpl(mazeObjects));
+        player.update(2, new MazeImpl(mazeObjects, () -> {}, () -> {}));
         assertEquals(new Position(2.1, 0), player.position());
     }
 
