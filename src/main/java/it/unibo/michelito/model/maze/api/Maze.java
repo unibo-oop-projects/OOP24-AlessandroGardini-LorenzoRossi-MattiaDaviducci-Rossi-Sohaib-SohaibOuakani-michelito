@@ -2,6 +2,7 @@ package it.unibo.michelito.model.maze.api;
 
 import it.unibo.michelito.model.box.api.Box;
 import it.unibo.michelito.model.door.api.Door;
+import it.unibo.michelito.model.enemy.api.Enemy;
 import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.model.modelutil.Temporary;
 import it.unibo.michelito.model.modelutil.Updatable;
@@ -65,7 +66,7 @@ public interface Maze {
     Set<Box> getBoxes();
 
     /**
-     * Getter for all the {@link Updatable} Objects in the maze.
+     * Getter a Set of  {@link Updatable} Objects in the maze.
      *
      * @return all {@link Updatable} Objects.
      */
@@ -81,7 +82,7 @@ public interface Maze {
     /**
      * Getter for all the {@link PowerUp} Objects in the maze.
      *
-     * @return all {@link PowerUp} Objects.
+     * @return all a Set of {@link PowerUp} Objects.
      */
     Set<PowerUp> getPowerUp();
 
@@ -91,4 +92,11 @@ public interface Maze {
      * @return the {@link Door}.
      */
     Door getDoor();
+
+    /**
+     * Getter for all the {@link Enemy} Objects in the maze.
+     *
+     * @return all a Set of {@link Enemy} Objects.
+     */
+    Set<Enemy> getEnemies();
 }
