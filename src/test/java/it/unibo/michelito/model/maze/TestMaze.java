@@ -13,13 +13,16 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- * TestMaze implementation.
+ * Test class for {@link MazeImpl}.
  */
 final class TestMaze {
-    Set<MazeObject> setOfObjects;
+    private Set<MazeObject> setOfObjects;
 
     /**
      * Creates a Set of MazeObjects to be used in each test.
@@ -45,7 +48,7 @@ final class TestMaze {
     @Test
     void testAddAndRemove() {
         final MazeObject mazeObject = new WallImpl(new Position(4, 4));
-        final Maze maze = new MazeImpl(setOfObjects);
+        final Maze maze = new MazeImpl(setOfObjects, () -> { });
         assertNotNull(maze);
         assertFalse(maze.getAllObjects().isEmpty());
         assertFalse(maze.getAllObjects().contains(mazeObject));
@@ -61,18 +64,18 @@ final class TestMaze {
      */
     @Test
     void testConsistency() {
-        final Maze maze = new MazeImpl(setOfObjects);
+        final Maze maze = new MazeImpl(setOfObjects, () -> { });
         assertThrows(NullPointerException.class, () -> maze.addMazeObject(null));
         assertThrows(NullPointerException.class, () -> maze.removeMazeObject(null));
         assertFalse(maze.removeMazeObject(new WallImpl(new Position(4, 4))));
     }
 
     /**
-     * Tests that the filter function
+     * Tests that the filter function.
      */
     @Test
     void testFilter() {
-        final Maze maze = new MazeImpl(setOfObjects);
+        final Maze maze = new MazeImpl(setOfObjects, () -> { });
         assertFalse(maze.getAllObjects().isEmpty());
         assertFalse(maze.getWalls().isEmpty());
         assertFalse(maze.getBoxes().isEmpty());

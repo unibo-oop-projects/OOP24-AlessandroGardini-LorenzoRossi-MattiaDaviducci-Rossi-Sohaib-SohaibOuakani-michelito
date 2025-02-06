@@ -15,9 +15,10 @@ import java.util.stream.Collectors;
 /**
  * Implementation of the {@link Maze} interface.
  *
- * @param mazeObjectsSet is the starter set of MazeObject.
+ * @param mazeObjectsSet the initial set of {@link MazeObject} instances.
+ * @param michelitoDeathHandler the action to be executed when Michelito dies.
  */
-public record MazeImpl(Set<MazeObject> mazeObjectsSet) implements Maze {
+public record MazeImpl(Set<MazeObject> mazeObjectsSet, Runnable michelitoDeathHandler) implements Maze {
     @Override
     public boolean addMazeObject(final MazeObject mazeObject) {
         Objects.requireNonNull(mazeObject);
@@ -28,7 +29,7 @@ public record MazeImpl(Set<MazeObject> mazeObjectsSet) implements Maze {
     public boolean removeMazeObject(final MazeObject mazeObject) {
         Objects.requireNonNull(mazeObject);
         if (mazeObject.equals(this.getPlayer())) {
-            //TODO: signal the gameManager
+            michelitoDeathHandler.run();
             return true;
         }
         return this.mazeObjectsSet.remove(mazeObject);

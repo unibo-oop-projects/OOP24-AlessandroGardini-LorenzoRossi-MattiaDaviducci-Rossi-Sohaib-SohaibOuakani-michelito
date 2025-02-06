@@ -9,23 +9,23 @@ import it.unibo.michelito.util.Position;
  */
 public interface MazeObject {
     /**
-     * Get the position of the MazeObject.
+     * Get the {@link Position} of the MazeObject.
      *
-     * @return the position of the MazeObject.
+     * @return the {@link Position} of the MazeObject.
      */
     Position position();
 
     /**
-     * Get the HitBox of the MazeObject.
+     * Get the {@link HitBox} of the MazeObject.
      *
-     * @return the HitBox of the MazeObject.
+     * @return the {@link HitBox} of the MazeObject.
      */
     HitBox getHitBox();
 
     /**
-     * Get the Type of the MazeObject.
+     * Get the {@link Type} of the MazeObject.
      *
-     * @return the Type of the MazeObject.
+     * @return the {@link Type}  of the MazeObject.
      */
     Type getType();
 }

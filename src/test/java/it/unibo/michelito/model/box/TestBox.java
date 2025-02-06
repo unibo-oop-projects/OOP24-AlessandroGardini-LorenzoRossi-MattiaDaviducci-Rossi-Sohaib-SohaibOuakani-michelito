@@ -6,14 +6,16 @@ import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- * Test class for Box Impl.
+ * Test class for {@link BoxImpl}.
  */
 final class TestBox {
     /**
-     * Tests BoxImpl.
+     * Tests {@link BoxImpl}.
      */
     @Test
     void testBox() {

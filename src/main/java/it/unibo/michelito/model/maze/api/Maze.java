@@ -10,12 +10,12 @@ import it.unibo.michelito.model.wall.api.Wall;
 import java.util.Set;
 
 /**
- * Interface that represent a maze and where all MazeObjects are contained.
- * It provides a method for each interface that extend MazeObject.
+ * Interface that represent a maze and where all {@link MazeObject} are contained.
+ * It provides a method for each interface that extend {@link MazeObject}.
  */
 public interface Maze {
     /**
-     * Adds a MazeObject in the maze.
+     * Adds a {@link MazeObject} in the maze.
      *
      * @param mazeObject to be added.
      * @return whether the operation as been successful.
@@ -23,7 +23,7 @@ public interface Maze {
     boolean addMazeObject(MazeObject mazeObject);
 
     /**
-     * Remove a MazeObject from the maze.
+     * Remove a {@link MazeObject} from the maze.
      *
      * @param mazeObject to be removed.
      * @return whether the operation as been successful.
@@ -31,44 +31,44 @@ public interface Maze {
     boolean removeMazeObject(MazeObject mazeObject);
 
     /**
-     * Getter for all the MazeObjects in the maze.
+     * Getter for all the {@link MazeObject} in the maze.
      *
-     * @return all MazeObjects.
+     * @return all {@link MazeObject}.
      */
     Set<MazeObject> getAllObjects();
 
     /**
-     * Getter for all the Walls in the maze.
+     * Getter for all the {@link Wall} in the maze.
      *
-     * @return all Walls.
+     * @return all {@link Wall}.
      */
     Set<Wall> getWalls();
 
     /**
-     * Getter for all the Boxes in the maze.
+     * Getter for all the {@link Box} in the maze.
      *
-     * @return all Walls.
+     * @return all {@link Box}.
      */
     Set<Box> getBoxes();
 
     /**
-     * Getter for all the Updatable Objects in the maze.
+     * Getter for all the {@link Updatable} Objects in the maze.
      *
-     * @return all Updatable Objects.
+     * @return all {@link Updatable} Objects.
      */
     Set<Updatable> getUpdatable();
 
     /**
-     * Getter the player within this maze.
+     * Getter the  {@link Player} within this maze.
      *
-     * @return the player.
+     * @return the {@link Player}.
      */
     Player getPlayer();
 
     /**
-     * Getter for all the Updatable Objects in the maze.
+     * Getter for all the {@link Powerup} Objects in the maze.
      *
-     * @return all Updatable Objects.
+     * @return all {@link Powerup} Objects.
      */
     Set<Powerup> getPowerup();
 }
