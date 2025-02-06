@@ -67,6 +67,7 @@ final class TestMaze {
         final Maze maze = new MazeImpl(setOfObjects, () -> { });
         assertThrows(NullPointerException.class, () -> maze.addMazeObject(null));
         assertThrows(NullPointerException.class, () -> maze.removeMazeObject(null));
+        assertFalse(maze.removeMazeObject(null));
         assertFalse(maze.removeMazeObject(new WallImpl(new Position(4, 4))));
     }
 

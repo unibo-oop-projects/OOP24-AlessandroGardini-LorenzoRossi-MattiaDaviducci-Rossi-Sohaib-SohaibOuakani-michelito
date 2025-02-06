@@ -5,7 +5,7 @@ import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.model.modelutil.Updatable;
 import it.unibo.michelito.model.player.api.Player;
-import it.unibo.michelito.model.powerups.Powerup;
+import it.unibo.michelito.model.powerups.api.Powerup;
 import it.unibo.michelito.model.wall.api.Wall;
 
 import java.util.Objects;
