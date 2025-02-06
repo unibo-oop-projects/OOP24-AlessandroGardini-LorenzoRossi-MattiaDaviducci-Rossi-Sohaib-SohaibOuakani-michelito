@@ -67,8 +67,13 @@ class TestPlayer {
         assertEquals(new Position(0, 0), player.position());
 
         player.setDirection(Direction.RIGHT);
+        player.update(8, new MazeImpl(Set.of(new WallImpl(new Position(6, 0))), () -> { }, () -> { }));
+        assertEquals(new Position(1, 0), player.position());
+
+        player.setDirection(Direction.RIGHT);
         player.update(17, new MazeImpl(Set.of(new WallImpl(new Position(100, 0))), () -> { }, () -> { }));
         assertEquals(new Position(10, 0), player.position());
+
     }
 
     @Test
