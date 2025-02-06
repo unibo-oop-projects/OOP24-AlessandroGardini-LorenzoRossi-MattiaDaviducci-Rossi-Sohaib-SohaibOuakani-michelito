@@ -2,6 +2,7 @@ package it.unibo.michelito.model.maze.impl;
 
 import it.unibo.michelito.model.box.api.Box;
 import it.unibo.michelito.model.door.api.Door;
+import it.unibo.michelito.model.enemy.api.Enemy;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.model.modelutil.Temporary;
@@ -15,12 +16,21 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of the {@link Maze} interface.
+ * An implementation of the {@link Maze} interface representing a maze in the game.
+ * <p>
+ * This class manages the maze objects, including walls, boxes, enemies, power-ups, and more.
+ * It provides methods to interact with and manipulate these objects within the maze.
+ * </p>
  *
- * @param mazeObjectsSet the initial set of {@link MazeObject} instances.
- * @param michelitoDeathHandler the action to be executed when Michelito dies.
+ * @param mazeObjectsSet a set of {@link MazeObject} instances contained within the maze.
+ * @param michelitoDeathHandler the action to execute when Michelito dies.
+ * @param michelitoWonMaze the action to execute when Michelito completes the maze.
  */
-public record MazeImpl(Set<MazeObject> mazeObjectsSet, Runnable michelitoDeathHandler, Runnable michelitoWonMaze) implements Maze {
+public record MazeImpl(
+        Set<MazeObject> mazeObjectsSet,
+        Runnable michelitoDeathHandler,
+        Runnable michelitoWonMaze
+) implements Maze {
     @Override
     public boolean addMazeObject(final MazeObject mazeObject) {
         Objects.requireNonNull(mazeObject);
@@ -84,12 +94,17 @@ public record MazeImpl(Set<MazeObject> mazeObjectsSet, Runnable michelitoDeathHa
                 .orElseThrow(IllegalStateException::new);
     }
 
+    @Override
+    public Set<Enemy> getEnemies() {
+        return this.getObjectsOfType(Enemy.class);
+    }
+
     /**
-     * Utility method to filter mazeObjectsSet to a set of one type.
+     * A utility method to filter and retrieve all objects of a specific type from the maze.
      *
-     * @param type is the class type to filter.
-     * @return a set with all the object.
-     * @param <T> the type of element that will be contained in the output.
+     * @param type the class type to filter the objects by.
+     * @return a {@link Set} of objects of the specified type.
+     * @param <T> the type of element that will be contained in the output set.
      */
     private <T> Set<T> getObjectsOfType(final Class<T> type) {
         return this.mazeObjectsSet.stream()
@@ -97,5 +112,4 @@ public record MazeImpl(Set<MazeObject> mazeObjectsSet, Runnable michelitoDeathHa
                 .map(type::cast)
                 .collect(Collectors.toSet());
     }
-
 }

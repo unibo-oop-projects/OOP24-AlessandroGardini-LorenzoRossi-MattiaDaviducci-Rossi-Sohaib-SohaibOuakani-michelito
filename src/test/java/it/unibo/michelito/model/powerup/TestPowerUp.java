@@ -28,7 +28,7 @@ final class TestPowerUp {
     @Test
     void testSpeedPowerUp() {
         final Player player = new PlayerImpl(new Position(0, 0));
-        final PowerUp speed = this.factory.generateSpeedPowerUp(new Position(8, 0));
+        final PowerUp speed = this.factory.generateSpeedPowerUp(new Position(3, 3));
         final Set<MazeObject> mazeObjects = new HashSet<>();
         mazeObjects.add(speed);
         mazeObjects.add(player);
