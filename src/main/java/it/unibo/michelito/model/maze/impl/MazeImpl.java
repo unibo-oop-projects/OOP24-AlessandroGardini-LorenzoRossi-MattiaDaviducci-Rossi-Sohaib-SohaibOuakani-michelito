@@ -1,8 +1,10 @@
 package it.unibo.michelito.model.maze.impl;
 
 import it.unibo.michelito.model.box.api.Box;
+import it.unibo.michelito.model.door.api.Door;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.modelutil.MazeObject;
+import it.unibo.michelito.model.modelutil.Temporary;
 import it.unibo.michelito.model.modelutil.Updatable;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.model.powerups.api.PowerUp;
@@ -15,9 +17,10 @@ import java.util.stream.Collectors;
 /**
  * Implementation of the {@link Maze} interface.
  *
- * @param mazeObjectsSet is the starter set of MazeObject.
+ * @param mazeObjectsSet the initial set of {@link MazeObject} instances.
+ * @param michelitoDeathHandler the action to be executed when Michelito dies.
  */
-public record MazeImpl(Set<MazeObject> mazeObjectsSet) implements Maze {
+public record MazeImpl(Set<MazeObject> mazeObjectsSet, Runnable michelitoDeathHandler, Runnable michelitoWonMaze) implements Maze {
     @Override
     public boolean addMazeObject(final MazeObject mazeObject) {
         Objects.requireNonNull(mazeObject);
@@ -25,13 +28,19 @@ public record MazeImpl(Set<MazeObject> mazeObjectsSet) implements Maze {
     }
 
     @Override
-    public boolean removeMazeObject(final MazeObject mazeObject) {
-        Objects.requireNonNull(mazeObject);
-        if (mazeObject.equals(this.getPlayer())) {
-            //TODO: signal the gameManager
-            return true;
-        }
-        return this.mazeObjectsSet.remove(mazeObject);
+    public boolean removeMazeObject(final Temporary temporaryObject) {
+        Objects.requireNonNull(temporaryObject);
+        return this.mazeObjectsSet.remove(temporaryObject);
+    }
+
+    @Override
+    public void killMichelito() {
+        this.michelitoDeathHandler.run();
+    }
+
+    @Override
+    public void enterTheDoor() {
+        this.michelitoWonMaze.run();
     }
 
     @Override
@@ -65,6 +74,14 @@ public record MazeImpl(Set<MazeObject> mazeObjectsSet) implements Maze {
     @Override
     public Set<PowerUp> getPowerup() {
         return this.getObjectsOfType(PowerUp.class);
+    }
+
+    @Override
+    public Door getDoor() {
+        return this.getObjectsOfType(Door.class)
+                .stream()
+                .findAny()
+                .orElseThrow(IllegalStateException::new);
     }
 
     /**

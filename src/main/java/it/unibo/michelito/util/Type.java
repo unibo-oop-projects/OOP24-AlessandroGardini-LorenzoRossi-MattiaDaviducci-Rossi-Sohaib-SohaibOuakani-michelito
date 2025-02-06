@@ -22,5 +22,10 @@ public enum Type {
     /**
      * A powerUp.
      */
-    POWERUP
+    POWERUP,
+
+    /**
+     * A Door
+     */
+    DOOR
 }

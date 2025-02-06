@@ -9,7 +9,7 @@ import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 /**
  * Implementation of the {@link Box} interface.
  *
- * @param position is the position that the Box will have.
+ * @param position is the {@link Position} that the Box will have.
  */
 public record BoxImpl(Position position) implements Box {
 
