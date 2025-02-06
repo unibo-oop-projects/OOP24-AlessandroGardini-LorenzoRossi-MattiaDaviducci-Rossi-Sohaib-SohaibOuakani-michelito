@@ -65,7 +65,7 @@ final class TestMaze {
      */
     @Test
     void testConsistency() {
-        final Maze maze = new MazeImpl(setOfObjects, () -> { }, () -> {});
+        final Maze maze = new MazeImpl(setOfObjects, () -> { }, () -> { });
         assertThrows(NullPointerException.class, () -> maze.addMazeObject(null));
         assertThrows(NullPointerException.class, () -> maze.removeMazeObject(null));
         assertFalse(maze.removeMazeObject(new BoxImpl(new Position(4, 4))));
@@ -76,7 +76,7 @@ final class TestMaze {
      */
     @Test
     void testFilter() {
-        final Maze maze = new MazeImpl(setOfObjects, () -> { }, () -> {});
+        final Maze maze = new MazeImpl(setOfObjects, () -> { }, () -> { });
         assertFalse(maze.getAllObjects().isEmpty());
         assertFalse(maze.getWalls().isEmpty());
         assertFalse(maze.getBoxes().isEmpty());
