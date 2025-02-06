@@ -1,11 +1,11 @@
-package it.unibo.michelito.model.PowerUp;
+package it.unibo.michelito.model.powerup;
 
 import it.unibo.michelito.model.maze.impl.MazeImpl;
 import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.model.player.impl.PlayerImpl;
 import it.unibo.michelito.model.powerups.api.PowerUpFactory;
-import it.unibo.michelito.model.powerups.api.Powerup;
+import it.unibo.michelito.model.powerups.api.PowerUp;
 import it.unibo.michelito.model.powerups.impl.PoweUpFactoryImpl;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
@@ -19,7 +19,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestPowerUp {
-    PowerUpFactory factory;
+    private PowerUpFactory factory;
     @BeforeEach
     void setUp() {
         this.factory = new PoweUpFactoryImpl();
@@ -27,9 +27,9 @@ final class TestPowerUp {
 
     @Test
     void testSpeedPowerUp() {
-        final Player player = new PlayerImpl(new Position(0, 0 ));
-        final Powerup speed = this.factory.generateSpeedPowerUp(new Position(3, 3));
-        HashSet<MazeObject> mazeObjects = new HashSet<>();
+        final Player player = new PlayerImpl(new Position(0, 0));
+        final PowerUp speed = this.factory.generateSpeedPowerUp(new Position(3, 3));
+        final Set<MazeObject> mazeObjects = new HashSet<>();
         mazeObjects.add(speed);
         mazeObjects.add(player);
 
@@ -43,7 +43,12 @@ final class TestPowerUp {
 
     @Test
     void testRandomPowerUp() {
-        final Player player = new PlayerImpl(new Position(0, 0 ));
-        final Optional<Powerup> powerup = this.factory.generateRandomPowerUp(new Position(3, 3));
+        final Optional<PowerUp> powerup = this.factory.generateRandomPowerUp(new Position(3, 3));
+        assertInstanceOf(Optional.class, powerup);
+
+        if (powerup.isPresent()) {
+            System.out.println("powerUp is dropped");
+            assertInstanceOf(PowerUp.class, powerup.get());
+        }
     }
 }

@@ -1,7 +1,7 @@
 package it.unibo.michelito.model.powerups.impl;
 
 import it.unibo.michelito.model.powerups.api.PowerUpFactory;
-import it.unibo.michelito.model.powerups.api.Powerup;
+import it.unibo.michelito.model.powerups.api.PowerUp;
 import it.unibo.michelito.util.Position;
 
 import java.util.Optional;
@@ -13,17 +13,17 @@ public class PoweUpFactoryImpl implements PowerUpFactory {
 
 
     @Override
-    public Powerup generateSpeedPowerUp(final Position position) {
+    public PowerUp generateSpeedPowerUp(final Position position) {
         return new SpeedPowerUp(position);
     }
 
     @Override
-    public Powerup generateBombPowerUp(final Position position) {
+    public PowerUp generateBombPowerUp(final Position position) {
         return new BombPowerUp(position);
     }
 
     @Override
-    public Optional<Powerup> generateRandomPowerUp(final Position position) {
+    public Optional<PowerUp> generateRandomPowerUp(final Position position) {
         final Random random = new Random();
         final double chance = random.nextDouble();
 

@@ -4,7 +4,7 @@ import it.unibo.michelito.model.box.api.Box;
 import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.model.modelutil.Updatable;
 import it.unibo.michelito.model.player.api.Player;
-import it.unibo.michelito.model.powerups.api.Powerup;
+import it.unibo.michelito.model.powerups.api.PowerUp;
 import it.unibo.michelito.model.wall.api.Wall;
 
 import java.util.Set;
@@ -70,5 +70,5 @@ public interface Maze {
      *
      * @return all Updatable Objects.
      */
-    Set<Powerup> getPowerup();
+    Set<PowerUp> getPowerup();
 }

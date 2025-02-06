@@ -11,7 +11,7 @@ import it.unibo.michelito.util.Type;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.api.HitBoxFactory;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
-import it.unibo.michelito.model.powerups.api.Powerup;
+import it.unibo.michelito.model.powerups.api.PowerUp;
 
 /**
  * implementation of Player.
@@ -64,7 +64,7 @@ public class PlayerImpl implements Player {
     }
 
     private boolean allowedToPlaceBomb(final Maze maze) {
-        //prendi le bombe e conta se sono meno di quelle max piazzabili.
+        //TODO: when maze.getBombs() is added
         return false;
     }
 
@@ -76,13 +76,16 @@ public class PlayerImpl implements Player {
 
         final BigDecimal newX = BigDecimal.valueOf(this.position().x()).add(xDisplacement);
         final BigDecimal newY = BigDecimal.valueOf(this.position().y()).add(yDisplacement);
+
         this.setPosition(new Position(newX.doubleValue(), newY.doubleValue()));
         this.updateHitbox();
 
-        if (maze.getWalls().stream()
-                .anyMatch(w -> this.getHitBox().collision(w.getHitBox())) ||
-            maze.getBoxes().stream()
-                .anyMatch(b -> this.getHitBox().collision(b.getHitBox()))
+        if (
+                maze.getWalls().stream()
+                        .anyMatch(w -> this.getHitBox().collision(w.getHitBox()))
+                ||
+                maze.getBoxes().stream()
+                        .anyMatch(b -> this.getHitBox().collision(b.getHitBox()))
         ) {
             this.setPosition(oldPosition);
             this.updateHitbox();
@@ -90,7 +93,7 @@ public class PlayerImpl implements Player {
     }
 
     private void checkPowerUp(final Maze maze) {
-        Optional<Powerup> powerUp = maze.getPowerup().stream()
+        final Optional<PowerUp> powerUp = maze.getPowerup().stream()
                 .filter(p -> this.getHitBox().collision(p.getHitBox())/*p.getHitBox().collision(this.hitbox)*/)
                 .findAny();
 
@@ -131,6 +134,7 @@ public class PlayerImpl implements Player {
 
     private void placeBomb(final Maze maze) {
         //maze.addMazeObject();
+        //TODO: when the Bomb is added
     }
 
     @Override

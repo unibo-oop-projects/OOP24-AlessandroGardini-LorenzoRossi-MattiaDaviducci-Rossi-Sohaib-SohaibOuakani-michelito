@@ -1,12 +1,12 @@
 package it.unibo.michelito.model.player.api;
 
 /**
- * interfce for commands that can be executed by the player.
+ * Interface for commands that can be executed by the {@link Player}.
  */
 public interface PlayerCommand {
     /**
-     * method that executes the command.
-     * @param player the player who has to execute the command.
+     * Method that executes the command.
+     * @param player the {@link Player} who has to execute the command.
      */
     void execute(Player player);
 }

@@ -4,10 +4,13 @@ import it.unibo.michelito.util.Position;
 
 import java.util.Optional;
 
+/**
+ * Interface for a factory that creates {@link PowerUp}
+ */
 public interface PowerUpFactory {
-    Powerup generateSpeedPowerUp(Position position);
+    PowerUp generateSpeedPowerUp(Position position);
 
-    Powerup generateBombPowerUp(Position position);
+    PowerUp generateBombPowerUp(Position position);
 
-    Optional<Powerup> generateRandomPowerUp(Position position);
+    Optional<PowerUp> generateRandomPowerUp(Position position);
 }
