@@ -7,7 +7,7 @@ import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.model.modelutil.Temporary;
 import it.unibo.michelito.model.modelutil.Updatable;
 import it.unibo.michelito.model.player.api.Player;
-import it.unibo.michelito.model.powerups.api.Powerup;
+import it.unibo.michelito.model.powerups.api.PowerUp;
 import it.unibo.michelito.model.wall.api.Wall;
 
 import java.util.Objects;
@@ -72,8 +72,8 @@ public record MazeImpl(Set<MazeObject> mazeObjectsSet, Runnable michelitoDeathHa
     }
 
     @Override
-    public Set<Powerup> getPowerup() {
-        return this.getObjectsOfType(Powerup.class);
+    public Set<PowerUp> getPowerup() {
+        return this.getObjectsOfType(PowerUp.class);
     }
 
     @Override

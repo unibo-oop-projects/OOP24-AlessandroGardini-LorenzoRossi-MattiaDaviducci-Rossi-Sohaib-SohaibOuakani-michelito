@@ -1,14 +1,14 @@
 package it.unibo.michelito.model.powerups.impl;
 
 import it.unibo.michelito.model.player.api.Player;
-import it.unibo.michelito.model.powerups.api.Powerup;
+import it.unibo.michelito.model.powerups.api.PowerUp;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.Type;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.api.HitBoxFactory;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 
-abstract class AbsPoweUp implements Powerup {
+abstract class AbsPoweUp implements PowerUp {
     private final Position position;
     private final HitBox hitBox;
 
