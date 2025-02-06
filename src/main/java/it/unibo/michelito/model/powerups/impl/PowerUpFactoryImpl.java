@@ -7,6 +7,9 @@ import it.unibo.michelito.util.Position;
 import java.util.Optional;
 import java.util.Random;
 
+/**
+ * Implementation of {@link PowerUpFactory}.
+ */
 public class PowerUpFactoryImpl implements PowerUpFactory {
     private static final double BOMB_CHANCE = 0.1;
     private static final double BOMB_PLUS_SPEED_CHANCE = 0.3;
