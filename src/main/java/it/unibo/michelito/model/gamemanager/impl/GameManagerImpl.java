@@ -1,9 +1,9 @@
 package it.unibo.michelito.model.gamemanager.impl;
 
+import it.unibo.michelito.controller.palyercommand.api.PlayerCommand;
 import it.unibo.michelito.model.gamegenerator.api.GameGenerator;
 import it.unibo.michelito.model.gamemanager.api.GameManager;
 import it.unibo.michelito.model.maze.api.Maze;
-import it.unibo.michelito.model.player.api.PlayerCommand;
 
 public class GameManagerImpl implements GameManager {
     private final static int MAX_MAZE_INDEX = 1;
