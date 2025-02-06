@@ -6,7 +6,7 @@ import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.model.player.impl.PlayerImpl;
 import it.unibo.michelito.model.powerups.api.PowerUpFactory;
 import it.unibo.michelito.model.powerups.api.PowerUp;
-import it.unibo.michelito.model.powerups.impl.PoweUpFactoryImpl;
+import it.unibo.michelito.model.powerups.impl.PowerUpFactoryImpl;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,33 +22,34 @@ final class TestPowerUp {
     private PowerUpFactory factory;
     @BeforeEach
     void setUp() {
-        this.factory = new PoweUpFactoryImpl();
+        this.factory = new PowerUpFactoryImpl();
     }
 
     @Test
     void testSpeedPowerUp() {
         final Player player = new PlayerImpl(new Position(0, 0));
-        final PowerUp speed = this.factory.generateSpeedPowerUp(new Position(3, 3));
+        final PowerUp speed = this.factory.generateSpeedPowerUp(new Position(8, 0));
         final Set<MazeObject> mazeObjects = new HashSet<>();
         mazeObjects.add(speed);
         mazeObjects.add(player);
+        final MazeImpl maze = new MazeImpl(mazeObjects, () -> {}, () -> {});
 
         player.setDirection(Direction.RIGHT);
-        player.update(1, new MazeImpl(mazeObjects, () -> {}, () -> {}));
+        player.update(5, maze);
 
         player.setDirection(Direction.RIGHT);
-        player.update(2, new MazeImpl(mazeObjects, () -> {}, () -> {}));
-        assertEquals(new Position(2.1, 0), player.position());
+        player.update(6, maze);
+        assertEquals(new Position(6.1, 0), player.position());
     }
 
     @Test
     void testRandomPowerUp() {
-        final Optional<PowerUp> powerup = this.factory.generateRandomPowerUp(new Position(3, 3));
-        assertInstanceOf(Optional.class, powerup);
+        final Optional<PowerUp> powerUp = this.factory.generateRandomPowerUp(new Position(3, 3));
+        assertInstanceOf(Optional.class, powerUp);
 
-        if (powerup.isPresent()) {
+        if (powerUp.isPresent()) {
             System.out.println("powerUp is dropped");
-            assertInstanceOf(PowerUp.class, powerup.get());
+            assertInstanceOf(PowerUp.class, powerUp.get());
         }
     }
 }
