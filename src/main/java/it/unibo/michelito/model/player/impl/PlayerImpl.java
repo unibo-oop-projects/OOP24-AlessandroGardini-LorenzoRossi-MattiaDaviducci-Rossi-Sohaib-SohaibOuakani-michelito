@@ -52,13 +52,13 @@ public class PlayerImpl implements Player {
     }
 
     @Override
-    public final void update(final long time, final Maze maze) {
+    public final void update(final long currentTime, final Maze maze) {
         if (this.command.isPresent()) {
             this.command.get().execute(this);
             this.emptyCommand();
         }
         this.updateHitbox();
-        this.lastUpdate = time;
+        this.lastUpdate = currentTime;
     }
 
     @Override

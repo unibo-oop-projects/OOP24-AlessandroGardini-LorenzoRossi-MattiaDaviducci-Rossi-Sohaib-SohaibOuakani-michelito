@@ -8,11 +8,11 @@ import it.unibo.michelito.util.Type;
  */
 public interface Updatable extends MazeObject {
     /**
-     * This method tells the object to update itself in relation to the time passed.
+     * This method tells the object to update itself in relation to the currentTime passed.
      * This method could change the state of the maze.
      *
-     * @param time is the current time in millisecond.
+     * @param currentTime is the current currentTime in millisecond.
      * @param maze is the current {@link Maze}, used to let the {@link MazeObject} change the {@link Maze}.
      */
-    void update(long time, Maze maze);
+    void update(long currentTime, Maze maze);
 }

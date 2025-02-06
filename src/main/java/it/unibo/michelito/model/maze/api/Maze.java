@@ -59,7 +59,7 @@ public interface Maze {
     Set<Updatable> getUpdatable();
 
     /**
-     * Getter the  {@link Player} within this maze.
+     * Getter the {@link Player} within this maze.
      *
      * @return the {@link Player}.
      */
