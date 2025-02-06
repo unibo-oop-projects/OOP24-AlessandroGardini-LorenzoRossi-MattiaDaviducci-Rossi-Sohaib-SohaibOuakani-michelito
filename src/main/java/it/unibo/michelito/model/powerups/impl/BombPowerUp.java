@@ -11,7 +11,7 @@ public class BombPowerUp extends AbsPowerUp {
     }
 
     @Override
-    public void applyEffect(final Player player) {
+    public final void applyEffect(final Player player) {
         player.increaseBombLimit();
     }
 }

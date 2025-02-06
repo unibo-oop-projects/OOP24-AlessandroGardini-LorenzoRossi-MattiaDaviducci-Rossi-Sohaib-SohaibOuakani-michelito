@@ -5,7 +5,7 @@ import it.unibo.michelito.util.Position;
 import java.util.Optional;
 
 /**
- * Interface for a factory that creates {@link PowerUp}
+ * Interface for a factory that creates {@link PowerUp}.
  */
 public interface PowerUpFactory {
     /**
@@ -15,6 +15,11 @@ public interface PowerUpFactory {
      */
     PowerUp generateSpeedPowerUp(Position position);
 
+    /**
+     * Method that creates a {@link it.unibo.michelito.model.powerups.impl.BombPowerUp}.
+     * @param position the {@link Position} of the {@link PowerUp}
+     * @return returns the created {@link it.unibo.michelito.model.powerups.impl.SpeedPowerUp}
+     */
     PowerUp generateBombPowerUp(Position position);
 
     /**
