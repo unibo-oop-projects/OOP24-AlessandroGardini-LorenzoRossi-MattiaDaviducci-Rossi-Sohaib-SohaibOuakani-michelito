@@ -46,12 +46,13 @@ public class PlayerImpl implements Player {
     }
 
     @Override
-    public final void update(final long time, final Maze maze) {
-        final long deltaTime = time - this.lastUpdate;
+    public final void update(final long currentTime, final Maze maze) {
+        final long deltaTime = currentTime - this.lastUpdate;
         if (!this.direction.equals(Direction.NONE)) {
             this.move(deltaTime, maze);
             this.setDirection(Direction.NONE);
             this.updateHitbox();
+            this.checkPowerUp(maze);
         }
         if (this.place) {
             if (this.allowedToPlaceBomb(maze)) {
@@ -59,7 +60,7 @@ public class PlayerImpl implements Player {
             }
             this.place = false;
         }
-        this.lastUpdate = time;
+        this.lastUpdate = currentTime;
     }
 
     private boolean allowedToPlaceBomb(final Maze maze) {
@@ -90,7 +91,7 @@ public class PlayerImpl implements Player {
 
     private void checkPowerUp(final Maze maze) {
         Optional<Powerup> powerUp = maze.getPowerup().stream()
-                .filter(p -> p.getHitBox().collision(this.hitbox))
+                .filter(p -> this.getHitBox().collision(p.getHitBox())/*p.getHitBox().collision(this.hitbox)*/)
                 .findAny();
 
         if (powerUp.isPresent()) {

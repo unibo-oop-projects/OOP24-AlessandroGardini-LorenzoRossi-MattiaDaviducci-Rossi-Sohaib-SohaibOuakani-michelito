@@ -64,9 +64,7 @@ final class TestMaze {
         final Maze maze = new MazeImpl(setOfObjects);
         assertThrows(NullPointerException.class, () -> maze.addMazeObject(null));
         assertThrows(NullPointerException.class, () -> maze.removeMazeObject(null));
-<<<<<<< HEAD
         assertFalse(maze.removeMazeObject(null));
-=======
         assertFalse(maze.removeMazeObject(new WallImpl(new Position(4, 4))));
     }
 
@@ -80,6 +78,5 @@ final class TestMaze {
         assertFalse(maze.getWalls().isEmpty());
         assertFalse(maze.getBoxes().isEmpty());
         assertTrue(maze.getPowerup().isEmpty());
->>>>>>> origin/feature-world-creation
     }
 }
