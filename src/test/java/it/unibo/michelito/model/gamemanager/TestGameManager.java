@@ -1,4 +1,9 @@
 package it.unibo.michelito.model.gamemanager;
 
-public class TestGameManager {
+import it.unibo.michelito.model.gamemanager.impl.GameManagerImpl;
+
+/**
+ * Test class for {@link GameManagerImpl}
+ */
+final class TestGameManager {
 }
