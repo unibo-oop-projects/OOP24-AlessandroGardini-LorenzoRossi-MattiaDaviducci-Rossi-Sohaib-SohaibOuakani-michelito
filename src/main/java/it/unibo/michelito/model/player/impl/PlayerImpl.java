@@ -14,7 +14,7 @@ import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 import it.unibo.michelito.model.powerups.api.PowerUp;
 
 /**
- * implementation of Player.
+ * Implementation of {@link Player}.
  */
 public class PlayerImpl implements Player {
     private static final int STANDARD_BOMB_LIMIT = 1;
@@ -30,8 +30,8 @@ public class PlayerImpl implements Player {
     private double currentSpeed = STANDARD_SPEED;
 
     /**
-     * Constructor for PlayerImpl.
-     * @param position the spawning position of the Player.
+     * Constructor for {@link PlayerImpl}.
+     * @param position the spawning {@link Position} of the {@link Player}.
      */
     public PlayerImpl(final Position position) {
         this.currentPosition = position;
@@ -93,7 +93,7 @@ public class PlayerImpl implements Player {
     }
 
     private void checkPowerUp(final Maze maze) {
-        final Optional<PowerUp> powerUp = maze.getPowerup().stream()
+        final Optional<PowerUp> powerUp = maze.getPowerUp().stream()
                 .filter(p -> this.getHitBox().collision(p.getHitBox())/*p.getHitBox().collision(this.hitbox)*/)
                 .findAny();
 

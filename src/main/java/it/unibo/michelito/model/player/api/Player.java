@@ -4,11 +4,11 @@ import it.unibo.michelito.model.modelutil.Updatable;
 import it.unibo.michelito.util.Direction;
 
 /**
- * Interface for Player.
+ * Interface for {@link Player}.
  */
 public interface Player extends Updatable {
     /**
-     * Increases the number of placeable bombs by the {@link Player}.
+     * Increases the number of placeable {Bomb} by the {@link Player}.
      */
     void increaseBombLimit();
 

@@ -8,11 +8,11 @@ import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.api.HitBoxFactory;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 
-abstract class AbsPoweUp implements PowerUp {
+abstract class AbsPowerUp implements PowerUp {
     private final Position position;
     private final HitBox hitBox;
 
-    public AbsPoweUp(final Position position) {
+    AbsPowerUp(final Position position) {
         this.position = position;
         this.hitBox = createHitBox();
     }

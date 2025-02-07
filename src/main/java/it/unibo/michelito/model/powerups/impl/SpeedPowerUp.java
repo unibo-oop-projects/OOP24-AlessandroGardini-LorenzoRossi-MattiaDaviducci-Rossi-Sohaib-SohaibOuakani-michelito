@@ -3,14 +3,21 @@ package it.unibo.michelito.model.powerups.impl;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.util.Position;
 
-public class SpeedPowerUp extends AbsPoweUp {
+/**
+ * Implementation of a {@link it.unibo.michelito.model.powerups.api.PowerUp} that increases {@link Player} speed.
+ */
+public class SpeedPowerUp extends AbsPowerUp {
 
+    /**
+     * Constructor for {@link SpeedPowerUp}.
+     * @param position {@link Position} of the {@link SpeedPowerUp}
+     */
     public SpeedPowerUp(final Position position) {
         super(position);
     }
 
     @Override
-    public void applyEffect(final Player player) {
+    public final void applyEffect(final Player player) {
         player.increaseSpeed();
     }
 }

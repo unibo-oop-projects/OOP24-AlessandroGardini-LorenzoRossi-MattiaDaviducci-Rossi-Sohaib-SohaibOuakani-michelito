@@ -25,13 +25,13 @@ public interface HitBox {
 
     /**
      *
-     * @return
+     * @return half of the wide of the object.
      */
-    double getWidth();
+    double getHalfWidth();
 
     /**
      *
-     * @return
+     * @return half of the height of the object.
      */
-    double getHeight();
+    double getHalfHeight();
 }
