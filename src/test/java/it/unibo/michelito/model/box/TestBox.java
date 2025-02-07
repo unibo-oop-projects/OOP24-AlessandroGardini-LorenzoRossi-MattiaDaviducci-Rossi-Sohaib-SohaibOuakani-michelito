@@ -4,22 +4,25 @@ import it.unibo.michelito.model.box.api.Box;
 import it.unibo.michelito.model.box.impl.BoxImpl;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- * TestBox test.
+ * Test class for {@link BoxImpl}.
  */
-class TestBox {
+final class TestBox {
     /**
-     * Tests the Box.
+     * Tests {@link BoxImpl}.
      */
-    @Test void testBox() {
-        Position position = new Position(0, 0);
-        Box box = new BoxImpl(position);
+    @Test
+    void testBox() {
+        final Position position = new Position(0, 0);
+        final Box box = new BoxImpl(position);
         assertNotNull(box);
         assertEquals(box.getHitBox(), new HitBoxFactoryImpl().squareHitBox(position));
-        assertEquals(box.getPosition(), position);
+        assertEquals(box.position(), position);
     }
 }

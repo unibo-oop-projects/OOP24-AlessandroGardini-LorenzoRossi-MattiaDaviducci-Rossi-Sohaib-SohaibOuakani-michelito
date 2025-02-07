@@ -11,8 +11,8 @@ import java.util.Objects;
  */
 public final class HitBoxFactoryImpl implements HitBoxFactory {
     private static final double X_DIMENSION_ENTITY = 1;
-    private static final double Y_DIMENSION_ENTITY = 1.5;
-    private static final double DIMENSION_SQUARE = 2;
+    private static final double Y_DIMENSION_ENTITY = 2;
+    private static final double DIMENSION_SQUARE = 3;
 
     private abstract static class HitBoxImpl implements HitBox {
         private final Position center;
@@ -33,16 +33,8 @@ public final class HitBoxFactoryImpl implements HitBoxFactory {
 
         @Override
         public boolean collision(final HitBox hitBox) {
-            return hitBox.inner(topRight()) || hitBox.inner(downLeft())
-                                            || hitBox.inner(new Position(downLeft().x(), topRight().y()))
-                                            || hitBox.inner(new Position(topRight().x(), downLeft().y()));
-        }
-
-        @Override
-        public boolean inner(final Position position) {
-            return topRight().x() >= position.x() && topRight().y() <= position.y()
-                                                  && downLeft().x() <= position.x()
-                                                  && downLeft().y() >= position.y();
+            return Math.abs(center.x() - hitBox.getCenter().x()) <= hitBox.getHalfWidth() + getHalfWidth()
+                    && Math.abs(center.y() - hitBox.getCenter().y()) <= hitBox.getHalfHeight() + getHalfHeight();
         }
 
         @Override
@@ -53,7 +45,7 @@ public final class HitBoxFactoryImpl implements HitBoxFactory {
             if (obj == null || getClass() != obj.getClass()) {
                 return false;
             }
-            HitBox other = (HitBox) obj;
+            final HitBox other = (HitBox) obj;
             return other.getCenter().equals(center);
         }
 
@@ -62,22 +54,32 @@ public final class HitBoxFactoryImpl implements HitBoxFactory {
             return Objects.hash(this.center);
         }
 
-        abstract Position topRight();
+        @Override
+        public double getHalfWidth() {
+            return wideDimension();
+        }
 
-        abstract Position downLeft();
+        @Override
+        public double getHalfHeight() {
+            return heightDimension();
+        }
+
+        abstract double wideDimension();
+
+        abstract double heightDimension();
     }
 
     @Override
     public HitBox squareHitBox(final Position position) {
         return new HitBoxImpl(position) {
             @Override
-            Position topRight() {
-                return new Position(position.x() + DIMENSION_SQUARE, position.y() - DIMENSION_SQUARE);
+            double wideDimension() {
+                return DIMENSION_SQUARE;
             }
 
             @Override
-            Position downLeft() {
-                return new Position(position.x() - DIMENSION_SQUARE, position.y() + DIMENSION_SQUARE);
+            double heightDimension() {
+                return DIMENSION_SQUARE;
             }
         };
     }
@@ -86,13 +88,13 @@ public final class HitBoxFactoryImpl implements HitBoxFactory {
     public HitBox entityeHitBox(final Position position) {
         return new HitBoxImpl(position) {
             @Override
-            Position topRight() {
-                return new Position(position.x() + X_DIMENSION_ENTITY, position.y() - Y_DIMENSION_ENTITY);
+            double wideDimension() {
+                return X_DIMENSION_ENTITY;
             }
 
             @Override
-            Position downLeft() {
-                return new Position(position.x() - X_DIMENSION_ENTITY, position.y() + Y_DIMENSION_ENTITY);
+            double heightDimension() {
+                return Y_DIMENSION_ENTITY;
             }
         };
     }

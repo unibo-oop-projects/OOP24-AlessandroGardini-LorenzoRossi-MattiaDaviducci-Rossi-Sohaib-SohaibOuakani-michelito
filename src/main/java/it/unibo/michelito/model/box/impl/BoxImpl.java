@@ -7,33 +7,19 @@ import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 
 /**
- * Represents a Box in the Maze.
+ * Implementation of the {@link Box} interface.
+ *
+ * @param position is the {@link Position} that the Box will have.
  */
-public class BoxImpl implements Box {
-
-    private final Position position;
-
-    /**
-     * Initializes a Box at a specified position.
-     *
-     * @param position the position of this box (immutable).
-     */
-    public BoxImpl(final Position position) {
-        this.position = position;
-    }
+public record BoxImpl(Position position) implements Box {
 
     @Override
-    public final Position getPosition() {
-        return this.position;
-    }
-
-    @Override
-    public final HitBox getHitBox() {
+    public HitBox getHitBox() {
         return new HitBoxFactoryImpl().squareHitBox(this.position);
     }
 
     @Override
-    public final Type getType() {
+    public Type getType() {
         return Type.BOX;
     }
 }

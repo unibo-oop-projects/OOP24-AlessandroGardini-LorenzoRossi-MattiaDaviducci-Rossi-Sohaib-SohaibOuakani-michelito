@@ -7,33 +7,19 @@ import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 
 /**
- * Represents a Wall in the Maze.
+ * Implementation of the {@link Wall} interface.
+ *
+ * @param position is the position that the Wall will have.
  */
-public class WallImpl implements Wall {
-
-    private final Position position;
-
-    /**
-     * Initializes a Wall at a specified position.
-     *
-     * @param position the position of this wall (immutable).
-     */
-    public WallImpl(final Position position) {
-        this.position = position;
-    }
+public record WallImpl(Position position) implements Wall {
 
     @Override
-    public final Position getPosition() {
-        return this.position;
-    }
-
-    @Override
-    public final HitBox getHitBox() {
+    public HitBox getHitBox() {
         return new HitBoxFactoryImpl().squareHitBox(this.position);
     }
 
     @Override
-    public final Type getType() {
+    public Type getType() {
         return Type.WALL;
     }
 }
