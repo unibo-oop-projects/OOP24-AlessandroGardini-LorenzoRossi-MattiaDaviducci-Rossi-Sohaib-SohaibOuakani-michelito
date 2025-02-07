@@ -59,30 +59,36 @@ class TestPlayer {
         assertEquals(new Position(0, 0), player.position());
 
         player.setDirection(Direction.DOWN);
-        player.update(6, new MazeImpl(Set.of(new WallImpl(new Position(0, 5))), () -> { }, () -> { }));
+        player.update(2, new MazeImpl(Set.of(new WallImpl(new Position(0, 6))), () -> { }, () -> { }));
         assertEquals(new Position(0, 0), player.position());
 
         player.setDirection(Direction.UP);
-        player.update(7, new MazeImpl(Set.of(new WallImpl(new Position(0, -5))), () -> { }, () -> { }));
+        player.update(3, new MazeImpl(Set.of(new WallImpl(new Position(0, -6))), () -> { }, () -> { }));
         assertEquals(new Position(0, 0), player.position());
 
         player.setDirection(Direction.RIGHT);
-        player.update(17, new MazeImpl(Set.of(new WallImpl(new Position(100, 0))), () -> { }, () -> { }));
+        player.update(4, new MazeImpl(Set.of(new WallImpl(new Position(6, 0))), () -> { }, () -> { }));
+        assertEquals(new Position(1, 0), player.position());
+
+        player.setDirection(Direction.RIGHT);
+        player.update(13, new MazeImpl(Set.of(new WallImpl(new Position(100, 0))), () -> { }, () -> { }));
         assertEquals(new Position(10, 0), player.position());
+
     }
 
     @Test
     void testIncreaseSpeed() {
+        final double speedUpgrade = 0.1;
         player.setDirection(Direction.RIGHT);
         player.update(1, new MazeImpl(Set.of(), () -> { }, () -> { }));
         assertEquals(new Position(1, 0), player.position());
 
         player.setDirection(Direction.DOWN);
-        player.increaseSpeed();
-        player.increaseSpeed();
-        player.increaseSpeed();
-        player.increaseSpeed();
-        player.increaseSpeed();
+        player.increaseSpeed(speedUpgrade);
+        player.increaseSpeed(speedUpgrade);
+        player.increaseSpeed(speedUpgrade);
+        player.increaseSpeed(speedUpgrade);
+        player.increaseSpeed(speedUpgrade);
         player.update(2, new MazeImpl(Set.of(), () -> { }, () -> { }));
         assertEquals(new Position(1, 1.5), player.position());
     }

@@ -3,7 +3,7 @@ package it.unibo.michelito.model.door.impl;
 import it.unibo.michelito.model.door.api.Door;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.util.Position;
-import it.unibo.michelito.util.Type;
+import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 
@@ -48,8 +48,8 @@ public final class DoorImpl implements Door {
     }
 
     @Override
-    public Type getType() {
-        return Type.DOOR;
+    public ObjectType getType() {
+        return ObjectType.DOOR;
     }
 
     @Override

@@ -6,13 +6,15 @@ import it.unibo.michelito.model.enemy.impl.ai.MoodAIImpl;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
-import it.unibo.michelito.util.Type;
+import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.api.HitBoxFactory;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
-
+import it.unibo.michelito.util.hitbox.api.HitBoxFactory;
+import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 /**
  * Implementation of {@link Enemy}.
  */
@@ -59,8 +61,8 @@ public final class EnemyImpl implements Enemy {
     }
 
     @Override
-    public Type getType() {
-        return Type.ENEMY;
+    public ObjectType getType() {
+        return ObjectType.ENEMY;
     }
 
     private HitBox updateHitBox(final Position position) {
@@ -90,7 +92,7 @@ public final class EnemyImpl implements Enemy {
                 .anyMatch(w -> calshitbox.collision(w.getHitBox()))
                 ||
                 maze.getBoxes().stream()
-                .anyMatch(b -> calshitbox.collision(b.getHitBox()));
+                        .anyMatch(b -> calshitbox.collision(b.getHitBox()));
     }
 
     private void verifyHitPlayer(final Maze maze) {

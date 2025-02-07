@@ -1,5 +1,8 @@
 package it.unibo.michelito.util;
 
+/**
+ * Represents cardinal {@link Direction} along with a null {@link Direction}.
+ */
 public enum Direction {
     /**
      * Up {@link Direction}.
@@ -33,8 +36,8 @@ public enum Direction {
     }
 
     /**
-     *
-     * @return
+     * Transforms the {@link Direction} into a {@link Position}.
+     * @return the {@link Position} representing the {@link Direction}
      */
     public Position toPosition() {
         return new Position(position.x(), position.y());

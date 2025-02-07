@@ -2,8 +2,10 @@ package it.unibo.michelito.model.gamemanager.impl;
 
 import it.unibo.michelito.controller.palyercommand.api.PlayerCommand;
 import it.unibo.michelito.model.gamegenerator.api.GameGenerator;
+import it.unibo.michelito.model.gamegenerator.impl.GameGeneratorImpl;
 import it.unibo.michelito.model.gamemanager.api.GameManager;
 import it.unibo.michelito.model.maze.api.Maze;
+import it.unibo.michelito.model.maze.impl.MazeImpl;
 
 /**
  * Implementation of the {@link GameManager} interface, responsible for managing the game state,
@@ -83,9 +85,9 @@ public final class GameManagerImpl implements GameManager {
      * @param level The level for which the maze should be generated.
      * @return The generated maze.
      */
-    private Maze generateMaze(final int level) { //TODO: gamegenerate impl
-        GameGenerator gameGenerator; // new gameGeneratorImpl();
-        return null; //new MazeImpl(gameGenerator.generate(level), this::loseLife, this::WonMaze);
+    private Maze generateMaze(final int level) {
+        GameGenerator gameGenerator = new GameGeneratorImpl();
+        return new MazeImpl(gameGenerator.generate(level), this::loseLife, this::wonMaze);
     }
 
     /**
