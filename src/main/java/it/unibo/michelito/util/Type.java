@@ -20,12 +20,17 @@ public enum Type {
     WALL,
 
     /**
+     * An enemy.
+     */
+    ENEMY,
+
+    /**
      * A powerUp.
      */
     POWERUP,
 
     /**
-     * A Door
+     * A Door.
      */
     DOOR
 }
