@@ -30,7 +30,7 @@ public enum Type {
     POWERUP,
 
     /**
-     * A Door
+     * A Door.
      */
     DOOR
 }

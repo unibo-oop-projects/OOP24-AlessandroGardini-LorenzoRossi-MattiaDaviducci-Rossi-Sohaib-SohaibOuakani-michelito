@@ -7,18 +7,20 @@ import it.unibo.michelito.util.Direction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoodAIFactoryImpl implements MoodAIFactory {
-
+/**
+ * Implementation of {@link MoodAIFactory}.
+ */
+public final class MoodAIFactoryImpl implements MoodAIFactory {
     @Override
     public MovementAI chilling() {
         return  new MovementAIImpl() {
             @Override
             List<Direction> possibility() {
                 List<Direction> list = new ArrayList<>();
-                for(int x = 0; x< 13; x++){
+                for (int x = 0; x < 13; x++) {
                         list.add(Direction.NONE);
                 }
-                for(int x = 0; x< 3; x++){
+                for (int x = 0; x < 3; x++) {
                     list.addAll(List.of(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT));
                 }
                 return list;
@@ -29,7 +31,6 @@ public class MoodAIFactoryImpl implements MoodAIFactory {
     @Override
     public MovementAI sleeping() {
         return new MovementAIImpl() {
-
             @Override
             List<Direction> possibility() {
                 return List.of(Direction.NONE);

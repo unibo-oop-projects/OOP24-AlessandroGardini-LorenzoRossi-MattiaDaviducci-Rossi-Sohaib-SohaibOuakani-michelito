@@ -8,25 +8,32 @@ import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.util.Direction;
 
 /**
- *
+ *Implementation of {@link MoodAI}.
  */
-public class MoodAIImpl implements MoodAI {
+public final class MoodAIImpl implements MoodAI {
+    private static final long SLEEPTIME = 10000;
+    private static final double DEATHFORVENGENS = 0.70;
     private MoodType actualMood;
     private MovementAI actualMovement;
     private final MoodAIFactory moodAIFactory = new MoodAIFactoryImpl();
     private final long createdTime;
     private final Maze maze;
-    private final int initialEnnemy;
+    private final int initialEnemy;
 
-    MoodAIImpl(long currentTime, Maze maze) {
+    /**
+     *
+     * @param currentTime
+     * @param maze
+     */
+    public MoodAIImpl(final long currentTime, final Maze maze) {
         this.createdTime = currentTime;
         this.maze = maze;
-        initialEnnemy = maze.getEnemies().size();
+        initialEnemy = maze.getEnemies().size();
         setMood(MoodType.SLEEPING);
     }
 
     @Override
-    public void setMood(MoodType mood) {
+    public void setMood(final MoodType mood) {
         switch (mood) {
             case SLEEPING:
                 actualMovement = moodAIFactory.sleeping();
@@ -41,7 +48,7 @@ public class MoodAIImpl implements MoodAI {
                 actualMood = MoodType.SEARCHING;
                 break;
             default:
-                    break;
+                break;
         }
     }
 
@@ -56,14 +63,12 @@ public class MoodAIImpl implements MoodAI {
     }
 
     @Override
-    public void update(long currentTime) {
-        if( currentTime - createdTime >= 10000){
+    public void update(final long currentTime) {
+        if (currentTime - createdTime >= SLEEPTIME) {
             setMood(MoodType.CHILLING);
         }
-        if(maze.getEnemies().size() < initialEnnemy * 0.70){
+        if (maze.getEnemies().size() < initialEnemy * DEATHFORVENGENS) {
             setMood(MoodType.SEARCHING);
         }
-
-
     }
 }
