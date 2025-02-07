@@ -1,100 +1,89 @@
 package it.unibo.michelito.model.gamemanager.impl;
 
 import it.unibo.michelito.controller.palyercommand.api.PlayerCommand;
-import it.unibo.michelito.model.gamegenerator.api.GameGenerator;
 import it.unibo.michelito.model.gamemanager.api.GameManager;
-import it.unibo.michelito.model.maze.api.Maze;
+import it.unibo.michelito.model.maze.api.Level;
+import it.unibo.michelito.model.maze.impl.MazeImpl;
+import it.unibo.michelito.util.GameObject;
+
+import java.util.Set;
 
 /**
- * Implementation of the {@link GameManager} interface, responsible for managing the game state,
- * levels, lives, and interactions between the player and the maze.
+ * Implementation of the {@link GameManager} interface, responsible for managing
+ * levels, lives and current game state.
  */
 public final class GameManagerImpl implements GameManager {
     private static final int MAX_MAZE_INDEX = 1;
     private static final int STARTING_LIFE_COUNT = 5;
-    private int currentLevel;
+
+    private int currentLevelIndex;
     private int currentLifeCount;
-    private Maze currentMaze;
-    private PlayerCommand playerCommand;
-    private final Runnable onGameWin;
-    private final Runnable onGameOver;
+    private Level currentLevel;
+
+    private boolean gameOver;
+    private boolean gameWon;
 
     /**
      * Constructs a GameManagerImpl instance.
-     *
-     * @param onGameWin  Callback for when the game is won.
-     * @param onGameOver Callback for when the game is over.
      */
-    public GameManagerImpl(final Runnable onGameWin, final Runnable onGameOver) {
+    public GameManagerImpl() {
+        this.currentLevelIndex = 0;
         this.currentLifeCount = STARTING_LIFE_COUNT;
-        this.currentLevel = 0;
-        this.onGameWin = onGameWin;
-        this.onGameOver = onGameOver;
-        this.startGame();
+        this.currentLevel = new MazeImpl(0);
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    @Override
+    public boolean isGameWon() {
+        return gameWon;
+    }
+
+    @Override
+    public Set<GameObject> getObjects() {
+        return this.currentLevel.getGameObjects();
     }
 
     @Override
     public void setCommand(final PlayerCommand playerCommand) {
-        this.playerCommand = playerCommand;
+        this.currentLevel.setCommand(playerCommand);
     }
 
     @Override
     public void update(final long currentTime) {
-        this.consumePlayerCommand();
-        this.currentMaze.getUpdatable().forEach(e -> e.update(currentTime, this.currentMaze));
+        currentLevel.update(currentTime);
+        if (currentLevel.isLost()) {
+            this.loseLife();
+        }
+        if (currentLevel.isWon()) {
+            this.wonMaze();
+        }
     }
 
     /**
-     * Starts a new game by resetting the level and generating the first maze.
-     */
-    private void startGame() {
-        this.currentLevel = 0;
-        this.currentMaze = this.generateMaze(this.currentLevel);
-    }
-
-    /**
-     * Reduces the player's life count and regenerates the current maze.
-     * If no lives remain, the game over action is triggered.
+     * Method to call when michelito lose a life.
      */
     private void loseLife() {
         if (this.currentLifeCount == 0) {
-            this.onGameOver.run();
+            this.gameOver = true;
         } else {
             this.currentLifeCount--;
-            this.currentMaze = this.generateMaze(this.currentLevel);
+            this.currentLevel = new MazeImpl(this.currentLevelIndex);
         }
     }
 
     /**
-     * Advances to the next maze if available, or triggers the win action if the last level is completed.
+     * Method to be called once michelito has won a level.
      */
     private void wonMaze() {
-        if (this.currentLevel + 1 > MAX_MAZE_INDEX) {
-            this.onGameWin.run();
+        if (this.currentLevelIndex >= MAX_MAZE_INDEX) {
+            this.gameWon = true;
         } else {
-            this.currentLevel++;
-            this.currentMaze = this.generateMaze(this.currentLevel);
-        }
-    }
-
-    /**
-     * Generates a new maze for the specified level.
-     *
-     * @param level The level for which the maze should be generated.
-     * @return The generated maze.
-     */
-    private Maze generateMaze(final int level) { //TODO: gamegenerate impl
-        GameGenerator gameGenerator; // new gameGeneratorImpl();
-        return null; //new MazeImpl(gameGenerator.generate(level), this::loseLife, this::WonMaze);
-    }
-
-    /**
-     * Executes the player's command if one has been set.
-     */
-    private void consumePlayerCommand() {
-        if (this.playerCommand != null) {
-            playerCommand.execute(this.currentMaze.getPlayer());
-            playerCommand = null;
+            this.currentLevelIndex++;
+            this.currentLevel = new MazeImpl(this.currentLevelIndex);
         }
     }
 }

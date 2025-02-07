@@ -4,7 +4,7 @@ package it.unibo.michelito.util;
  * Enumeration containing all types of objects present in the Maze.
  * Used for possible view implementation.
  */
-public enum Type {
+public enum ObjectType {
     /**
      * A player.
      */
@@ -20,12 +20,17 @@ public enum Type {
     WALL,
 
     /**
+     * An enemy.
+     */
+    ENEMY,
+
+    /**
      * A powerUp.
      */
     POWERUP,
 
     /**
-     * A Door
+     * A Door.
      */
     DOOR,
 

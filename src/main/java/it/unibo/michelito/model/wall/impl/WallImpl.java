@@ -2,7 +2,7 @@ package it.unibo.michelito.model.wall.impl;
 
 import it.unibo.michelito.model.wall.api.Wall;
 import it.unibo.michelito.util.Position;
-import it.unibo.michelito.util.Type;
+import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 
@@ -19,7 +19,7 @@ public record WallImpl(Position position) implements Wall {
     }
 
     @Override
-    public Type getType() {
-        return Type.WALL;
+    public ObjectType getType() {
+        return ObjectType.WALL;
     }
 }
