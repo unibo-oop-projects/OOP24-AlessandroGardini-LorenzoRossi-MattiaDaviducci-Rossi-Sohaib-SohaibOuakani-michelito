@@ -1,5 +1,7 @@
 package it.unibo.michelito.model.maze.api;
 
+import it.unibo.michelito.model.blanckspace.api.BlankSpace;
+import it.unibo.michelito.model.bomb.api.Bomb;
 import it.unibo.michelito.model.box.api.Box;
 import it.unibo.michelito.model.door.api.Door;
 import it.unibo.michelito.model.enemy.api.Enemy;
@@ -99,4 +101,18 @@ public interface Maze {
      * @return all a Set of {@link Enemy} Objects.
      */
     Set<Enemy> getEnemies();
+
+    /**
+     * Getter for all the {@link BlankSpace} Objects in the maze.
+     *
+     * @return all a Set of {@link BlankSpace} Objects.
+     */
+    Set<BlankSpace> getBlankSpaces();
+
+    /**
+     * Getter for all the {@link Bomb} Objects in the maze.
+     *
+     * @return all a Set of {@link Bomb} Objects.
+     */
+    Set<Bomb> getBombs();
 }

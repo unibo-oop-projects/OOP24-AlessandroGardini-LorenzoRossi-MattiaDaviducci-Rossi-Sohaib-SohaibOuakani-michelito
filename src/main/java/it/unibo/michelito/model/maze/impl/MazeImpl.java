@@ -1,6 +1,8 @@
 package it.unibo.michelito.model.maze.impl;
 
 import it.unibo.michelito.controller.palyercommand.api.PlayerCommand;
+import it.unibo.michelito.model.blanckspace.api.BlankSpace;
+import it.unibo.michelito.model.bomb.api.Bomb;
 import it.unibo.michelito.model.box.api.Box;
 import it.unibo.michelito.model.door.api.Door;
 import it.unibo.michelito.model.enemy.api.Enemy;
@@ -138,6 +140,16 @@ public final class MazeImpl implements Maze, Level {
     @Override
     public Set<Enemy> getEnemies() {
         return this.getObjectsOfType(Enemy.class);
+    }
+
+    @Override
+    public Set<BlankSpace> getBlankSpaces() {
+        return this.getObjectsOfType(BlankSpace.class);
+    }
+
+    @Override
+    public Set<Bomb> getBombs() {
+        return this.getObjectsOfType(Bomb.class);
     }
 
     /**
