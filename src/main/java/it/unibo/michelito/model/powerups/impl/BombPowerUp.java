@@ -5,6 +5,7 @@ import it.unibo.michelito.util.Position;
 
 
 public class BombPowerUp extends AbsPowerUp {
+    private static final int BOMB_LIMIT_UPGRADE = 1;
 
     public BombPowerUp(final Position position) {
         super(position);
@@ -12,6 +13,6 @@ public class BombPowerUp extends AbsPowerUp {
 
     @Override
     public final void applyEffect(final Player player) {
-        player.increaseBombLimit();
+        player.increaseBombLimit(BOMB_LIMIT_UPGRADE);
     }
 }

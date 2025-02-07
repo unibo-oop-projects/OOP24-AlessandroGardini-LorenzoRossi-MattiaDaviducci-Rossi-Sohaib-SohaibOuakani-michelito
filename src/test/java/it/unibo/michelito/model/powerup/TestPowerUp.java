@@ -28,18 +28,18 @@ final class TestPowerUp {
     @Test
     void testSpeedPowerUp() {
         final Player player = new PlayerImpl(new Position(0, 0));
-        final PowerUp speed = this.factory.generateSpeedPowerUp(new Position(3, 3));
+        final PowerUp speed = this.factory.generateSpeedPowerUp(new Position(5, 0));
         final Set<MazeObject> mazeObjects = new HashSet<>();
         mazeObjects.add(speed);
         mazeObjects.add(player);
         final MazeImpl maze = new MazeImpl(mazeObjects, () -> { }, () -> { });
 
         player.setDirection(Direction.RIGHT);
-        player.update(5, maze);
+        player.update(1, maze);
 
         player.setDirection(Direction.RIGHT);
-        player.update(6, maze);
-        assertEquals(new Position(6.1, 0), player.position());
+        player.update(2, maze);
+        assertEquals(new Position(2.1, 0), player.position());
     }
 
     @Test
