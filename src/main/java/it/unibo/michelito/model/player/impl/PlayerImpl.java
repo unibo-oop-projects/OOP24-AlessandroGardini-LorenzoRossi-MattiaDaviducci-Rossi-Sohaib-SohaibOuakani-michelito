@@ -33,7 +33,7 @@ public class PlayerImpl implements Player {
      */
     public PlayerImpl(final Position position) {
         this.currentPosition = position;
-        this.lastUpdate = 0;
+        this.lastUpdate = System.currentTimeMillis();
         this.setDirection(Direction.NONE);
         this.updateHitbox();
     }
