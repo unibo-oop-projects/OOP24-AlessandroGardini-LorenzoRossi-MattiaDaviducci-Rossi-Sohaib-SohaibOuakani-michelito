@@ -10,7 +10,7 @@ public class EnemyImpl implements Enemy {
     private Position actualposition;
 
 
-    EnemyImpl(Position position) {
+    public EnemyImpl(Position position) {
 
     }
 
