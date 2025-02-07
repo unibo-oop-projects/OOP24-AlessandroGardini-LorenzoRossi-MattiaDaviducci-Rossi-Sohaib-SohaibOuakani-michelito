@@ -19,8 +19,6 @@ import it.unibo.michelito.model.powerups.api.PowerUp;
 public class PlayerImpl implements Player {
     private static final int STANDARD_BOMB_LIMIT = 1;
     private static final double STANDARD_SPEED = 1;
-    private static final double STANDARD_SPEED_UPGRADE = 0.1;
-    private static final int STANDARD_BOMB_LIMIT_UPGRADE = 1;
     private HitBox hitbox;
     private Direction direction;
     private boolean place;
@@ -119,14 +117,15 @@ public class PlayerImpl implements Player {
     }
 
     @Override
-    public final void increaseBombLimit() {
-        this.currentBombLimit = this.currentBombLimit + STANDARD_BOMB_LIMIT_UPGRADE;
+    public void increaseBombLimit(int amount) {
+        this.currentBombLimit = this.currentBombLimit + amount;
     }
 
     @Override
-    public final void increaseSpeed() {
-        this.currentSpeed = BigDecimal.valueOf(this.currentSpeed).add(BigDecimal.valueOf(STANDARD_SPEED_UPGRADE)).doubleValue();
+    public void increaseSpeed(double speedIncrease) {
+        this.currentSpeed = BigDecimal.valueOf(this.currentSpeed).add(BigDecimal.valueOf(speedIncrease)).doubleValue();
     }
+
 
     private void setPosition(final Position newPosition) {
         this.currentPosition = newPosition;
