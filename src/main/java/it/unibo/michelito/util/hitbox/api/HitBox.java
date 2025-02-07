@@ -34,4 +34,11 @@ public interface HitBox {
      * @return half of the height of the object.
      */
     double getHalfHeight();
+
+    /**
+     *
+     * @param position that you what to confront.
+     * @return if the position is inner of the hitbox.
+     */
+    boolean inner(Position position);
 }
