@@ -27,5 +27,10 @@ public enum Type {
     /**
      * A Door
      */
-    DOOR
+    DOOR,
+
+    /**
+     * A bomb.
+     */
+    BOMB
 }
