@@ -68,6 +68,17 @@ public class PlayerImpl implements Player {
 
     private void move(final long time, final Maze maze) {
         final Position oldPosition = this.position();
+        final Position newPosition = this.calculateNextPosition(time);
+        this.setPosition(newPosition);
+        this.updateHitbox();
+
+        if (this.checkCollision(maze)) {
+            this.setPosition(oldPosition);
+            this.updateHitbox();
+        }
+    }
+
+    private Position calculateNextPosition(final long time) {
         final BigDecimal move = BigDecimal.valueOf(this.currentSpeed).multiply(BigDecimal.valueOf(time));
         final BigDecimal xDisplacement = move.multiply(BigDecimal.valueOf(this.direction.toPosition().x()));
         final BigDecimal yDisplacement = move.multiply(BigDecimal.valueOf(this.direction.toPosition().y()));
@@ -75,23 +86,20 @@ public class PlayerImpl implements Player {
         final BigDecimal newX = BigDecimal.valueOf(this.position().x()).add(xDisplacement);
         final BigDecimal newY = BigDecimal.valueOf(this.position().y()).add(yDisplacement);
 
-        this.setPosition(new Position(newX.doubleValue(), newY.doubleValue()));
-        this.updateHitbox();
+        return new Position(newX.doubleValue(), newY.doubleValue());
+    }
 
-        if (
-                maze.getWalls().stream()
-                        .anyMatch(w -> this.getHitBox().collision(w.getHitBox()))
-                ||
-                maze.getBoxes().stream()
-                        .anyMatch(b -> this.getHitBox().collision(b.getHitBox()))
-        ) {
-            this.setPosition(oldPosition);
-            this.updateHitbox();
-        }
+    private boolean checkCollision(final Maze maze) {
+        boolean collisionWalls = maze.getWalls().stream()
+                .anyMatch(w -> this.getHitBox().collision(w.getHitBox()));
+        boolean collisionBox = maze.getBoxes().stream()
+                .anyMatch(b -> this.getHitBox().collision(b.getHitBox()));
+        return collisionWalls || collisionBox;
     }
 
     private void checkPowerUp(final Maze maze) {
         final Optional<PowerUp> powerUp = maze.getPowerUp().stream()
+                .filter(obj -> obj.getType().equals(Type.POWERUP))
                 .filter(p -> this.getHitBox().collision(p.getHitBox())/*p.getHitBox().collision(this.hitbox)*/)
                 .findAny();
 
