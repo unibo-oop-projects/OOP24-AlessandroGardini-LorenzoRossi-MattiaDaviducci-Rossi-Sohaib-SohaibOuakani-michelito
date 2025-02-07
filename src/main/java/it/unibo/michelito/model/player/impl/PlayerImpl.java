@@ -99,7 +99,7 @@ public class PlayerImpl implements Player {
 
     private void checkPowerUp(final Maze maze) {
         final Optional<PowerUp> powerUp = maze.getPowerUp().stream()
-                .filter(obj -> obj.getType().equals(ObjectType.POWERUP))
+                .filter(obj -> obj.getType().equals(ObjectType.POWER_UP))
                 .filter(p -> this.getHitBox().collision(p.getHitBox())/*p.getHitBox().collision(this.hitbox)*/)
                 .findAny();
 
