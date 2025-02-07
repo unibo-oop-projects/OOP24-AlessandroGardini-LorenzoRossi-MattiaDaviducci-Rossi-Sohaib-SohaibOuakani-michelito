@@ -1,17 +1,43 @@
 package it.unibo.michelito.model.gamemanager.api;
 
 import it.unibo.michelito.controller.palyercommand.api.PlayerCommand;
+import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.player.api.Player;
+import it.unibo.michelito.util.GameObject;
+
+import java.util.Set;
 
 /**
  * Represents the Game Manager of the Michelito Application.
- * This interface defines the core logic for controlling the game state, processing player commands,
- * and updating the game environment. It serves as the primary entry point of the model layer.
+ * This interface defines the core logic for controlling the game state
+ * ant it is the single entry point of the model.
+ * Provides getter od the current state of the game.
  */
 public interface GameManager {
 
     /**
-     * Sets the command to be executed on the {@link Player}.
+     * Getter for the gameOver state.
+     *
+     * @return true if the game is lost.
+     */
+    boolean isGameOver() ;
+
+    /**
+     * Getter for the gameWon state.
+     *
+     * @return true if the game is won.
+     */
+    boolean isGameWon();
+
+    /**
+     * Getter for the Set of {@link GameObject} currently in the {@link Maze}.
+     *
+     * @return the Set of {@link GameObject} currently in the {@link Maze}.
+     */
+    Set<GameObject> getObjects();
+
+    /**
+     * Sets the command to be executed on the current {@link Player}.
      * This method should be called before invoking {@link #update(long)} to ensure
      * that the player's action is processed in the next game update cycle.
      *
@@ -20,8 +46,8 @@ public interface GameManager {
     void setCommand(PlayerCommand playerCommand);
 
     /**
-     * Updates the state of the game, applying the player's command and progressing
-     * the game logic based on the current time.
+     * Updates the state of the game, applying the player's command and updating
+     * the current {@link Maze}.
      *
      * @param currentTime the current time in milliseconds, used for game state updates.
      */
