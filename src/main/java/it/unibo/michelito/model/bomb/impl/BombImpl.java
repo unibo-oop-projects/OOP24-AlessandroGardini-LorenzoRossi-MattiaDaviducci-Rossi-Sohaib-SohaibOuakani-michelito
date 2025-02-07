@@ -41,7 +41,7 @@ public class BombImpl implements Bomb {
 
     @Override
     public int getRange() {
-        return 0;
+        return 1;
     }
 
     @Override
