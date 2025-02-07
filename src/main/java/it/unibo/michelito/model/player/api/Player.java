@@ -10,12 +10,12 @@ public interface Player extends Updatable {
     /**
      * Increases the number of placeable {Bomb} by the {@link Player}.
      */
-    void increaseBombLimit();
+    void increaseBombLimit(int amount);
 
     /**
      * Increases the speed of the {@link Player}.
      */
-    void increaseSpeed();
+    void increaseSpeed(double speedIncrease);
 
     /**
      * Sets the direction for the next move of the {@link Player}.
