@@ -1,5 +1,6 @@
 package it.unibo.michelito.model.maze.impl;
 
+import it.unibo.michelito.controller.palyercommand.api.PlayerCommand;
 import it.unibo.michelito.model.box.api.Box;
 import it.unibo.michelito.model.door.api.Door;
 import it.unibo.michelito.model.enemy.api.Enemy;
@@ -13,7 +14,7 @@ import it.unibo.michelito.model.modelutil.Updatable;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.model.powerups.api.PowerUp;
 import it.unibo.michelito.model.wall.api.Wall;
-import it.unibo.michelito.model.maze.api.GameObject;
+import it.unibo.michelito.util.GameObject;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -21,17 +22,24 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * An implementation of the {@link Maze} interface representing a maze in the game.
+ * An implementation of {@link Maze} and {@link Level} interfaces representing a single maze in the game.
  * <p>
  * This class manages the maze objects, including walls, boxes, enemies, power-ups, and more.
- * It provides methods to interact with and manipulate these objects within the maze.
+ * It provides methods to interact with and manipulate these objects within the maze thought the Maze interface.
+ * It provides method to get the current state and to update all {@link Updatable} thought the Level interface.
  * </p>
  */
 public final class MazeImpl implements Maze, Level {
     private final Set<MazeObject> mazeObjectsSet;
+
     private boolean won;
     private boolean lost;
 
+    /**
+     * Construct a Maze of a certain level.
+     *
+     * @param levelNumber current level number.
+     */
     public MazeImpl(final int levelNumber) {
         GameGenerator gameGenerator = new GameGeneratorImpl();
         mazeObjectsSet = new HashSet<>(gameGenerator.generate(levelNumber));
@@ -43,7 +51,12 @@ public final class MazeImpl implements Maze, Level {
     }
 
     @Override
-    public Set<GameObject> getObjects() {
+    public void setCommand(PlayerCommand playerCommand) {
+        playerCommand.execute(this.getPlayer());
+    }
+
+    @Override
+    public Set<GameObject> getGameObjects() {
         return this.getAllObjects().stream()
                 .map(m -> new GameObject(m.getType(), m.position()))
                 .collect(Collectors.toSet());
