@@ -7,6 +7,13 @@ import it.unibo.michelito.util.Type;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 
 public class EnemyImpl implements Enemy {
+    private Position actualposition;
+
+
+    EnemyImpl(Position position) {
+
+    }
+
     @Override
     public void update(long currentTime, Maze maze) {
 
