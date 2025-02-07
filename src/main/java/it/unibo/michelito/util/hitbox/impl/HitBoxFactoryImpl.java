@@ -38,6 +38,12 @@ public final class HitBoxFactoryImpl implements HitBoxFactory {
         }
 
         @Override
+        public boolean inner(Position position){
+            return Math.abs(center.x() - position.x()) <= getHalfWidth()
+                    && Math.abs(center.y() - position.y()) <= getHalfHeight();
+        }
+
+        @Override
         public boolean equals(final Object obj) {
             if (this == obj) {
                 return true;
