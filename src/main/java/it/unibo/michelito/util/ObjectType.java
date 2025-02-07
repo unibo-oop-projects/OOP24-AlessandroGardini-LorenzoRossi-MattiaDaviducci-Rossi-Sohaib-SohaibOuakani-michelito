@@ -28,7 +28,7 @@ public enum ObjectType {
     /**
      * A powerUp.
      */
-    POWER_UP,
+    POWERUP,
 
     /**
      * A Door.

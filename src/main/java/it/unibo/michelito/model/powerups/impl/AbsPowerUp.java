@@ -34,7 +34,7 @@ abstract class AbsPowerUp implements PowerUp {
 
    @Override
     public ObjectType getType() {
-        return ObjectType.POWER_UP;
+        return ObjectType.POWERUP;
    }
 
    @Override
