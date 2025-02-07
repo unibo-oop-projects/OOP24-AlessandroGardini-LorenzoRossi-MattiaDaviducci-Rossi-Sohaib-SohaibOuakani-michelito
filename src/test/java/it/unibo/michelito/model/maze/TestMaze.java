@@ -31,7 +31,7 @@ final class TestMaze {
      */
     @BeforeEach
     void setUp() {
-        Set<MazeObject> setOfObjects = new HashSet<>(Set.of(
+        final Set<MazeObject> setOfObjects = new HashSet<>(Set.of(
                 new WallImpl(new Position(0, 0)),
                 new WallImpl(new Position(1, 1)),
                 new WallImpl(new Position(2, 2)),
@@ -90,8 +90,8 @@ final class TestMaze {
      */
     @Test
     void testRunnable() {
-        AtomicBoolean deathHandlerExecuted = new AtomicBoolean(false);
-        AtomicBoolean wonMazeExecuted = new AtomicBoolean(false);
+        final AtomicBoolean deathHandlerExecuted = new AtomicBoolean(false);
+        final AtomicBoolean wonMazeExecuted = new AtomicBoolean(false);
         maze = new MazeImpl(new HashSet<>(),
                 () -> deathHandlerExecuted.set(true),
                 () -> wonMazeExecuted.set(true));

@@ -59,9 +59,9 @@ final class TestDoor {
      */
     @Test
     void testOpening(){
-        var enemy = new EnemyImpl(new Position(10, 10));
-        var player = new PlayerImpl(new Position(10, 10));
-        var set = new HashSet<MazeObject>(Set.of(enemy, player));
+        final var enemy = new EnemyImpl(new Position(10, 10));
+        final var player = new PlayerImpl(new Position(10, 10));
+        final var set = new HashSet<MazeObject>(Set.of(enemy, player));
         final Maze maze = new MazeImpl(set, () -> { }, () -> { });
         final int time = 0;
         assertFalse(door.isOpen());
