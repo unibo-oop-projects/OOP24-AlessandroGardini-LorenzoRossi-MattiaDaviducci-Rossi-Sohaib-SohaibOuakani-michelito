@@ -3,6 +3,9 @@ package it.unibo.michelito.model.maze.impl;
 import it.unibo.michelito.model.box.api.Box;
 import it.unibo.michelito.model.door.api.Door;
 import it.unibo.michelito.model.enemy.api.Enemy;
+import it.unibo.michelito.model.gamegenerator.api.GameGenerator;
+import it.unibo.michelito.model.gamegenerator.impl.GameGeneratorImpl;
+import it.unibo.michelito.model.maze.api.Level;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.model.modelutil.Temporary;
@@ -10,7 +13,9 @@ import it.unibo.michelito.model.modelutil.Updatable;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.model.powerups.api.PowerUp;
 import it.unibo.michelito.model.wall.api.Wall;
+import it.unibo.michelito.model.maze.api.GameObject;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,16 +26,39 @@ import java.util.stream.Collectors;
  * This class manages the maze objects, including walls, boxes, enemies, power-ups, and more.
  * It provides methods to interact with and manipulate these objects within the maze.
  * </p>
- *
- * @param mazeObjectsSet a set of {@link MazeObject} instances contained within the maze.
- * @param michelitoDeathHandler the action to execute when Michelito dies.
- * @param michelitoWonMaze the action to execute when Michelito completes the maze.
  */
-public record MazeImpl(
-        Set<MazeObject> mazeObjectsSet,
-        Runnable michelitoDeathHandler,
-        Runnable michelitoWonMaze
-) implements Maze {
+public final class MazeImpl implements Maze, Level {
+    private final Set<MazeObject> mazeObjectsSet;
+    private boolean won;
+    private boolean lost;
+
+    public MazeImpl(final int levelNumber) {
+        GameGenerator gameGenerator = new GameGeneratorImpl();
+        mazeObjectsSet = new HashSet<>(gameGenerator.generate(levelNumber));
+    }
+
+    @Override
+    public void update(long currentTime) {
+        this.getUpdatable().forEach(u -> u.update(currentTime, this));
+    }
+
+    @Override
+    public Set<GameObject> getObjects() {
+        return this.getAllObjects().stream()
+                .map(m -> new GameObject(m.getType(), m.position()))
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public boolean isWon() {
+        return this.won;
+    }
+
+    @Override
+    public boolean isLost() {
+        return this.lost;
+    }
+
     @Override
     public boolean addMazeObject(final MazeObject mazeObject) {
         Objects.requireNonNull(mazeObject);
@@ -45,12 +73,12 @@ public record MazeImpl(
 
     @Override
     public void killMichelito() {
-        this.michelitoDeathHandler.run();
+        this.lost = true;
     }
 
     @Override
     public void enterTheDoor() {
-        this.michelitoWonMaze.run();
+        this.won = true;
     }
 
     @Override
@@ -103,13 +131,27 @@ public record MazeImpl(
      * A utility method to filter and retrieve all objects of a specific type from the maze.
      *
      * @param type the class type to filter the objects by.
+     * @param <T>  the type of element that will be contained in the output set.
      * @return a {@link Set} of objects of the specified type.
-     * @param <T> the type of element that will be contained in the output set.
      */
     private <T> Set<T> getObjectsOfType(final Class<T> type) {
         return this.mazeObjectsSet.stream()
                 .filter(type::isInstance)
                 .map(type::cast)
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mazeObjectsSet);
+    }
+
+    @Override
+    public String toString() {
+        return "MazeImpl{" +
+                "mazeObjectsSet=" + mazeObjectsSet +
+                ", won=" + won +
+                ", lost=" + lost +
+                '}';
     }
 }
