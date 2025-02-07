@@ -11,8 +11,7 @@ import java.util.Random;
  */
 public abstract class MovementAIImpl implements MovementAI {
     /**
-     *
-     * @return
+     * @return a direction get randomly from the list of possibility so an event can have more possibility than others.
      */
     @Override
     public Direction getDirection() {

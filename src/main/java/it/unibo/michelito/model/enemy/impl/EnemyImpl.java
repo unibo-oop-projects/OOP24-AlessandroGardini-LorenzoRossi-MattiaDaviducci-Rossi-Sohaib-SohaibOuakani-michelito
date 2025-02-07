@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 /**
  * Implementation of {@link Enemy}.
  */
-final public class EnemyImpl implements Enemy {
+public final class EnemyImpl implements Enemy {
     private Position actualposition;
     private long lastUpdate;
     private MoodAI moodAI;
@@ -24,8 +24,8 @@ final public class EnemyImpl implements Enemy {
     private Direction direction;
 
     /**
-     *
-     * @param position
+     *Constructor for {@link EnemyImpl}.
+     * @param position the initial position of enemy.
      */
     public EnemyImpl(final Position position) {
         this.actualposition = position;

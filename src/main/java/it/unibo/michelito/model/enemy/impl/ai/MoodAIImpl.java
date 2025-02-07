@@ -21,9 +21,9 @@ public final class MoodAIImpl implements MoodAI {
     private final int initialEnemy;
 
     /**
-     *
-     * @param currentTime
-     * @param maze
+     *Constructor for {@link MoodAIImpl}.
+     * @param currentTime the time of creation of the AI
+     * @param maze the maze so it can accede information about the current state of the maze.
      */
     public MoodAIImpl(final long currentTime, final Maze maze) {
         this.createdTime = currentTime;
