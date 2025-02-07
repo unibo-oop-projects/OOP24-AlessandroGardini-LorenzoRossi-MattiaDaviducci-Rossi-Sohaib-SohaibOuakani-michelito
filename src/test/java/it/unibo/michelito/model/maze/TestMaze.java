@@ -11,6 +11,7 @@ import it.unibo.michelito.util.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,14 +24,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * Test class for {@link MazeImpl}.
  */
 final class TestMaze {
-    private Set<MazeObject> setOfObjects;
+    private Maze maze;
 
     /**
      * Creates a Set of MazeObjects to be used in each test.
      */
     @BeforeEach
     void setUp() {
-        setOfObjects = new HashSet<>(Set.of(
+        Set<MazeObject> setOfObjects = new HashSet<>(Set.of(
                 new WallImpl(new Position(0, 0)),
                 new WallImpl(new Position(1, 1)),
                 new WallImpl(new Position(2, 2)),
@@ -41,6 +42,7 @@ final class TestMaze {
                 new BoxImpl(new Position(3, 3)),
                 new PlayerImpl(new Position(0, 0))
         ));
+        maze = new MazeImpl(setOfObjects, () -> { }, () -> { });
     }
 
     /**
@@ -49,7 +51,6 @@ final class TestMaze {
     @Test
     void testAddAndRemove() {
         final Temporary temporaryObject = new BoxImpl(new Position(4, 4));
-        final Maze maze = new MazeImpl(setOfObjects, () -> { }, () -> { });
         assertNotNull(maze);
         assertFalse(maze.getAllObjects().isEmpty());
         assertFalse(maze.getAllObjects().contains(temporaryObject));
@@ -65,7 +66,6 @@ final class TestMaze {
      */
     @Test
     void testConsistency() {
-        final Maze maze = new MazeImpl(setOfObjects, () -> { }, () -> { });
         assertThrows(NullPointerException.class, () -> maze.addMazeObject(null));
         assertThrows(NullPointerException.class, () -> maze.removeMazeObject(null));
         assertFalse(maze.removeMazeObject(new BoxImpl(new Position(4, 4))));
@@ -76,10 +76,28 @@ final class TestMaze {
      */
     @Test
     void testFilter() {
-        final Maze maze = new MazeImpl(setOfObjects, () -> { }, () -> { });
         assertFalse(maze.getAllObjects().isEmpty());
         assertFalse(maze.getWalls().isEmpty());
         assertFalse(maze.getBoxes().isEmpty());
         assertTrue(maze.getPowerUp().isEmpty());
+    }
+
+    /**
+     * This test verifies that the `Runnable` handlers in {@link MazeImpl} are correctly executed
+     * when Michelito dies (`killMichelito()`) or when he completes the maze (`enterTheDoor()`).
+     * We use {@link AtomicBoolean} instead of a primitive `boolean` because Java does not allow
+     * modifying captured local variables inside lambdas unless they are effectively final.
+     */
+    @Test
+    void testRunnable() {
+        AtomicBoolean deathHandlerExecuted = new AtomicBoolean(false);
+        AtomicBoolean wonMazeExecuted = new AtomicBoolean(false);
+        maze = new MazeImpl(new HashSet<>(),
+                () -> deathHandlerExecuted.set(true),
+                () -> wonMazeExecuted.set(true));
+        maze.killMichelito();
+        assertTrue(deathHandlerExecuted.get());
+        maze.enterTheDoor();
+        assertTrue(wonMazeExecuted.get());
     }
 }
