@@ -9,6 +9,7 @@ public enum ObjectType {
      * A player.
      */
     PLAYER,
+
     /**
      * A box.
      */
@@ -32,5 +33,15 @@ public enum ObjectType {
     /**
      * A Door.
      */
-    DOOR
+    DOOR,
+
+    /**
+     * A BlankSpace
+     */
+    BLANK_SPACE,
+
+    /**
+     * A bomb.
+     */
+    BOMB
 }

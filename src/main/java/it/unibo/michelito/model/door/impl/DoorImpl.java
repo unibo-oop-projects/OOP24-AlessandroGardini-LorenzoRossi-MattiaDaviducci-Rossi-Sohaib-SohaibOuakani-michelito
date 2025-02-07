@@ -2,8 +2,8 @@ package it.unibo.michelito.model.door.impl;
 
 import it.unibo.michelito.model.door.api.Door;
 import it.unibo.michelito.model.maze.api.Maze;
-import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.ObjectType;
+import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 
