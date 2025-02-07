@@ -22,7 +22,7 @@ class TestGameManager {
     void setUp() {
         gameWon = new AtomicBoolean(false);
         gameOver = new AtomicBoolean(false);
-        gameManager = new GameManagerImpl(() -> gameWon.set(true), () -> gameOver.set(true));
+        gameManager = new GameManagerImpl();
     }
 
     /**
