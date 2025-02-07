@@ -1,6 +1,6 @@
 package it.unibo.michelito.model.gamemanager.api;
 
-import it.unibo.michelito.controller.palyercommand.api.PlayerCommand;
+import it.unibo.michelito.controller.playercommand.api.PlayerCommand;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.util.GameObject;

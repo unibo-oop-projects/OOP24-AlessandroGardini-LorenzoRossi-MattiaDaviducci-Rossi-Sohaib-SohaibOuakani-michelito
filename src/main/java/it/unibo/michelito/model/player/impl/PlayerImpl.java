@@ -3,7 +3,10 @@ package it.unibo.michelito.model.player.impl;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import it.unibo.michelito.model.blanckspace.api.BlankSpace;
+import it.unibo.michelito.model.bomb.impl.BombImpl;
 import it.unibo.michelito.model.maze.api.Maze;
+import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
@@ -62,8 +65,7 @@ public class PlayerImpl implements Player {
     }
 
     private boolean allowedToPlaceBomb(final Maze maze) {
-        //TODO: when maze.getBombs() is added
-        return false;
+        return maze.getBombs().size() < this.currentBombLimit;
     }
 
     private void move(final long time, final Maze maze) {
@@ -142,6 +144,14 @@ public class PlayerImpl implements Player {
     private void placeBomb(final Maze maze) {
         //maze.addMazeObject();
         //TODO: when the Bomb is added
+        Optional<BlankSpace> blankSpace = maze.getBlankSpaces().stream()
+                .filter(b -> b.getHitBox().collision(this.hitbox))
+                .findAny();
+        if (blankSpace.isPresent()) {
+            maze.addMazeObject(new BombImpl(6, blankSpace.get().position()));
+        } else {
+            throw new IllegalStateException();
+        }
     }
 
     @Override
