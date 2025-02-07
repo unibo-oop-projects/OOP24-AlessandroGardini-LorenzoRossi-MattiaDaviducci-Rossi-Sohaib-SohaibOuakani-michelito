@@ -50,7 +50,7 @@ final class TestDoor {
      */
     @Test
     void testPlayer() {
-        final Maze maze = new MazeImpl(Set.of(), () -> { }, () -> { });
+        final Maze maze = new MazeImpl(0);
         assertThrows(IllegalStateException.class, () -> door.update(0, maze));
     }
 
@@ -61,8 +61,7 @@ final class TestDoor {
     void testOpening(){
         final var enemy = new EnemyImpl(new Position(10, 10));
         final var player = new PlayerImpl(new Position(10, 10));
-        final var set = new HashSet<MazeObject>(Set.of(enemy, player));
-        final Maze maze = new MazeImpl(set, () -> { }, () -> { });
+        final Maze maze = new MazeImpl(0);
         final int time = 0;
         assertFalse(door.isOpen());
         door.update(time, maze);

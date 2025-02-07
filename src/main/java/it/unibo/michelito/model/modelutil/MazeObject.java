@@ -1,6 +1,6 @@
 package it.unibo.michelito.model.modelutil;
 
-import it.unibo.michelito.util.Type;
+import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.model.maze.api.Maze;
@@ -24,9 +24,9 @@ public interface MazeObject {
     HitBox getHitBox();
 
     /**
-     * Get the {@link Type} of the MazeObject.
+     * Get the {@link ObjectType} of the MazeObject.
      *
-     * @return the {@link Type} of the MazeObject.
+     * @return the {@link ObjectType} of the MazeObject.
      */
-    Type getType();
+    ObjectType getType();
 }

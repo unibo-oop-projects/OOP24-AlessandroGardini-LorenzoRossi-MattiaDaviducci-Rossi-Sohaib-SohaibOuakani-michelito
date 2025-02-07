@@ -2,7 +2,7 @@ package it.unibo.michelito.model.box.impl;
 
 import it.unibo.michelito.model.box.api.Box;
 import it.unibo.michelito.util.Position;
-import it.unibo.michelito.util.Type;
+import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 
@@ -19,7 +19,7 @@ public record BoxImpl(Position position) implements Box {
     }
 
     @Override
-    public Type getType() {
-        return Type.BOX;
+    public ObjectType getType() {
+        return ObjectType.BOX;
     }
 }

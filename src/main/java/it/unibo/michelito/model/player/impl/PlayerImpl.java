@@ -7,7 +7,7 @@ import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
-import it.unibo.michelito.util.Type;
+import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.api.HitBoxFactory;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
@@ -114,8 +114,8 @@ public class PlayerImpl implements Player {
     }
 
     @Override
-    public final Type getType() {
-        return Type.PLAYER;
+    public final ObjectType getType() {
+        return ObjectType.PLAYER;
     }
 
     @Override

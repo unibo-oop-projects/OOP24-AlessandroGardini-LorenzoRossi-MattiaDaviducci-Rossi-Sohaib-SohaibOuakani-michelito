@@ -3,7 +3,7 @@ package it.unibo.michelito.model.enemy.impl;
 import it.unibo.michelito.model.enemy.api.Enemy;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.util.Position;
-import it.unibo.michelito.util.Type;
+import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 
 public class EnemyImpl implements Enemy {
@@ -30,7 +30,7 @@ public class EnemyImpl implements Enemy {
     }
 
     @Override
-    public Type getType() {
+    public ObjectType getType() {
         return null;
     }
 }
