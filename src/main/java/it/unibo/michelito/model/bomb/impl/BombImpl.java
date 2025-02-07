@@ -3,7 +3,7 @@ package it.unibo.michelito.model.bomb.impl;
 import it.unibo.michelito.model.bomb.api.Bomb;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.util.Position;
-import it.unibo.michelito.util.Type;
+import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 
 public class BombImpl implements Bomb {
@@ -36,7 +36,7 @@ public class BombImpl implements Bomb {
 
     @Override
     public boolean isPassThrough() {
-        return false;
+        return true;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class BombImpl implements Bomb {
     }
 
     @Override
-    public Type getType() {
-        return null;
+    public ObjectType getType() {
+        return ObjectType.BOMB;
     }
 }
