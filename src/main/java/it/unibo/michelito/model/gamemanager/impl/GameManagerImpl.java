@@ -17,7 +17,7 @@ public final class GameManagerImpl implements GameManager {
     private static final int STARTING_LIFE_COUNT = 5;
 
     private int currentLevelIndex;
-    private int currentLifeCount;
+    private int currentLives;
     private Level currentLevel;
 
     private boolean gameOver;
@@ -28,7 +28,7 @@ public final class GameManagerImpl implements GameManager {
      */
     public GameManagerImpl() {
         this.currentLevelIndex = 0;
-        this.currentLifeCount = STARTING_LIFE_COUNT;
+        this.currentLives = STARTING_LIFE_COUNT;
         this.currentLevel = new MazeImpl(0);
     }
 
@@ -45,6 +45,11 @@ public final class GameManagerImpl implements GameManager {
     @Override
     public Set<GameObject> getObjects() {
         return this.currentLevel.getGameObjects();
+    }
+
+    @Override
+    public int getRemainingLives() {
+        return this.currentLives;
     }
 
     @Override
@@ -67,10 +72,10 @@ public final class GameManagerImpl implements GameManager {
      * Method to call when michelito lose a life.
      */
     private void loseLife() {
-        if (this.currentLifeCount == 0) {
+        if (this.currentLives == 0) {
             this.gameOver = true;
         } else {
-            this.currentLifeCount--;
+            this.currentLives--;
             this.currentLevel = new MazeImpl(this.currentLevelIndex);
         }
     }

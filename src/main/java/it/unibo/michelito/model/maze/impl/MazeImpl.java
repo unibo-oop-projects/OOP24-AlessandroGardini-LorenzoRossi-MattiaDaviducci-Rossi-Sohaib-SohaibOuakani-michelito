@@ -1,13 +1,13 @@
 package it.unibo.michelito.model.maze.impl;
 
+import it.unibo.michelito.controller.objectadapter.api.ObjectAdapter;
+import it.unibo.michelito.controller.objectadapter.impl.ObjectAdapterImpl;
 import it.unibo.michelito.controller.palyercommand.api.PlayerCommand;
 import it.unibo.michelito.model.blanckspace.api.BlankSpace;
 import it.unibo.michelito.model.bomb.api.Bomb;
 import it.unibo.michelito.model.box.api.Box;
 import it.unibo.michelito.model.door.api.Door;
 import it.unibo.michelito.model.enemy.api.Enemy;
-import it.unibo.michelito.model.gamegenerator.api.GameGenerator;
-import it.unibo.michelito.model.gamegenerator.impl.GameGeneratorImpl;
 import it.unibo.michelito.model.maze.api.Level;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.modelutil.MazeObject;
@@ -43,8 +43,8 @@ public final class MazeImpl implements Maze, Level {
      * @param levelNumber current level number.
      */
     public MazeImpl(final int levelNumber) {
-        GameGenerator gameGenerator = new GameGeneratorImpl();
-        mazeObjectsSet = new HashSet<>(gameGenerator.generate(levelNumber));
+        ObjectAdapter objectAdapter = new ObjectAdapterImpl();
+        mazeObjectsSet = new HashSet<>(objectAdapter.requestMazeObjects(levelNumber));
     }
 
     @Override
