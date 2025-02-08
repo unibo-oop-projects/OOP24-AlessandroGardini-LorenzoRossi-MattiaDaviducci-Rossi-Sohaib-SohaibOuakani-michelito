@@ -60,7 +60,7 @@ class TestEnemy {
 
     @Test
     public void testAI() {
-        MoodAI moodAI = new MoodAIImpl(maze);
+        final MoodAI moodAI = new MoodAIImpl(maze);
         assertEquals(MoodType.SLEEPING, moodAI.getMood());
         assertEquals(Direction.NONE, moodAI.getDirection());
         moodAI.update(SLEEP_TIME);

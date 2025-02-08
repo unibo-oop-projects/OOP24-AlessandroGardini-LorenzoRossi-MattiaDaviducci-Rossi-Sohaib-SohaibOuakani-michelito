@@ -18,7 +18,7 @@ public final class MoodAIFactoryImpl implements MoodAIFactory {
         return  new MovementAIImpl() {
             @Override
             List<Direction> possibility() {
-                List<Direction> list = new ArrayList<>();
+                final List<Direction> list = new ArrayList<>();
                 for (int x = 0; x < CHILLINGPOSSIBILITY; x++) {
                         list.add(Direction.NONE);
                 }

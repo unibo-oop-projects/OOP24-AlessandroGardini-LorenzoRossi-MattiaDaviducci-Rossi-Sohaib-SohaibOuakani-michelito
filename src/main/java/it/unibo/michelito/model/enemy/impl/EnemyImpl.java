@@ -59,7 +59,7 @@ public final class EnemyImpl implements Enemy {
     }
 
     private HitBox updateHitBox(final Position position) {
-        HitBoxFactory hitboxfactory = new HitBoxFactoryImpl();
+        final HitBoxFactory hitboxfactory = new HitBoxFactoryImpl();
         return hitboxfactory.entityeHitBox(position);
     }
 
