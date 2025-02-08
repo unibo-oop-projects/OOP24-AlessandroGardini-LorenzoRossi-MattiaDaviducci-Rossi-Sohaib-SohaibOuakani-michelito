@@ -5,5 +5,5 @@ import it.unibo.michelito.model.modelutil.MazeObject;
 import java.util.Set;
 
 public interface ObjectAdapter {
-    Set<MazeObject> requestMazeObjects();
+    Set<MazeObject> requestMazeObjects(final int level);
 }
