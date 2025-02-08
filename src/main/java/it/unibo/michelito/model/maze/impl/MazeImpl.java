@@ -1,7 +1,7 @@
 package it.unibo.michelito.model.maze.impl;
 
-import it.unibo.michelito.controller.objectadapter.api.ObjectAdapter;
-import it.unibo.michelito.controller.objectadapter.impl.ObjectAdapterImpl;
+import it.unibo.michelito.controller.objectsadapter.api.ObjectsAdapter;
+import it.unibo.michelito.controller.objectsadapter.impl.ObjectAdapterImpl;
 import it.unibo.michelito.controller.palyercommand.api.PlayerCommand;
 import it.unibo.michelito.model.blanckspace.api.BlankSpace;
 import it.unibo.michelito.model.bomb.api.Bomb;
@@ -43,8 +43,8 @@ public final class MazeImpl implements Maze, Level {
      * @param levelNumber current level number.
      */
     public MazeImpl(final int levelNumber) {
-        ObjectAdapter objectAdapter = new ObjectAdapterImpl();
-        mazeObjectsSet = new HashSet<>(objectAdapter.requestMazeObjects(levelNumber));
+        ObjectsAdapter objectsAdapter = new ObjectAdapterImpl();
+        mazeObjectsSet = new HashSet<>(objectsAdapter.requestMazeObjects(levelNumber));
     }
 
     @Override

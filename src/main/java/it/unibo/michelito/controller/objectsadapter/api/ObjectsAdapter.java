@@ -1,9 +1,9 @@
-package it.unibo.michelito.controller.objectadapter.api;
+package it.unibo.michelito.controller.objectsadapter.api;
 
 import it.unibo.michelito.model.modelutil.MazeObject;
 
 import java.util.Set;
 
-public interface ObjectAdapter {
+public interface ObjectsAdapter {
     Set<MazeObject> requestMazeObjects(final int level);
 }
