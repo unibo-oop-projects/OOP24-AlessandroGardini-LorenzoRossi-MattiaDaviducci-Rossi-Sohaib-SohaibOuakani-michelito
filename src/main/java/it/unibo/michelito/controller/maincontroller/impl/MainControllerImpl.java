@@ -11,7 +11,8 @@ import it.unibo.michelito.controller.maincontroller.api.MainController;
  * <p>
  * This class acts as the central controller of the application, managing both
  * the home menu and the game. It coordinates transitions between the two
- * and handles application termination requests.
+ * and handles application termination requests thought {@link HomeParentController}
+ * and {@link GameParentController}.
  * </p>
  */
 public class MainControllerImpl implements MainController, HomeParentController, GameParentController {
