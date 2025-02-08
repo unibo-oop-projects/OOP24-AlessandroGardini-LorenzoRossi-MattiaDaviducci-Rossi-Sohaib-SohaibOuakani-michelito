@@ -14,7 +14,6 @@ import java.util.Set;
  * Provides getter od the current state of the game.
  */
 public interface GameManager {
-
     /**
      * Getter for the gameOver state.
      *
@@ -35,6 +34,13 @@ public interface GameManager {
      * @return the Set of {@link GameObject} currently in the {@link Maze}.
      */
     Set<GameObject> getObjects();
+
+    /**
+     * Getter for remaining lives in the game.
+     *
+     * @return remaining lives.
+     */
+    int getRemainingLives();
 
     /**
      * Sets the command to be executed on the current {@link Player}.

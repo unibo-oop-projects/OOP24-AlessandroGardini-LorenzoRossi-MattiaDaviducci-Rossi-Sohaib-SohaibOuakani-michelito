@@ -4,5 +4,5 @@ import it.unibo.michelito.util.Position;
 
 public interface BombFactory {
 
-    Bomb createBomb(int range, Position position);
+    Bomb createBomb(Position position, BombType bombType);
 }
