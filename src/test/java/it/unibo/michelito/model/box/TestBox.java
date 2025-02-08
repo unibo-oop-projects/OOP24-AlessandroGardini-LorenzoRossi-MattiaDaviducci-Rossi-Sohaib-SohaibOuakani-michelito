@@ -34,7 +34,7 @@ final class TestBox {
     @Test
     void testGetHitBox() {
         HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(position);
-        assertEquals(expectedHitBox, box.getHitBox(), "HitBox should match the expected one");
+        assertEquals(expectedHitBox, box.getHitBox(), "HitBox should be squareHitBox");
     }
 
     /**
