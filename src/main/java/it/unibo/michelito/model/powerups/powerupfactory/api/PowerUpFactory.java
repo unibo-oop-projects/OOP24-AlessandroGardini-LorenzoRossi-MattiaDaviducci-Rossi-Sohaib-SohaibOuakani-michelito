@@ -1,6 +1,6 @@
-package it.unibo.michelito.model.powerups.api;
+package it.unibo.michelito.model.powerups.powerupfactory.api;
 
-import it.unibo.michelito.model.powerups.impl.BombLimitPowerUp;
+import it.unibo.michelito.model.powerups.api.PowerUp;
 import it.unibo.michelito.util.Position;
 
 import java.util.Optional;

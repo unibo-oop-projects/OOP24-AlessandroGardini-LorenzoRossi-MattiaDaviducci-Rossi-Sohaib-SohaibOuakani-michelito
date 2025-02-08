@@ -1,8 +1,8 @@
 package it.unibo.michelito.powerupfactory;
 
-import it.unibo.michelito.model.powerups.api.PowerUpFactory;
+import it.unibo.michelito.model.powerups.powerupfactory.api.PowerUpFactory;
 import it.unibo.michelito.model.powerups.api.PowerUp;
-import it.unibo.michelito.model.powerups.impl.PowerUpFactoryImpl;
+import it.unibo.michelito.model.powerups.powerupfactory.impl.PowerUpFactoryImpl;
 import it.unibo.michelito.util.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
