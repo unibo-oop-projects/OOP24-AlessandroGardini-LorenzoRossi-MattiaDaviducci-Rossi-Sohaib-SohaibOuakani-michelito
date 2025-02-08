@@ -1,5 +1,6 @@
 package it.unibo.michelito.model.powerups.api;
 
+import it.unibo.michelito.model.powerups.impl.BombLimitPowerUp;
 import it.unibo.michelito.util.Position;
 
 import java.util.Optional;
@@ -8,20 +9,6 @@ import java.util.Optional;
  * Interface for a factory that creates {@link PowerUp}.
  */
 public interface PowerUpFactory {
-    /**
-     * Method that creates a {@link it.unibo.michelito.model.powerups.impl.SpeedPowerUp}.
-     * @param position the {@link Position} of the {@link PowerUp}
-     * @return returns the created {@link it.unibo.michelito.model.powerups.impl.SpeedPowerUp}
-     */
-    PowerUp generateSpeedPowerUp(Position position);
-
-    /**
-     * Method that creates a {@link it.unibo.michelito.model.powerups.impl.BombPowerUp}.
-     * @param position the {@link Position} of the {@link PowerUp}
-     * @return returns the created {@link it.unibo.michelito.model.powerups.impl.SpeedPowerUp}
-     */
-    PowerUp generateBombPowerUp(Position position);
-
     /**
      * Method that can create a random {@link PowerUp} or not.
      * @param position the {@link Position} where to create the random {@link PowerUp}.

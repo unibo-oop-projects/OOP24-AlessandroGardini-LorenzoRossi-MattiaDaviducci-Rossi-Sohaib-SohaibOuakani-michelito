@@ -1,5 +1,6 @@
 package it.unibo.michelito.model.player.api;
 
+import it.unibo.michelito.model.bomb.api.BombType;
 import it.unibo.michelito.model.modelutil.Updatable;
 import it.unibo.michelito.util.Direction;
 
@@ -29,4 +30,10 @@ public interface Player extends Updatable {
      * Makes the player place a {Bomb}.
      */
     void notifyToPlace();
+
+    /**
+     * Changes the {@link BombType} of the {@link it.unibo.michelito.model.bomb.api.Bomb} deployed by the {@link Player}.
+     * @param type the new {@link BombType}
+     */
+    void changeBombType(BombType type);
 }

@@ -1,56 +1,53 @@
 package it.unibo.michelito.model.powerup;
 
+import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.maze.impl.MazeImpl;
-import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.model.player.impl.PlayerImpl;
-import it.unibo.michelito.model.powerups.api.PowerUpFactory;
 import it.unibo.michelito.model.powerups.api.PowerUp;
-import it.unibo.michelito.model.powerups.impl.PowerUpFactoryImpl;
+import it.unibo.michelito.model.powerups.impl.BombLimitPowerUp;
+import it.unibo.michelito.model.powerups.impl.SpeedPowerUp;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestPowerUp {
-    private PowerUpFactory factory;
-    @BeforeEach
-    void setUp() {
-        this.factory = new PowerUpFactoryImpl();
-    }
-
     @Test
     void testSpeedPowerUp() {
-        int levelNumber = -1;
-        final MazeImpl maze = new MazeImpl(levelNumber);
-        final Player player = new PlayerImpl(new Position(0, 0));
-        final PowerUp speed = this.factory.generateSpeedPowerUp(new Position(5, 0));
-        maze.addMazeObject(speed);
-        maze.addMazeObject(player);
-
+        final Position position = new Position(0, 0);
+        final PowerUp powerUp = new SpeedPowerUp(position);
+        final Player player = new PlayerImpl(position);
+        powerUp.applyEffect(player);
 
         player.setDirection(Direction.RIGHT);
-        player.update(1, maze);
-
-        player.setDirection(Direction.RIGHT);
-        player.update(2, maze);
-        assertEquals(new Position(2.1, 0), player.position());
+        player.update(1, new MazeImpl(-1));
+        assertEquals(new Position(1.1, 0), player.position());
     }
 
     @Test
-    void testRandomPowerUp() {
-        final Optional<PowerUp> powerUp = this.factory.generateRandomPowerUp(new Position(3, 3));
-        assertInstanceOf(Optional.class, powerUp);
+    void testBombLimitPowerUp() {
+        //TODO: test the bomb once we can create a maze with blanks
+        final Position position = new Position(0, 0);
+        final PowerUp powerUp = new BombLimitPowerUp(position);
+        final Player player = new PlayerImpl(position);
+        powerUp.applyEffect(player);
+        Maze maze = new MazeImpl(-1);
 
-        if (powerUp.isPresent()) {
-            System.out.println("powerUp is dropped");
-            assertInstanceOf(PowerUp.class, powerUp.get());
-        }
+        player.notifyToPlace();
+        player.update(1, maze);
+        player.notifyToPlace();
+        player.update(1, maze);
+        assertEquals(2, maze.getBombs().stream());
+    }
+
+    @Test
+    void testBombTypePowerUp() {
+        //TODO: test the bomb once we can create a maze with blanks
+        //do a loop where you take the power up place the bomb check if it is different form the standard
+        //if not remove the bomb from the maze, rinse and repeat
     }
 }

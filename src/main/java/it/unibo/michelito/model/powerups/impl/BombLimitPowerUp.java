@@ -4,10 +4,10 @@ import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.util.Position;
 
 
-public class BombPowerUp extends AbsPowerUp {
+public class BombLimitPowerUp extends AbsPowerUp {
     private static final int BOMB_LIMIT_UPGRADE = 1;
 
-    public BombPowerUp(final Position position) {
+    public BombLimitPowerUp(final Position position) {
         super(position);
     }
 

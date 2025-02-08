@@ -6,9 +6,7 @@ import java.util.Optional;
 import it.unibo.michelito.model.blanckspace.api.BlankSpace;
 import it.unibo.michelito.model.bomb.api.BombType;
 import it.unibo.michelito.model.bomb.impl.BombFactoryImpl;
-import it.unibo.michelito.model.bomb.impl.BombImpl;
 import it.unibo.michelito.model.maze.api.Maze;
-import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
@@ -28,7 +26,6 @@ public class PlayerImpl implements Player {
     private Direction direction;
     private boolean place;
     private Position currentPosition;
-    private long lastUpdate;
     private int currentBombLimit = STANDARD_BOMB_LIMIT;
     private double currentSpeed = STANDARD_SPEED;
     private BombType bombType = BombType.STANDARD;
@@ -39,7 +36,6 @@ public class PlayerImpl implements Player {
      */
     public PlayerImpl(final Position position) {
         this.currentPosition = position;
-        this.lastUpdate = System.currentTimeMillis();
         this.setDirection(Direction.NONE);
         this.updateHitbox();
     }
@@ -50,8 +46,7 @@ public class PlayerImpl implements Player {
     }
 
     @Override
-    public final void update(final long currentTime, final Maze maze) {
-        final long deltaTime = currentTime - this.lastUpdate;
+    public final void update(final long deltaTime, final Maze maze) {
         if (!this.direction.equals(Direction.NONE)) {
             this.move(deltaTime, maze);
             this.setDirection(Direction.NONE);
@@ -64,7 +59,6 @@ public class PlayerImpl implements Player {
             }
             this.place = false;
         }
-        this.lastUpdate = currentTime;
     }
 
     private boolean allowedToPlaceBomb(final Maze maze) {
@@ -147,7 +141,9 @@ public class PlayerImpl implements Player {
     private void placeBomb(final Maze maze) {
         Optional<BlankSpace> blankSpace = maze.getBlankSpaces().stream()
                 .filter(b -> b.getHitBox().collision(this.hitbox))
+                .filter(innerblank -> innerblank.getHitBox().inner(this.position()))
                 .findAny();
+
         if (blankSpace.isPresent()) {
             maze.addMazeObject(new BombFactoryImpl().createBomb(blankSpace.get().position(), this.bombType));
         } else {
@@ -163,5 +159,10 @@ public class PlayerImpl implements Player {
     @Override
     public final void notifyToPlace() {
         this.place = true;
+    }
+
+    @Override
+    public void changeBombType(BombType type) {
+        this.bombType = type;
     }
 }
