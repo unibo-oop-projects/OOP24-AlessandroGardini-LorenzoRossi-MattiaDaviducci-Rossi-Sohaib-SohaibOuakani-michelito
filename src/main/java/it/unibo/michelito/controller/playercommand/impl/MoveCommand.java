@@ -1,7 +1,7 @@
-package it.unibo.michelito.controller.palyercommand.impl;
+package it.unibo.michelito.controller.playercommand.impl;
 
 import it.unibo.michelito.model.player.api.Player;
-import it.unibo.michelito.controller.palyercommand.api.PlayerCommand;
+import it.unibo.michelito.controller.playercommand.api.PlayerCommand;
 import it.unibo.michelito.util.Direction;
 
 /**
