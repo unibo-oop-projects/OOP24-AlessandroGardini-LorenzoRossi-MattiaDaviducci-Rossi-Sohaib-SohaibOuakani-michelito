@@ -1,4 +1,4 @@
-package it.unibo.michelito.model.levelgenerator;
+package it.unibo.michelito.controller.levelgenerator;
 
 import it.unibo.michelito.util.GameObject;
 import it.unibo.michelito.util.ObjectType;
@@ -14,39 +14,42 @@ import java.util.Set;
  *A class that create the maze reading form file.
  */
 public class LevelGenerator {
-    private static final Integer MAZEBLOCKWHID = 20;
-    private static final Integer MAZEBLOCKHIGHT = 15;
+    private static final int MAZE_BLOCK_WIDTH = 20;
+    private static final int MAZE_BLOCK_HEIGHT = 15;
+    private static final int BLOCkEDGE = 6;
+    private static final int TEST_MAZE_CODE = -1;
 
     /**
      * @param levelNumber the number of level.
      * @return a set of {@link GameObject} that represent every object in the current level maze.
      */
-     public static Set<GameObject> generate(Integer levelNumber){
-         Set<GameObject> maze = new HashSet<>(basemaze());
+     public static Set<GameObject> generate(int levelNumber){
+         Set<GameObject> maze = new HashSet<>(baseMaze());
          String file = "src/main/resources/level/level"+levelNumber+".txt";
-         maze.addAll(basemaze());
-         if(levelNumber != -1){
+         maze.addAll(baseMaze());
+         if(levelNumber != TEST_MAZE_CODE){
              maze.addAll(mazeFromFile(file));
+         }
+         else {
+             maze.add(new GameObject(ObjectType.PLAYER, new Position(BLOCkEDGE, BLOCkEDGE)));
          }
          return maze;
     }
 
-    private static Set<GameObject> basemaze(){
+    private static Set<GameObject> baseMaze(){
         Set<GameObject> maze = new HashSet<>();
-
         cellPositions().forEach(x -> maze.add(new GameObject(ObjectType.BLANK_SPACE, x)));
-
-        for(int x = 0; x <= MAZEBLOCKWHID; x++){
-            maze.add(new GameObject(ObjectType.WALL, new Position(x*6, 0)));
-            maze.add(new GameObject(ObjectType.WALL, new Position(x*6, MAZEBLOCKHIGHT*6)));
+        for(int x = 0; x <= MAZE_BLOCK_WIDTH; x++){
+            maze.add(new GameObject(ObjectType.WALL, new Position(x*BLOCkEDGE, 0)));
+            maze.add(new GameObject(ObjectType.WALL, new Position(x*BLOCkEDGE, MAZE_BLOCK_HEIGHT *BLOCkEDGE)));
         }
-        for(int x = 0; x <= MAZEBLOCKHIGHT; x++){
-            maze.add(new GameObject(ObjectType.WALL, new Position(0, x*6)));
-            maze.add(new GameObject(ObjectType.WALL, new Position(MAZEBLOCKWHID*6, x*6)));
+        for(int x = 0; x <= MAZE_BLOCK_HEIGHT; x++){
+            maze.add(new GameObject(ObjectType.WALL, new Position(0, x*BLOCkEDGE)));
+            maze.add(new GameObject(ObjectType.WALL, new Position(MAZE_BLOCK_WIDTH *BLOCkEDGE, x*BLOCkEDGE)));
         }
-        for(int x = 0; x <= MAZEBLOCKWHID; x = x+2){
-            for(int y = 0; y <= MAZEBLOCKHIGHT; y = y+2){
-                maze.add(new GameObject(ObjectType.WALL, new Position(x*6, y*6)));
+        for(int x = 0; x <= MAZE_BLOCK_WIDTH; x = x+2){
+            for(int y = 0; y <= MAZE_BLOCK_HEIGHT; y = y+2){
+                maze.add(new GameObject(ObjectType.WALL, new Position(x*BLOCkEDGE, y*BLOCkEDGE)));
             }
         }
         return maze;
@@ -85,9 +88,9 @@ public class LevelGenerator {
 
     private static Set<Position> cellPositions() {
         Set<Position> positions = new HashSet<>();
-        for (int x = 0; x <= MAZEBLOCKWHID; x++ ) {
-            for (int y = 0; y <= MAZEBLOCKHIGHT; y++ ) {
-                positions.add(new Position(x*6, y*6));
+        for (int x = 0; x <= MAZE_BLOCK_WIDTH; x++ ) {
+            for (int y = 0; y <= MAZE_BLOCK_HEIGHT; y++ ) {
+                positions.add(new Position(x*BLOCkEDGE, y*BLOCkEDGE));
             }
         }
         return positions;
