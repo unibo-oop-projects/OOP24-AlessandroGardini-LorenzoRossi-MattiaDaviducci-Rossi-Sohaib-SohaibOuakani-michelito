@@ -16,17 +16,16 @@ public final class MoodAIImpl implements MoodAI {
     private MoodType actualMood;
     private MovementAI actualMovement;
     private final MoodAIFactory moodAIFactory = new MoodAIFactoryImpl();
-    private final long createdTime;
+    private long createdTime;
     private final Maze maze;
     private final int initialEnemy;
 
     /**
      *Constructor for {@link MoodAIImpl}.
-     * @param currentTime the time of creation of the AI
      * @param maze the maze so it can accede information about the current state of the maze.
      */
-    public MoodAIImpl(final long currentTime, final Maze maze) {
-        this.createdTime = currentTime;
+    public MoodAIImpl(final Maze maze) {
+        this.createdTime = 0;
         this.maze = maze;
         initialEnemy = maze.getEnemies().size();
         setMood(MoodType.SLEEPING);
@@ -63,8 +62,9 @@ public final class MoodAIImpl implements MoodAI {
     }
 
     @Override
-    public void update(final long currentTime) {
-        if (currentTime - createdTime >= SLEEPTIME) {
+    public void update(final long deltaTime) {
+        this.createdTime = createdTime + deltaTime;
+        if (createdTime >= SLEEPTIME) {
             setMood(MoodType.CHILLING);
         }
         if (maze.getEnemies().size() < initialEnemy * DEATHFORVENGENS) {
