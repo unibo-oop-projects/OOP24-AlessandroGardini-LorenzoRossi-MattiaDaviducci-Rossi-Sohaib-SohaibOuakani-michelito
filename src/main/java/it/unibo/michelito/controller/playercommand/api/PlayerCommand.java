@@ -1,4 +1,4 @@
-package it.unibo.michelito.controller.palyercommand.api;
+package it.unibo.michelito.controller.playercommand.api;
 
 import it.unibo.michelito.model.player.api.Player;
 
