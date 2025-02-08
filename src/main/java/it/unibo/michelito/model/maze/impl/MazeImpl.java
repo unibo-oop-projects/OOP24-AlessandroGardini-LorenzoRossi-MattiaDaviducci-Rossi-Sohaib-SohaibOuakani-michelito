@@ -1,8 +1,8 @@
 package it.unibo.michelito.model.maze.impl;
 
 import it.unibo.michelito.controller.objectsadapter.api.ObjectsAdapter;
-import it.unibo.michelito.controller.objectsadapter.impl.ObjectAdapterImpl;
-import it.unibo.michelito.controller.palyercommand.api.PlayerCommand;
+import it.unibo.michelito.controller.objectsadapter.impl.ObjectsAdapterImpl;
+import it.unibo.michelito.controller.playercommand.api.PlayerCommand;
 import it.unibo.michelito.model.blanckspace.api.BlankSpace;
 import it.unibo.michelito.model.bomb.api.Bomb;
 import it.unibo.michelito.model.box.api.Box;
@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
  */
 public final class MazeImpl implements Maze, Level {
     private final Set<MazeObject> mazeObjectsSet;
-    private long lastUpdate;
 
     private boolean won;
     private boolean lost;
@@ -44,14 +43,13 @@ public final class MazeImpl implements Maze, Level {
      * @param levelNumber current level number.
      */
     public MazeImpl(final int levelNumber) {
-        ObjectsAdapter objectsAdapter = new ObjectAdapterImpl();
+        ObjectsAdapter objectsAdapter = new ObjectsAdapterImpl();
         mazeObjectsSet = new HashSet<>(objectsAdapter.requestMazeObjects(levelNumber));
     }
 
     @Override
     public void update(long currentTime) {
-        this.lastUpdate = currentTime;
-        this.getUpdatable().forEach(u -> u.update(currentTime - this.lastUpdate, this));
+        this.getUpdatable().forEach(u -> u.update(currentTime, this));
     }
 
     @Override

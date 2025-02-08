@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * Implementation of the {@link ObjectsAdapter} interface.
  * This class adapts objects from the LevelGenerator into a set of {@link MazeObject}s.
  */
-public class ObjectAdapterImpl implements ObjectsAdapter {
+public class ObjectsAdapterImpl implements ObjectsAdapter {
     private static final Map<ObjectType, Function<GameObject, MazeObject>> OBJECT_CREATORS = Map.of(
             ObjectType.PLAYER, obj -> new PlayerImpl(obj.position()),
             ObjectType.BOX, obj -> new BoxImpl(obj.position()),

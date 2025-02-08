@@ -1,7 +1,10 @@
 package it.unibo.michelito.model.powerups.impl;
 
+import it.unibo.michelito.model.player.api.ModifiablePlayer;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.util.Position;
+
+import java.math.BigDecimal;
 
 /**
  * Implementation of a {@link it.unibo.michelito.model.powerups.api.PowerUp} that increases {@link Player} speed.
@@ -17,7 +20,8 @@ public class SpeedPowerUp extends AbsPowerUp {
     }
 
     @Override
-    public final void applyEffect(final Player player) {
-        player.increaseSpeed(SPEED_UPGRADE);
+    public final void applyEffect(final ModifiablePlayer player) {
+        double newSpeed = BigDecimal.valueOf(SPEED_UPGRADE).add(BigDecimal.valueOf(player.getSpeed())).doubleValue();
+        player.setSpeed(newSpeed);
     }
 }
