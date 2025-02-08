@@ -54,8 +54,8 @@ public class BombImpl implements Bomb {
     }
 
     @Override
-    public void update(long currentTime, Maze maze) {
-        if (!exploded && currentTime - timerStart >= 3000) {
+    public void update(long deltaTime, Maze maze) {
+        if (!exploded && deltaTime - timerStart >= 3000) {
             explode(maze);
         }
     }
