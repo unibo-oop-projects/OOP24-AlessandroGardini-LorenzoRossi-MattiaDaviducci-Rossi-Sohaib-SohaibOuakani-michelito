@@ -26,7 +26,8 @@ class TestPlayer {
 
     @Test
     void testMovement() {
-        final Maze maze = new MazeImpl(Set.of(), () -> { }, () -> { });
+        int levelNumber = -1;
+        final Maze maze = new MazeImpl(levelNumber);
 
         assertEquals(new Position(0, 0), player.position());
         player.update(10, maze);
@@ -54,33 +55,38 @@ class TestPlayer {
 
     @Test
     void testBumpInToWall() {
+        int levelNumber = -1;
+        Maze maze = new MazeImpl(levelNumber);
+
         player.setDirection(Direction.RIGHT);
-        player.update(1, new MazeImpl(Set.of(new WallImpl(new Position(5, 0))), () -> { }, () -> { }));
+        player.update(1, maze);
         assertEquals(new Position(0, 0), player.position());
 
         player.setDirection(Direction.DOWN);
-        player.update(2, new MazeImpl(Set.of(new WallImpl(new Position(0, 6))), () -> { }, () -> { }));
+        player.update(2, maze);
         assertEquals(new Position(0, 0), player.position());
 
         player.setDirection(Direction.UP);
-        player.update(3, new MazeImpl(Set.of(new WallImpl(new Position(0, -6))), () -> { }, () -> { }));
+        player.update(3,maze);
         assertEquals(new Position(0, 0), player.position());
 
         player.setDirection(Direction.RIGHT);
-        player.update(4, new MazeImpl(Set.of(new WallImpl(new Position(6, 0))), () -> { }, () -> { }));
+        player.update(4, maze);
         assertEquals(new Position(1, 0), player.position());
 
         player.setDirection(Direction.RIGHT);
-        player.update(13, new MazeImpl(Set.of(new WallImpl(new Position(100, 0))), () -> { }, () -> { }));
+        player.update(13, maze);
         assertEquals(new Position(10, 0), player.position());
 
     }
 
     @Test
     void testIncreaseSpeed() {
+        int levelNumber = -1;
+        Maze maze = new MazeImpl(levelNumber);
         final double speedUpgrade = 0.1;
         player.setDirection(Direction.RIGHT);
-        player.update(1, new MazeImpl(Set.of(), () -> { }, () -> { }));
+        player.update(1, maze);
         assertEquals(new Position(1, 0), player.position());
 
         player.setDirection(Direction.DOWN);
@@ -89,7 +95,7 @@ class TestPlayer {
         player.increaseSpeed(speedUpgrade);
         player.increaseSpeed(speedUpgrade);
         player.increaseSpeed(speedUpgrade);
-        player.update(2, new MazeImpl(Set.of(), () -> { }, () -> { }));
+        player.update(2, maze);
         assertEquals(new Position(1, 1.5), player.position());
     }
 }

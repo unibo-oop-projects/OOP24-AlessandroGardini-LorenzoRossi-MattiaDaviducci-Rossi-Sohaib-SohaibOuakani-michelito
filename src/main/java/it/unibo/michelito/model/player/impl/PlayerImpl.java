@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import it.unibo.michelito.model.blanckspace.api.BlankSpace;
+import it.unibo.michelito.model.bomb.api.BombType;
+import it.unibo.michelito.model.bomb.impl.BombFactoryImpl;
 import it.unibo.michelito.model.bomb.impl.BombImpl;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.modelutil.MazeObject;
@@ -29,6 +31,7 @@ public class PlayerImpl implements Player {
     private long lastUpdate;
     private int currentBombLimit = STANDARD_BOMB_LIMIT;
     private double currentSpeed = STANDARD_SPEED;
+    private BombType bombType = BombType.STANDARD;
 
     /**
      * Constructor for {@link PlayerImpl}.
@@ -102,7 +105,7 @@ public class PlayerImpl implements Player {
     private void checkPowerUp(final Maze maze) {
         final Optional<PowerUp> powerUp = maze.getPowerUp().stream()
                 .filter(obj -> obj.getType().equals(ObjectType.POWERUP))
-                .filter(p -> this.getHitBox().collision(p.getHitBox())/*p.getHitBox().collision(this.hitbox)*/)
+                .filter(p -> this.getHitBox().collision(p.getHitBox()))
                 .findAny();
 
         if (powerUp.isPresent()) {
@@ -142,13 +145,11 @@ public class PlayerImpl implements Player {
     }
 
     private void placeBomb(final Maze maze) {
-        //maze.addMazeObject();
-        //TODO: when the Bomb is added
         Optional<BlankSpace> blankSpace = maze.getBlankSpaces().stream()
                 .filter(b -> b.getHitBox().collision(this.hitbox))
                 .findAny();
         if (blankSpace.isPresent()) {
-            maze.addMazeObject(new BombImpl(6, blankSpace.get().position()));
+            maze.addMazeObject(new BombFactoryImpl().createBomb(blankSpace.get().position(), this.bombType));
         } else {
             throw new IllegalStateException();
         }
