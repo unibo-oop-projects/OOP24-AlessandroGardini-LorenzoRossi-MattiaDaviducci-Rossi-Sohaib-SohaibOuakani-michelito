@@ -11,51 +11,56 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- *A class that create the maze reading form file.
+ * A class that create the maze reading form file.
  */
 public class LevelGenerator {
     private static final int MAZE_BLOCK_WIDTH = 20;
     private static final int MAZE_BLOCK_HEIGHT = 15;
-    private static final int BLOCkEDGE = 6;
+    private static final int BLOCK_EDGE = 6;
     private static final int TEST_MAZE_CODE = -1;
+
+    /**
+     * Private constructor preventing initialization.
+     */
+    private LevelGenerator() {
+    }
 
     /**
      * @param levelNumber the number of level.
      * @return a set of {@link GameObject} that represent every object in the current level maze.
      */
-     public static Set<GameObject> generate(int levelNumber){
-         Set<GameObject> maze = new HashSet<>(baseMaze());
-         String file = "src/main/resources/level/level"+levelNumber+".txt";
+     public static Set<GameObject> generate(final int levelNumber) {
+         final Set<GameObject> maze = new HashSet<>(baseMaze());
+         final String file = "src/main/resources/level/level" + levelNumber + ".txt";
          maze.addAll(baseMaze());
-         if(levelNumber != TEST_MAZE_CODE){
+         if (levelNumber != TEST_MAZE_CODE) {
              maze.addAll(mazeFromFile(file));
-         }
-         else {
-             maze.add(new GameObject(ObjectType.PLAYER, new Position(BLOCkEDGE, BLOCkEDGE)));
+         } else {
+             maze.add(new GameObject(ObjectType.PLAYER, new Position(BLOCK_EDGE, BLOCK_EDGE)));
          }
          return maze;
     }
 
-    private static Set<GameObject> baseMaze(){
-        Set<GameObject> maze = new HashSet<>();
+    private static Set<GameObject> baseMaze() {
+        final Set<GameObject> maze = new HashSet<>();
         cellPositions().forEach(x -> maze.add(new GameObject(ObjectType.BLANK_SPACE, x)));
-        for(int x = 0; x < MAZE_BLOCK_WIDTH; x++){
-            maze.add(new GameObject(ObjectType.WALL, new Position(x*BLOCkEDGE, 0)));
-            maze.add(new GameObject(ObjectType.WALL, new Position(x*BLOCkEDGE, MAZE_BLOCK_HEIGHT *BLOCkEDGE)));
+        for (int x = 0; x < MAZE_BLOCK_WIDTH; x++) {
+            maze.add(new GameObject(ObjectType.WALL, new Position(x * BLOCK_EDGE, 0)));
+            maze.add(new GameObject(ObjectType.WALL, new Position(x * BLOCK_EDGE, MAZE_BLOCK_HEIGHT * BLOCK_EDGE)));
         }
-        for(int x = 0; x < MAZE_BLOCK_HEIGHT; x++){
-            maze.add(new GameObject(ObjectType.WALL, new Position(0, x*BLOCkEDGE)));
-            maze.add(new GameObject(ObjectType.WALL, new Position(MAZE_BLOCK_WIDTH *BLOCkEDGE, x*BLOCkEDGE)));
+        for (int x = 0; x < MAZE_BLOCK_HEIGHT; x++) {
+            maze.add(new GameObject(ObjectType.WALL, new Position(0, x * BLOCK_EDGE)));
+            maze.add(new GameObject(ObjectType.WALL, new Position(MAZE_BLOCK_WIDTH * BLOCK_EDGE, x * BLOCK_EDGE)));
         }
-        for(int x = 0; x < MAZE_BLOCK_WIDTH; x = x+2){
-            for(int y = 0; y < MAZE_BLOCK_HEIGHT; y = y+2){
-                maze.add(new GameObject(ObjectType.WALL, new Position(x*BLOCkEDGE, y*BLOCkEDGE)));
+        for (int x = 0; x < MAZE_BLOCK_WIDTH; x = x + 2) {
+            for (int y = 0; y < MAZE_BLOCK_HEIGHT; y = y + 2) {
+                maze.add(new GameObject(ObjectType.WALL, new Position(x * BLOCK_EDGE, y * BLOCK_EDGE)));
             }
         }
         return maze;
     }
 
-    private static Set<GameObject> mazeFromFile(String file){
+    private static Set<GameObject> mazeFromFile(final String file) {
         Set<GameObject> maze = new HashSet<>();
         String objectType;
         double xValue;
@@ -64,7 +69,7 @@ public class LevelGenerator {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String riga;
             while ((riga = br.readLine()) != null) {
-                String[] read = riga.split(" ");
+                final String[] read = riga.split(" ");
                 objectType = read[0];
                 xValue = Double.parseDouble(read[1]);
                 yValue = Double.parseDouble(read[2]);
@@ -76,7 +81,7 @@ public class LevelGenerator {
                     case "player" -> new GameObject(ObjectType.PLAYER, new Position(xValue, yValue));
                     default -> throw new IllegalArgumentException("Invalid object type: " + objectType);
                 };
-                if(cellPositions().contains(readObject.position())){
+                if (cellPositions().contains(readObject.position())) {
                     maze.add(readObject);
                 }
             }
@@ -87,10 +92,10 @@ public class LevelGenerator {
     }
 
     private static Set<Position> cellPositions() {
-        Set<Position> positions = new HashSet<>();
-        for (int x = 0; x < MAZE_BLOCK_WIDTH; x++ ) {
-            for (int y = 0; y < MAZE_BLOCK_HEIGHT; y++ ) {
-                positions.add(new Position(x*BLOCkEDGE, y*BLOCkEDGE));
+        final Set<Position> positions = new HashSet<>();
+        for (int x = 0; x < MAZE_BLOCK_WIDTH; x++) {
+            for (int y = 0; y < MAZE_BLOCK_HEIGHT; y++) {
+                positions.add(new Position(x * BLOCK_EDGE, y * BLOCK_EDGE ));
             }
         }
         return positions;
