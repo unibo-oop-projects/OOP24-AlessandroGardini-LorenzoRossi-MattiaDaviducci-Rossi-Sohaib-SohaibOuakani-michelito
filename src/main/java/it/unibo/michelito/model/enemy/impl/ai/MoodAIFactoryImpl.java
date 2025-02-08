@@ -11,7 +11,7 @@ import java.util.List;
  * Implementation of {@link MoodAIFactory}.
  */
 public final class MoodAIFactoryImpl implements MoodAIFactory {
-    private final static int CHILLINGPOSSIBILITY = 13;
+    private static final int CHILLINGPOSSIBILITY = 13;
 
     @Override
     public MovementAI chilling() {
