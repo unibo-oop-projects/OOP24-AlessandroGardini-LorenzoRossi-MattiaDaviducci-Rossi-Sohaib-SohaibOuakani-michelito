@@ -28,7 +28,7 @@ public final class DoorImpl implements Door {
     }
 
     @Override
-    public void update(final long currentTime, final Maze maze) {
+    public void update(final long deltaTime, final Maze maze) {
         if (maze.getEnemies().isEmpty()) {
             this.open = true;
         }
