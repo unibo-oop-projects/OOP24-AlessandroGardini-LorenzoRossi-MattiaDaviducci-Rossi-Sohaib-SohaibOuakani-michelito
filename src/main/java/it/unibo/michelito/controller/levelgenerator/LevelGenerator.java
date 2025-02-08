@@ -39,16 +39,16 @@ public class LevelGenerator {
     private static Set<GameObject> baseMaze(){
         Set<GameObject> maze = new HashSet<>();
         cellPositions().forEach(x -> maze.add(new GameObject(ObjectType.BLANK_SPACE, x)));
-        for(int x = 0; x <= MAZE_BLOCK_WIDTH; x++){
+        for(int x = 0; x < MAZE_BLOCK_WIDTH; x++){
             maze.add(new GameObject(ObjectType.WALL, new Position(x*BLOCkEDGE, 0)));
             maze.add(new GameObject(ObjectType.WALL, new Position(x*BLOCkEDGE, MAZE_BLOCK_HEIGHT *BLOCkEDGE)));
         }
-        for(int x = 0; x <= MAZE_BLOCK_HEIGHT; x++){
+        for(int x = 0; x < MAZE_BLOCK_HEIGHT; x++){
             maze.add(new GameObject(ObjectType.WALL, new Position(0, x*BLOCkEDGE)));
             maze.add(new GameObject(ObjectType.WALL, new Position(MAZE_BLOCK_WIDTH *BLOCkEDGE, x*BLOCkEDGE)));
         }
-        for(int x = 0; x <= MAZE_BLOCK_WIDTH; x = x+2){
-            for(int y = 0; y <= MAZE_BLOCK_HEIGHT; y = y+2){
+        for(int x = 0; x < MAZE_BLOCK_WIDTH; x = x+2){
+            for(int y = 0; y < MAZE_BLOCK_HEIGHT; y = y+2){
                 maze.add(new GameObject(ObjectType.WALL, new Position(x*BLOCkEDGE, y*BLOCkEDGE)));
             }
         }
@@ -88,8 +88,8 @@ public class LevelGenerator {
 
     private static Set<Position> cellPositions() {
         Set<Position> positions = new HashSet<>();
-        for (int x = 0; x <= MAZE_BLOCK_WIDTH; x++ ) {
-            for (int y = 0; y <= MAZE_BLOCK_HEIGHT; y++ ) {
+        for (int x = 0; x < MAZE_BLOCK_WIDTH; x++ ) {
+            for (int y = 0; y < MAZE_BLOCK_HEIGHT; y++ ) {
                 positions.add(new Position(x*BLOCkEDGE, y*BLOCkEDGE));
             }
         }
