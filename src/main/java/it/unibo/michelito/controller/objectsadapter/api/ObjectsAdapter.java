@@ -12,7 +12,7 @@ public interface ObjectsAdapter {
     /**
      * This method retrieves a set of {@link MazeObject} from the LevelGenerator.
      *
-     * @param level the level to generate the set of maze objects.
+     * @param level the level to generate the set of {@link MazeObject}s.
      * @return a set of {@link MazeObject} representing the level.
      */
     Set<MazeObject> requestMazeObjects(final int level);
