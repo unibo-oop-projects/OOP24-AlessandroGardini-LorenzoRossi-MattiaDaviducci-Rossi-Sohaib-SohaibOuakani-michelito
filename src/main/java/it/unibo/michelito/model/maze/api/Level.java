@@ -13,9 +13,9 @@ public interface Level {
     /**
      * Updates all {@link Updatable} and applies the player's command.
      *
-     * @param currentTime the current time in milliseconds, used for game state updates.
+     * @param deltaTime the delta between last update in milliseconds, used for game state updates.
      */
-    void update(long currentTime);
+    void update(long deltaTime);
 
     /**
      * Set the next command to apply.

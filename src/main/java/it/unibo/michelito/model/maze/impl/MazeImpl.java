@@ -48,8 +48,8 @@ public final class MazeImpl implements Maze, Level {
     }
 
     @Override
-    public void update(long currentTime) {
-        this.getUpdatable().forEach(u -> u.update(currentTime, this));
+    public void update(final long deltaTime) {
+        this.getUpdatable().forEach(u -> u.update(deltaTime, this));
     }
 
     @Override
