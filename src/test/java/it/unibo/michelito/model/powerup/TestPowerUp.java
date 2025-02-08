@@ -1,11 +1,14 @@
 package it.unibo.michelito.model.powerup;
 
+import it.unibo.michelito.model.bomb.api.BombType;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.maze.impl.MazeImpl;
+import it.unibo.michelito.model.player.api.ModifiablePlayer;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.model.player.impl.PlayerImpl;
 import it.unibo.michelito.model.powerups.api.PowerUp;
 import it.unibo.michelito.model.powerups.impl.BombLimitPowerUp;
+import it.unibo.michelito.model.powerups.impl.BombTypePowerUp;
 import it.unibo.michelito.model.powerups.impl.SpeedPowerUp;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
@@ -20,7 +23,7 @@ final class TestPowerUp {
     void testSpeedPowerUp() {
         final Position position = new Position(0, 0);
         final PowerUp powerUp = new SpeedPowerUp(position);
-        final Player player = new PlayerImpl(position);
+        final PlayerImpl player = new PlayerImpl(position);
         powerUp.applyEffect(player);
 
         player.setDirection(Direction.RIGHT);
@@ -33,7 +36,7 @@ final class TestPowerUp {
         //TODO: test the bomb once we can create a maze with blanks
         final Position position = new Position(0, 0);
         final PowerUp powerUp = new BombLimitPowerUp(position);
-        final Player player = new PlayerImpl(position);
+        final PlayerImpl player = new PlayerImpl(position);
         powerUp.applyEffect(player);
         Maze maze = new MazeImpl(-1);
 
@@ -46,8 +49,11 @@ final class TestPowerUp {
 
     @Test
     void testBombTypePowerUp() {
-        //TODO: test the bomb once we can create a maze with blanks
-        //do a loop where you take the power up place the bomb check if it is different form the standard
-        //if not remove the bomb from the maze, rinse and repeat
+        final PlayerImpl player = new PlayerImpl(new Position(0, 0));
+        final PowerUp bombTypePowerUp = new BombTypePowerUp(new Position(0, 0));
+
+        assertEquals(BombType.STANDARD, player.getBombType());
+        bombTypePowerUp.applyEffect(player);
+        assertNotEquals(BombType.STANDARD, player.getBombType());
     }
 }

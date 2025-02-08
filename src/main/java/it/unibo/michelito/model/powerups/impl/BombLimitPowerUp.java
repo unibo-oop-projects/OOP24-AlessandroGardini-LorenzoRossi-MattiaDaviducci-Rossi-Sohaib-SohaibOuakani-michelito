@@ -1,6 +1,6 @@
 package it.unibo.michelito.model.powerups.impl;
 
-import it.unibo.michelito.model.player.api.Player;
+import it.unibo.michelito.model.player.api.ModifiablePlayer;
 import it.unibo.michelito.util.Position;
 
 
@@ -12,7 +12,8 @@ public class BombLimitPowerUp extends AbsPowerUp {
     }
 
     @Override
-    public final void applyEffect(final Player player) {
-        player.increaseBombLimit(BOMB_LIMIT_UPGRADE);
+    public final void applyEffect(final ModifiablePlayer player) {
+        final int newLimit = player.getBombLimit() + BOMB_LIMIT_UPGRADE;
+        player.setBombLimit(newLimit);
     }
 }

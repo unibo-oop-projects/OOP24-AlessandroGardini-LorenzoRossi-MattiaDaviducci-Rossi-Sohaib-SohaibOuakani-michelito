@@ -1,7 +1,10 @@
 package it.unibo.michelito.model.player;
 
+import it.unibo.michelito.model.box.impl.BoxImpl;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.maze.impl.MazeImpl;
+import it.unibo.michelito.model.modelutil.MazeObject;
+import it.unibo.michelito.model.modelutil.Temporary;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.model.player.impl.PlayerImpl;
 import it.unibo.michelito.model.wall.impl.WallImpl;
@@ -9,8 +12,6 @@ import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -54,48 +55,26 @@ class TestPlayer {
     }
 
     @Test
-    void testBumpInToWall() {
+    void testBumpInToBox() {
         int levelNumber = -1;
         Maze maze = new MazeImpl(levelNumber);
 
+        final Temporary box1 = new BoxImpl(new Position(5, 0));
+        maze.addMazeObject(box1);
         player.setDirection(Direction.RIGHT);
         player.update(1, maze);
         assertEquals(new Position(0, 0), player.position());
+        maze.removeMazeObject(box1);
 
+        final Temporary box2 = new BoxImpl(new Position(0, 6));
+        maze.addMazeObject(box2);
         player.setDirection(Direction.DOWN);
-        player.update(2, maze);
-        assertEquals(new Position(0, 0), player.position());
-
-        player.setDirection(Direction.UP);
-        player.update(3,maze);
+        player.update(1, maze);
         assertEquals(new Position(0, 0), player.position());
 
         player.setDirection(Direction.RIGHT);
-        player.update(4, maze);
-        assertEquals(new Position(1, 0), player.position());
-
-        player.setDirection(Direction.RIGHT);
-        player.update(13, maze);
+        player.update(10, maze);
         assertEquals(new Position(10, 0), player.position());
 
-    }
-
-    @Test
-    void testIncreaseSpeed() {
-        int levelNumber = -1;
-        Maze maze = new MazeImpl(levelNumber);
-        final double speedUpgrade = 0.1;
-        player.setDirection(Direction.RIGHT);
-        player.update(1, maze);
-        assertEquals(new Position(1, 0), player.position());
-
-        player.setDirection(Direction.DOWN);
-        player.increaseSpeed(speedUpgrade);
-        player.increaseSpeed(speedUpgrade);
-        player.increaseSpeed(speedUpgrade);
-        player.increaseSpeed(speedUpgrade);
-        player.increaseSpeed(speedUpgrade);
-        player.update(2, maze);
-        assertEquals(new Position(1, 1.5), player.position());
     }
 }

@@ -5,7 +5,7 @@ import it.unibo.michelito.model.player.api.Player;
 
 public class PlaceCommand implements PlayerCommand {
     @Override
-    public void execute(Player player) {
+    public void execute(final Player player) {
         player.notifyToPlace();
     }
 }
