@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
  */
 public final class MazeImpl implements Maze, Level {
     private final Set<MazeObject> mazeObjectsSet;
+    private long lastUpdate;
 
     private boolean won;
     private boolean lost;
@@ -49,7 +50,8 @@ public final class MazeImpl implements Maze, Level {
 
     @Override
     public void update(long currentTime) {
-        this.getUpdatable().forEach(u -> u.update(currentTime, this));
+        this.lastUpdate = currentTime;
+        this.getUpdatable().forEach(u -> u.update(currentTime - this.lastUpdate, this));
     }
 
     @Override

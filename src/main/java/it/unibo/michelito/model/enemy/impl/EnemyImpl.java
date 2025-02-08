@@ -20,7 +20,6 @@ import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
  */
 public final class EnemyImpl implements Enemy {
     private Position actualposition;
-    private long lastUpdate;
     private MoodAI moodAI;
     private HitBox hitBox;
     private Direction direction;
@@ -31,23 +30,20 @@ public final class EnemyImpl implements Enemy {
      */
     public EnemyImpl(final Position position) {
         this.actualposition = position;
-        this.lastUpdate = System.currentTimeMillis();
         hitBox = updateHitBox(position);
         direction = Direction.NONE;
     }
 
     @Override
-    public void update(final long currentTime, final Maze maze) {
+    public void update(final long deltaTime, final Maze maze) {
         if (moodAI == null) {
-            moodAI = new MoodAIImpl(currentTime, maze);
+            moodAI = new MoodAIImpl(maze);
         }
 
-        final long deltaTime = currentTime - lastUpdate;
         direction = moodAI.getDirection();
         verifyHitPlayer(maze);
         this.move(maze, deltaTime);
-        moodAI.update(currentTime);
-        lastUpdate = currentTime;
+        moodAI.update(deltaTime);
     }
 
     @Override
