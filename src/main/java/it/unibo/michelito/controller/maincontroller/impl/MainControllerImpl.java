@@ -19,7 +19,7 @@ public class MainControllerImpl implements MainController, HomeParentController,
     private GameController gameController; // = new GameControllerImpl(this); can be final
 
     /**
-     * Starts the application by displaying the home menu.
+     * {@inheritDoc}
      */
     @Override
     public void start() {
@@ -27,8 +27,7 @@ public class MainControllerImpl implements MainController, HomeParentController,
     }
 
     /**
-     * Switches from the home menu to the game.
-     * The home menu is hidden, and the game is started.
+     * {@inheritDoc}
      */
     @Override
     public void switchToGame() {
@@ -37,8 +36,7 @@ public class MainControllerImpl implements MainController, HomeParentController,
     }
 
     /**
-     * Switches from the game back to the home menu.
-     * The game is stopped, and the home menu is displayed again.
+     * {@inheritDoc}
      */
     @Override
     public void switchToHome() {
@@ -47,7 +45,7 @@ public class MainControllerImpl implements MainController, HomeParentController,
     }
 
     /**
-     * Requests the termination of the application by exiting the system.
+     * {@inheritDoc}
      */
     @Override
     public void quit() {
