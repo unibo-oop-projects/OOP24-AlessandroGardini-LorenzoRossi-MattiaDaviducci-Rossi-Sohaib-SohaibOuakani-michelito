@@ -127,12 +127,12 @@ public class PlayerImpl implements Player {
     }
 
     @Override
-    public void increaseBombLimit(int amount) {
+    public void increaseBombLimit(final int amount) {
         this.currentBombLimit = this.currentBombLimit + amount;
     }
 
     @Override
-    public void increaseSpeed(double speedIncrease) {
+    public void increaseSpeed(final double speedIncrease) {
         this.currentSpeed = BigDecimal.valueOf(this.currentSpeed).add(BigDecimal.valueOf(speedIncrease)).doubleValue();
     }
 

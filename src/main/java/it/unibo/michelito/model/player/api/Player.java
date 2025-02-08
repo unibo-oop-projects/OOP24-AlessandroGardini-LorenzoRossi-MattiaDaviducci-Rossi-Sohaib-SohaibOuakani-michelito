@@ -9,11 +9,13 @@ import it.unibo.michelito.util.Direction;
 public interface Player extends Updatable {
     /**
      * Increases the number of placeable {Bomb} by the {@link Player}.
+     * @param amount the number of bombs that {@link Player} can place more
      */
     void increaseBombLimit(int amount);
 
     /**
      * Increases the speed of the {@link Player}.
+     * @param speedIncrease the amount of increase to speed
      */
     void increaseSpeed(double speedIncrease);
 
