@@ -58,8 +58,8 @@ public final class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void update(final long currentTime) {
-        currentLevel.update(currentTime);
+    public void update(final long deltaTime) {
+        currentLevel.update(deltaTime);
         if (currentLevel.isLost()) {
             this.loseLife();
         }
