@@ -1,5 +1,8 @@
 package it.unibo.michelito.application;
 
+import it.unibo.michelito.controller.maincontroller.api.MainController;
+import it.unibo.michelito.controller.maincontroller.impl.MainControllerImpl;
+
 /**
  * Entry class for the Michelito application.
  */
@@ -15,6 +18,7 @@ public final class Michelito {
      * @param args is ignored.
      */
     public static void main(final String[] args) {
-        //DO SOMETHING
+        MainController controller = new MainControllerImpl();
+        controller.start();
     }
 }
