@@ -9,13 +9,14 @@ import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.util.Position;
 
 public class BombManagerComponentImpl implements BombManagerComponent {
+    private static final int STANDARD_BOMB_LIMIT = 1;
     private int currentBombLimit;
     private boolean place;
     private BombType bombType;
 
-    public BombManagerComponentImpl(final int limit) {
+    public BombManagerComponentImpl() {
         this.bombType = BombType.STANDARD;
-        this.currentBombLimit = limit;
+        this.currentBombLimit = STANDARD_BOMB_LIMIT;
         this.place = false;
     }
 

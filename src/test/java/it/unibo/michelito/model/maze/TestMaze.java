@@ -1,21 +1,26 @@
 package it.unibo.michelito.model.maze;
 
+import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
+import it.unibo.michelito.controller.playercommand.impl.MoveCommand;
 import it.unibo.michelito.model.box.impl.BoxImpl;
+import it.unibo.michelito.model.door.impl.DoorImpl;
+import it.unibo.michelito.model.enemy.impl.EnemyImpl;
 import it.unibo.michelito.model.maze.impl.MazeImpl;
 import it.unibo.michelito.model.modelutil.Temporary;
+import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test for the {@link MazeImpl} class.
  */
 final class TestMaze {
+    public static final int DELTA_TIME = 100;
+    public static final int ENEMY_POSITION = 10; //used for x and y, for simplicity
+    public static final int BOX_POSITION = 4; //used for x and y, for simplicity
     private MazeImpl maze;
 
     /**
@@ -24,7 +29,7 @@ final class TestMaze {
      */
     @BeforeEach
     void setUp() {
-        maze = new MazeImpl(-1);
+        maze = new MazeImpl(LevelGenerator.testLevel());
     }
 
     /**
@@ -50,7 +55,7 @@ final class TestMaze {
     void testConsistency() {
         assertThrows(NullPointerException.class, () -> maze.addMazeObject(null));
         assertThrows(NullPointerException.class, () -> maze.removeMazeObject(null));
-        assertFalse(maze.removeMazeObject(new BoxImpl(new Position(4, 4))));
+        assertFalse(maze.removeMazeObject(new BoxImpl(new Position(BOX_POSITION, BOX_POSITION))));
     }
 
     /**
@@ -75,5 +80,19 @@ final class TestMaze {
         assertTrue(maze.isLost());
         maze.enterTheDoor();
         assertTrue(maze.isWon());
+    }
+
+    /**
+     * Test {@code Update} method.
+     */
+    @Test
+    void testUpdate() {
+        var initialPlayerPosition = maze.getPlayer().position();
+        var initialEnemyPosition = new Position(ENEMY_POSITION, ENEMY_POSITION);
+        maze.addMazeObject(new EnemyImpl(initialEnemyPosition));
+        maze.setCommand(new MoveCommand(Direction.DOWN));
+        maze.update(DELTA_TIME);
+        assertNotEquals(initialPlayerPosition, maze.getPlayer().position());
+        assertNotEquals(initialPlayerPosition, maze.getPlayer().position());
     }
 }

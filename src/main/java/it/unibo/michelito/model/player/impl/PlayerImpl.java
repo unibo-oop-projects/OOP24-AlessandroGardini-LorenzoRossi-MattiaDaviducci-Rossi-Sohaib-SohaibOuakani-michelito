@@ -24,8 +24,6 @@ import it.unibo.michelito.model.powerups.api.PowerUp;
  * Implementation of {@link Player}.
  */
 public class PlayerImpl implements Player, ModifiablePlayer {
-    private static final int STANDARD_BOMB_LIMIT = 1;
-    private static final double STANDARD_SPEED = 1;
     private final HitBoxComponent hitBoxComponent;
     private final MovementComponent movementComponent;
     private final BombManagerComponent bombManagerComponent;
@@ -35,8 +33,8 @@ public class PlayerImpl implements Player, ModifiablePlayer {
      * @param position the spawning {@link Position} of the {@link Player}.
      */
     public PlayerImpl(final Position position) {
-        this.movementComponent = new MovementComponentImpl(position, STANDARD_SPEED);
-        this.bombManagerComponent = new BombManagerComponentImpl(STANDARD_BOMB_LIMIT);
+        this.movementComponent = new MovementComponentImpl(position);
+        this.bombManagerComponent = new BombManagerComponentImpl();
         this.hitBoxComponent = new HitBoxComponentImpl(position);
     }
 
