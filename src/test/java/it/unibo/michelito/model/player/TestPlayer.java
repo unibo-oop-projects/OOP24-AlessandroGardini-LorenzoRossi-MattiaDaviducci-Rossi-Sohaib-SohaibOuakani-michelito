@@ -18,46 +18,44 @@ import static org.junit.jupiter.api.Assertions.*;
 class TestPlayer {
 
     Player player;
+    int levelNumber = -1;
+    final Maze maze = new MazeImpl(levelNumber);
 
     @BeforeEach
     void setUp() {
-        final Position initialPosition = new Position(0, 0);
-        this.player = new PlayerImpl(initialPosition);
+        this.player = maze.getPlayer();
+        /*spwans at (6, 6)*/
     }
 
     @Test
     void testMovement() {
-        int levelNumber = -1;
-        final Maze maze = new MazeImpl(levelNumber);
 
-        assertEquals(new Position(0, 0), player.position());
-        player.update(10, maze);
-        assertEquals(new Position(0, 0), player.position());
+        assertEquals(new Position(6, 6), player.position());
+        player.update(10, this.maze);
+        assertEquals(new Position(6, 6), player.position());
 
         player.setDirection(Direction.RIGHT);
-        player.update(20, maze);
-        assertEquals(new Position(10, 0), player.position());
+        player.update(10, this.maze);
+        assertEquals(new Position(16, 6), player.position());
 
-        player.update(30, maze);
-        assertEquals(new Position(10, 0), player.position());
+        player.update(10, this.maze);
+        assertEquals(new Position(16, 6), player.position());
 
         player.setDirection(Direction.LEFT);
-        player.update(40, maze);
-        assertEquals(new Position(0, 0), player.position());
+        player.update(10, this.maze);
+        assertEquals(new Position(6, 6), player.position());
 
         player.setDirection(Direction.DOWN);
-        player.update(50, maze);
-        assertEquals(new Position(0, 10), player.position());
+        player.update(10, this.maze);
+        assertEquals(new Position(6, 16), player.position());
 
         player.setDirection(Direction.UP);
-        player.update(60, maze);
-        assertEquals(new Position(0, 0), player.position());
+        player.update(10, this.maze);
+        assertEquals(new Position(6, 6), player.position());
     }
 
     @Test
     void testBumpInToBox() {
-        int levelNumber = -1;
-        Maze maze = new MazeImpl(levelNumber);
 
         final Temporary box1 = new BoxImpl(new Position(5, 0));
         maze.addMazeObject(box1);

@@ -20,6 +20,7 @@ public class MovementComponentImpl implements MovementComponent {
     @Override
     public void move(final long time) {
         this.setPosition(calculateNextPosition(time));
+        this.setDirection(Direction.NONE);
     }
 
     private Position calculateNextPosition(final long time) {
@@ -51,5 +52,10 @@ public class MovementComponentImpl implements MovementComponent {
     @Override
     public Position getPosition() {
         return this.position;
+    }
+
+    @Override
+    public double getSpeed() {
+        return this.speed;
     }
 }

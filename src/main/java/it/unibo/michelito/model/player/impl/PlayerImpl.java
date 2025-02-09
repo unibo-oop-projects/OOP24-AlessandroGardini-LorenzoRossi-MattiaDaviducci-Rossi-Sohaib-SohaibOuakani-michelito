@@ -1,11 +1,13 @@
 package it.unibo.michelito.model.player.impl;
 
-import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Optional;
 
 import it.unibo.michelito.model.blanckspace.api.BlankSpace;
 import it.unibo.michelito.model.bomb.api.BombType;
 import it.unibo.michelito.model.bomb.impl.BombFactoryImpl;
+import it.unibo.michelito.model.components.api.MovementComponent;
+import it.unibo.michelito.model.components.impl.MovementComponentImpl;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.player.api.ModifiablePlayer;
 import it.unibo.michelito.model.player.api.Player;
@@ -24,20 +26,17 @@ public class PlayerImpl implements Player, ModifiablePlayer {
     private static final int STANDARD_BOMB_LIMIT = 1;
     private static final double STANDARD_SPEED = 1;
     private HitBox hitbox;
-    private Direction direction;
     private boolean place;
-    private Position currentPosition;
     private int currentBombLimit = STANDARD_BOMB_LIMIT;
-    private double currentSpeed = STANDARD_SPEED;
     private BombType bombType = BombType.STANDARD;
+    private final MovementComponent movementComponent;
 
     /**
      * Constructor for {@link PlayerImpl}.
      * @param position the spawning {@link Position} of the {@link Player}.
      */
     public PlayerImpl(final Position position) {
-        this.currentPosition = position;
-        this.setDirection(Direction.NONE);
+        this.movementComponent = new MovementComponentImpl(position, STANDARD_SPEED);
         this.updateHitbox();
     }
 
@@ -48,12 +47,9 @@ public class PlayerImpl implements Player, ModifiablePlayer {
 
     @Override
     public final void update(final long deltaTime, final Maze maze) {
-        if (!this.direction.equals(Direction.NONE)) {
             this.move(deltaTime, maze);
-            this.setDirection(Direction.NONE);
             this.updateHitbox();
             this.checkPowerUp(maze);
-        }
         if (this.place) {
             if (this.allowedToPlaceBomb(maze)) {
                 this.placeBomb(maze);
@@ -68,25 +64,13 @@ public class PlayerImpl implements Player, ModifiablePlayer {
 
     private void move(final long time, final Maze maze) {
         final Position oldPosition = this.position();
-        final Position newPosition = this.calculateNextPosition(time);
-        this.setPosition(newPosition);
+        this.movementComponent.move(time);
         this.updateHitbox();
 
         if (this.checkCollision(maze)) {
             this.setPosition(oldPosition);
             this.updateHitbox();
         }
-    }
-
-    private Position calculateNextPosition(final long time) {
-        final BigDecimal move = BigDecimal.valueOf(this.currentSpeed).multiply(BigDecimal.valueOf(time));
-        final BigDecimal xDisplacement = move.multiply(BigDecimal.valueOf(this.direction.toPosition().x()));
-        final BigDecimal yDisplacement = move.multiply(BigDecimal.valueOf(this.direction.toPosition().y()));
-
-        final BigDecimal newX = BigDecimal.valueOf(this.position().x()).add(xDisplacement);
-        final BigDecimal newY = BigDecimal.valueOf(this.position().y()).add(yDisplacement);
-
-        return new Position(newX.doubleValue(), newY.doubleValue());
     }
 
     private boolean checkCollision(final Maze maze) {
@@ -111,7 +95,7 @@ public class PlayerImpl implements Player, ModifiablePlayer {
 
     @Override
     public final Position position() {
-        return this.currentPosition;
+        return this.movementComponent.getPosition();
     }
 
     @Override
@@ -137,12 +121,12 @@ public class PlayerImpl implements Player, ModifiablePlayer {
      */
     @Override
     public void setSpeed(final double newSpeed) {
-        this.currentSpeed = newSpeed;
+        this.movementComponent.setSpeed(newSpeed);
     }
 
     @Override
     public double getSpeed() {
-        return  this.currentSpeed;
+        return this.movementComponent.getSpeed();
     }
 
     @Override
@@ -152,7 +136,7 @@ public class PlayerImpl implements Player, ModifiablePlayer {
 
 
     private void setPosition(final Position newPosition) {
-        this.currentPosition = newPosition;
+        this.movementComponent.setPosition(newPosition);
     }
 
     private void placeBomb(final Maze maze) {
@@ -170,7 +154,11 @@ public class PlayerImpl implements Player, ModifiablePlayer {
 
     @Override
     public final void setDirection(final Direction direction) {
-        this.direction = direction;
+        if (Objects.isNull(direction)) {
+            throw new IllegalArgumentException();
+        } else {
+            this.movementComponent.setDirection(direction);
+        }
     }
 
     @Override

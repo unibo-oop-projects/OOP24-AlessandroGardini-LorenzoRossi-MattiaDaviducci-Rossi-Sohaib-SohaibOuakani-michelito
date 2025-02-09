@@ -13,4 +13,6 @@ public interface MovementComponent {
     void setPosition(Position position);
 
     Position getPosition();
+
+    double getSpeed();
 }
