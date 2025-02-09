@@ -5,12 +5,12 @@ import java.util.Optional;
 
 import it.unibo.michelito.model.blanckspace.api.BlankSpace;
 import it.unibo.michelito.model.bomb.api.BombType;
-import it.unibo.michelito.model.components.api.BombManagerComponent;
-import it.unibo.michelito.model.components.api.HitBoxComponent;
-import it.unibo.michelito.model.components.api.MovementComponent;
-import it.unibo.michelito.model.components.impl.BombManagerComponentImpl;
-import it.unibo.michelito.model.components.impl.HitBoxComponentImpl;
-import it.unibo.michelito.model.components.impl.MovementComponentImpl;
+import it.unibo.michelito.model.player.components.api.BombManagerComponent;
+import it.unibo.michelito.model.player.components.api.HitBoxComponent;
+import it.unibo.michelito.model.player.components.api.MovementComponent;
+import it.unibo.michelito.model.player.components.impl.BombManagerComponentImpl;
+import it.unibo.michelito.model.player.components.impl.HitBoxComponentImpl;
+import it.unibo.michelito.model.player.components.impl.MovementComponentImpl;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.player.api.ModifiablePlayer;
 import it.unibo.michelito.model.player.api.Player;

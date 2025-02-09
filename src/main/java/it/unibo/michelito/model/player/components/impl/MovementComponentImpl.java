@@ -1,6 +1,6 @@
-package it.unibo.michelito.model.components.impl;
+package it.unibo.michelito.model.player.components.impl;
 
-import it.unibo.michelito.model.components.api.MovementComponent;
+import it.unibo.michelito.model.player.components.api.MovementComponent;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 

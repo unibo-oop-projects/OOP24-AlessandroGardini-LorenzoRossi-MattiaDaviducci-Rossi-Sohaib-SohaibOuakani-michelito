@@ -1,4 +1,4 @@
-package it.unibo.michelito.model.components.api;
+package it.unibo.michelito.model.player.components.api;
 
 import it.unibo.michelito.model.blanckspace.api.BlankSpace;
 import it.unibo.michelito.model.maze.api.Maze;

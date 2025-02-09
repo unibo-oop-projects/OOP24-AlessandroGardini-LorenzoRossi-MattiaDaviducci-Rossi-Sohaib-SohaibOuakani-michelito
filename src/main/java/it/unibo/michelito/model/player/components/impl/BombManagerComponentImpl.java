@@ -1,9 +1,9 @@
-package it.unibo.michelito.model.components.impl;
+package it.unibo.michelito.model.player.components.impl;
 
 import it.unibo.michelito.model.bomb.api.BombFactory;
 import it.unibo.michelito.model.bomb.api.BombType;
 import it.unibo.michelito.model.bomb.impl.BombFactoryImpl;
-import it.unibo.michelito.model.components.api.BombManagerComponent;
+import it.unibo.michelito.model.player.components.api.BombManagerComponent;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.util.Position;

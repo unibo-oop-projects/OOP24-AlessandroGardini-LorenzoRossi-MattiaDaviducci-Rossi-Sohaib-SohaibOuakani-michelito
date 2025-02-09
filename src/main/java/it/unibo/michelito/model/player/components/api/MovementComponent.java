@@ -1,4 +1,4 @@
-package it.unibo.michelito.model.components.api;
+package it.unibo.michelito.model.player.components.api;
 
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
