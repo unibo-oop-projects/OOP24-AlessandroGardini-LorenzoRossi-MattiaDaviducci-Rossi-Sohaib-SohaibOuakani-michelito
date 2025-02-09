@@ -2,6 +2,8 @@ package it.unibo.michelito.model.bomb.impl;
 
 import it.unibo.michelito.model.bomb.api.Bomb;
 import it.unibo.michelito.model.bomb.api.BombType;
+import it.unibo.michelito.model.flame.api.Flame;
+import it.unibo.michelito.model.flame.impl.FlameFactoryImpl;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.ObjectType;
@@ -12,21 +14,20 @@ public class BombImpl implements Bomb {
     private final Position position;
     private final BombType bombType;
     private boolean exploded;
-    private long timerStart;
+    private final int fuseTime = 3000;
 
     public BombImpl(Position position, BombType bombType) {
         this.position = position;
         this.bombType = bombType;
         this.exploded = false;
-        startTimer();
-    }
-
-    private void startTimer() {
-        this.timerStart = System.currentTimeMillis();
     }
 
     public boolean isExploded() {
         return this.exploded;
+    }
+
+    public BombType getBombType() {
+        return bombType;
     }
 
     private void explode(Maze maze) {
@@ -34,17 +35,22 @@ public class BombImpl implements Bomb {
         if (isExploded()) {
             maze.removeMazeObject(this);
         }
+        generateFlame(maze);
     }
 
-    private boolean isPassThrough() {
+    private void generateFlame(Maze maze) {
+        Flame flame = new FlameFactoryImpl().createFlame(this.position, bombType);
+        maze.addMazeObject(flame);
+    }
+
+    public static boolean isFlamePassThrough(BombType bombType) {
         return switch (bombType) {
-            case NUKE -> true;
-            case PASS_THROUGH -> true;
+            case NUKE, PASS_THROUGH -> true;
             default -> false;
         };
     }
 
-    private int getRange() {
+    public static int getFlameRange(BombType bombType) {
         return switch (bombType) {
             case NUKE -> 7;
             case LONG -> 5;
@@ -54,8 +60,9 @@ public class BombImpl implements Bomb {
     }
 
     @Override
-    public void update(long currentTime, Maze maze) {
-        if (!exploded && currentTime - timerStart >= 3000) {
+    public void update(long deltaTime, Maze maze) {
+        long remainingTime = fuseTime - deltaTime;
+        if (!exploded && remainingTime <= 0) {
             explode(maze);
         }
     }
