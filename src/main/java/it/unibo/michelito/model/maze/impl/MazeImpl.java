@@ -26,14 +26,13 @@ import java.util.stream.Collectors;
 /**
  * An implementation of {@link Maze} and {@link Level} interfaces representing a single maze in the game.
  * <p>
- * This class manages the maze objects, including walls, boxes, enemies, power-ups, and more.
- * It provides methods to interact with and manipulate these objects within the maze thought the Maze interface.
- * It provides method to get the current state and to update all {@link Updatable} thought the Level interface.
+ * This class manages the {@link MazeObject}.
+ * It provides methods to interact with and manipulate these objects within the maze thought the {@link Maze} interface.
+ * It provides method to get the current state and to update all {@link Updatable} thought the {@link Level} interface.
  * </p>
  */
 public final class MazeImpl implements Maze, Level {
     private final Set<MazeObject> mazeObjectsSet;
-
     private boolean won;
     private boolean lost;
 
@@ -156,7 +155,7 @@ public final class MazeImpl implements Maze, Level {
      * A utility method to filter and retrieve all objects of a specific type from the maze.
      *
      * @param type the class type to filter the objects by.
-     * @param <T>  the type of element that will be contained in the output set.
+     * @param <T> the type of element that will be contained in the output set.
      * @return a {@link Set} of objects of the specified type.
      */
     private <T> Set<T> getObjectsOfType(final Class<T> type) {
