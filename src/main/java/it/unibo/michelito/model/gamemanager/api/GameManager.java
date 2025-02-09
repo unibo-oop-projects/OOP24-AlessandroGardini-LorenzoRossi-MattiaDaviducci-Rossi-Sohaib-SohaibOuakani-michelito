@@ -11,7 +11,7 @@ import java.util.Set;
  * Represents the Game Manager of the Michelito Application.
  * This interface defines the core logic for controlling the game state
  * ant it is the single entry point of the model.
- * Provides getter od the current state of the game.
+ * Provides getter for the current state of the game.
  */
 public interface GameManager {
     /**
