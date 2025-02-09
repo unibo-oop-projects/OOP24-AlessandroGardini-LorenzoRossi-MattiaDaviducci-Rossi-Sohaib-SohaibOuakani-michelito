@@ -21,7 +21,8 @@ import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
 import it.unibo.michelito.model.powerups.api.PowerUp;
 
 /**
- * Implementation of {@link Player}.
+ * Implementation of {@link Player} and {@link ModifiablePlayer} that represents a player entity in the game.
+ * It manages movement, collisions, and bomb placement.
  */
 public class PlayerImpl implements Player, ModifiablePlayer {
     private final HitBoxComponent hitBoxComponent;
@@ -29,7 +30,8 @@ public class PlayerImpl implements Player, ModifiablePlayer {
     private final BombManagerComponent bombManagerComponent;
 
     /**
-     * Constructor for {@link PlayerImpl}.
+     * Constructs a {@code PlayerImpl} instance at the specified {@link Position}.
+     *
      * @param position the spawning {@link Position} of the {@link Player}.
      */
     public PlayerImpl(final Position position) {
@@ -38,6 +40,12 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         this.hitBoxComponent = new HitBoxComponentImpl(position);
     }
 
+    /**
+     * Updates the player's state, including movement and interactions with the {@link Maze}.
+     *
+     * @param deltaTime the time elapsed since the last update
+     * @param maze the current game {@link Maze}
+     */
     @Override
     public final void update(final long deltaTime, final Maze maze) {
             this.move(deltaTime, maze);
@@ -79,18 +87,27 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public final Position position() {
+    public Position position() {
         return this.movementComponent.getPosition();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public final HitBox getHitBox() {
+    public HitBox getHitBox() {
         return this.hitBoxComponent.getHitBox();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public final ObjectType getType() {
+    public ObjectType getType() {
         return ObjectType.PLAYER;
     }
 
@@ -110,11 +127,17 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         this.movementComponent.setSpeed(newSpeed);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getSpeed() {
         return this.movementComponent.getSpeed();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getBombLimit() {
         return this.bombManagerComponent.getBombLimit();
@@ -130,8 +153,11 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public final void setDirection(final Direction direction) {
+    public void setDirection(final Direction direction) {
         if (Objects.isNull(direction)) {
             throw new IllegalArgumentException();
         } else {
@@ -139,8 +165,11 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public final void notifyToPlace() {
+    public void notifyToPlace() {
         this.bombManagerComponent.notifyToPlace(true);
     }
 
@@ -152,6 +181,9 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         this.bombManagerComponent.setBombType(type);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BombType getBombType() {
         return this.bombManagerComponent.getBombType();
