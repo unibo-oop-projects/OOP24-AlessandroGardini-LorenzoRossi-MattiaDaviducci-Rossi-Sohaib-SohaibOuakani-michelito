@@ -1,4 +1,4 @@
-package it.unibo.michelito.util.hitbox.api;
+package it.unibo.michelito.model.modelutil.hitbox.api;
 
 import it.unibo.michelito.util.Position;
 
