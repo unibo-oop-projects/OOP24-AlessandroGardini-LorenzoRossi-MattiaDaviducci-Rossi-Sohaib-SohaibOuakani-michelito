@@ -11,6 +11,9 @@ public class BombLimitPowerUp extends AbsPowerUp {
         super(position);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final void applyEffect(final ModifiablePlayer player) {
         final int newLimit = player.getBombLimit() + BOMB_LIMIT_UPGRADE;

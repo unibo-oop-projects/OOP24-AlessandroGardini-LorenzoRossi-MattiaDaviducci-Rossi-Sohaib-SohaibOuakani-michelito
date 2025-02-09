@@ -18,8 +18,11 @@ public class PowerUpFactoryImpl implements PowerUpFactory {
     private static final double UPGRADE_SPEED_CHANCE = 0.2;
     private static final double BOMB_TYPE_CHANCE = 0.5;
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
-    public final Optional<PowerUp> generateRandomPowerUp(final Position position) {
+    public Optional<PowerUp> generateRandomPowerUp(final Position position) {
         final double chance = new Random().nextDouble();
 
         if (chance <= BOMB_TYPE_CHANCE) {

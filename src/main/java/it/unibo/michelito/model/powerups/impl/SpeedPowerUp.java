@@ -12,13 +12,15 @@ import java.math.BigDecimal;
 public class SpeedPowerUp extends AbsPowerUp {
     private static final double SPEED_UPGRADE = 0.1;
     /**
-     * Constructor for {@link SpeedPowerUp}.
-     * @param position {@link Position} of the {@link SpeedPowerUp}
+     * {@inheritDoc}
      */
     public SpeedPowerUp(final Position position) {
         super(position);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final void applyEffect(final ModifiablePlayer player) {
         final double newSpeed = BigDecimal.valueOf(SPEED_UPGRADE).add(BigDecimal.valueOf(player.getSpeed())).doubleValue();
