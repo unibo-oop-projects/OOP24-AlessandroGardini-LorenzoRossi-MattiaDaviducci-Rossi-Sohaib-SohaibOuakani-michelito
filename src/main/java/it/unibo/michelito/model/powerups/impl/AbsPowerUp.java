@@ -12,7 +12,7 @@ abstract class AbsPowerUp implements PowerUp {
     private final Position position;
     private final HitBox hitBox;
     /**
-     * Constructor for {@link PowerUp}
+     * Constructor for {@link PowerUp}.
      * @param position position {@link Position} of the {@link PowerUp}
      */
     AbsPowerUp(final Position position) {

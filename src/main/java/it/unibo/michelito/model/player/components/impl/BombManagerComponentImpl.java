@@ -19,38 +19,61 @@ public class BombManagerComponentImpl implements BombManagerComponent {
         this.place = false;
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void setBombLimit(final int limit) {
         this.currentBombLimit = limit;
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public int getBombLimit() {
         return this.currentBombLimit;
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void place(final Maze maze, final Position position) {
         final BombFactory factory = new BombFactoryImpl();
         final MazeObject bomb = factory.createBomb(position, this.bombType);
-        maze.addMazeObject(bomb);
+        if(this.place) {
+            maze.addMazeObject(bomb);
+        }
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void notifyToPlace(final boolean place) {
         this.place = place;
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public boolean hasToPlace() {
         return this.place;
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void setBombType(final BombType type) {
         this.bombType = type;
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public BombType getBombType() {
         return this.bombType;
