@@ -24,11 +24,9 @@ public class PowerUpFactoryImpl implements PowerUpFactory {
 
         if (chance <= BOMB_LIMIT_CHANCE) {
             return Optional.of(new BombLimitPowerUp(position));
-        }
-        if (chance <= UPGRADE_SPEED_CHANCE) {
+        } else if (chance <= UPGRADE_SPEED_CHANCE) {
             return Optional.of(new SpeedPowerUp(position));
-        }
-        if(chance <= BOMB_TYPE_CHANCE) {
+        } else if(chance <= BOMB_TYPE_CHANCE) {
             return Optional.of(new BombTypePowerUp(position));
         }
         return Optional.empty();

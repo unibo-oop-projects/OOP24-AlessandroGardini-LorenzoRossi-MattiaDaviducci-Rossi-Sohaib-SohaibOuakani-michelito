@@ -15,8 +15,9 @@ import java.util.Optional;
 public class HitBoxComponentImpl implements HitBoxComponent {
     private HitBox hitBox;
 
-    public HitBoxComponentImpl(Position position) {
-        update(position);
+    public HitBoxComponentImpl(final Position position) {
+        final HitBoxFactory hitBoxFactory = new HitBoxFactoryImpl();
+        this.hitBox = hitBoxFactory.entityeHitBox(position);
     }
 
     @Override
@@ -25,13 +26,13 @@ public class HitBoxComponentImpl implements HitBoxComponent {
     }
 
     @Override
-    public void update(Position position) {
+    public void update(final Position position) {
         final HitBoxFactory hitBoxFactory = new HitBoxFactoryImpl();
         this.hitBox = hitBoxFactory.entityeHitBox(position);
     }
 
     @Override
-    public boolean checkCollisionWallsBoxes(Maze maze) {
+    public boolean checkCollisionWallsBoxes(final Maze maze) {
         final boolean collisionWalls = maze.getWalls().stream()
                 .anyMatch(w -> this.hitBox.collision(w.getHitBox()));
         final boolean collisionBox = maze.getBoxes().stream()
@@ -40,7 +41,7 @@ public class HitBoxComponentImpl implements HitBoxComponent {
     }
 
     @Override
-    public Optional<PowerUp> checkCollisionPowerUp(Maze maze) {
+    public Optional<PowerUp> checkCollisionPowerUp(final Maze maze) {
         return maze.getPowerUp().stream()
                 .filter(obj -> obj.getType().equals(ObjectType.POWERUP))
                 .filter(p -> this.getHitBox().collision(p.getHitBox()))
@@ -48,7 +49,7 @@ public class HitBoxComponentImpl implements HitBoxComponent {
     }
 
     @Override
-    public Optional<BlankSpace> closestBlankSpace(Maze maze) {
+    public Optional<BlankSpace> closestBlankSpace(final Maze maze) {
         return maze.getBlankSpaces().stream()
                 .filter(b -> b.getHitBox().collision(this.hitBox))
                 .filter(collidingBlanks -> collidingBlanks.getHitBox().inner(this.hitBox.getCenter()))

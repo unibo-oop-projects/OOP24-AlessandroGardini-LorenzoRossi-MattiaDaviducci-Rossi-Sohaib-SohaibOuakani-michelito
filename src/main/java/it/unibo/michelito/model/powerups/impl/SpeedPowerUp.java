@@ -21,7 +21,7 @@ public class SpeedPowerUp extends AbsPowerUp {
 
     @Override
     public final void applyEffect(final ModifiablePlayer player) {
-        double newSpeed = BigDecimal.valueOf(SPEED_UPGRADE).add(BigDecimal.valueOf(player.getSpeed())).doubleValue();
+        final double newSpeed = BigDecimal.valueOf(SPEED_UPGRADE).add(BigDecimal.valueOf(player.getSpeed())).doubleValue();
         player.setSpeed(newSpeed);
     }
 }

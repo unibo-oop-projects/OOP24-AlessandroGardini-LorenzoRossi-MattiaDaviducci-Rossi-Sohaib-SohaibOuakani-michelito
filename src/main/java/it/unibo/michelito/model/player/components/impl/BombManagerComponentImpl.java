@@ -20,7 +20,7 @@ public class BombManagerComponentImpl implements BombManagerComponent {
     }
 
     @Override
-    public void setBombLimit(int limit) {
+    public void setBombLimit(final int limit) {
         this.currentBombLimit = limit;
     }
 
@@ -47,7 +47,7 @@ public class BombManagerComponentImpl implements BombManagerComponent {
     }
 
     @Override
-    public void setBombType(BombType type) {
+    public void setBombType(final BombType type) {
         this.bombType = type;
     }
 
