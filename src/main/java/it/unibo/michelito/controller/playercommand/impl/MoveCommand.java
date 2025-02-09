@@ -5,7 +5,7 @@ import it.unibo.michelito.controller.playercommand.api.PlayerCommand;
 import it.unibo.michelito.util.Direction;
 
 /**
- * Class that implements {@link PlayerCommand} to set the {@link Direction} of the next move of the {@link Player}.
+ * Implementation of a {@link PlayerCommand} that sets the {@link Direction} of the next move of the {@link Player}.
  */
 public class MoveCommand implements PlayerCommand {
     private final Direction direction;
