@@ -15,39 +15,27 @@ import it.unibo.michelito.controller.maincontroller.api.MainController;
  * and {@link GameParentController}.
  * </p>
  */
-public class MainControllerImpl implements MainController, HomeParentController, GameParentController {
+public final class MainControllerImpl implements MainController, HomeParentController, GameParentController {
     private HomeController homeController; // = new HomeControllerImpl(this); can be final
     private GameController gameController; // = new GameControllerImpl(this); can be final
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void start() {
         homeController.showMenu();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void switchToGame() {
         homeController.hideMenu();
         gameController.startGame();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void switchToHome() {
         gameController.stopGame();
         homeController.showMenu();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void quit() {
         System.exit(0);
