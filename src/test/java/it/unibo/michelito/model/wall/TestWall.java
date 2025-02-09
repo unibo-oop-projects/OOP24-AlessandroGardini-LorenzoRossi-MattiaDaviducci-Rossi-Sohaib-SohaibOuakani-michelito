@@ -1,27 +1,46 @@
 package it.unibo.michelito.model.wall;
 
-import it.unibo.michelito.model.wall.api.Wall;
 import it.unibo.michelito.model.wall.impl.WallImpl;
+import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.Position;
+import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- *  Test class for {@link WallImpl}.
+ *  Test class for {@link WallImpl} class.
  */
 final class TestWall {
+    private WallImpl wall;
+    private Position position;
+
     /**
-     * Tests {@link WallImpl}.
+     * Sets up the test environment before each test.
+     * Initializes a new {@link WallImpl} instance with a predefined position.
+     */
+    @BeforeEach
+    void setUp() {
+        position = new Position(0, 4);
+        wall = new WallImpl(position);
+    }
+
+    /**
+     * Tests the {@code getHitBox} method to ensure it returns the correct {@link HitBox}.
      */
     @Test
-    void testWall() {
-        final Position position = new Position(0, 0);
-        final Wall wall = new WallImpl(position);
-        assertNotNull(wall);
-        assertEquals(wall.getHitBox(), new HitBoxFactoryImpl().squareHitBox(position));
-        assertEquals(wall.position(), position);
+    void testGetHitBox() {
+        HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(position);
+        assertEquals(expectedHitBox, wall.getHitBox(), "HitBox should be squareHitBox");
+    }
+
+    /**
+     * Tests the {@code getType} method to ensure it returns the correct {@link ObjectType}.
+     */
+    @Test
+    void testGetType() {
+        assertEquals(ObjectType.WALL, wall.getType(), "Type should be WALL");
     }
 }
