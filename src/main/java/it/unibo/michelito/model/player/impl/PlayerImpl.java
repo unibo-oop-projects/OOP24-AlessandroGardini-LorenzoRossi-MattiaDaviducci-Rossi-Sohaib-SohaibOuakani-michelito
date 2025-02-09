@@ -5,10 +5,11 @@ import java.util.Optional;
 
 import it.unibo.michelito.model.blanckspace.api.BlankSpace;
 import it.unibo.michelito.model.bomb.api.BombType;
-import it.unibo.michelito.model.bomb.impl.BombFactoryImpl;
 import it.unibo.michelito.model.components.api.BombManagerComponent;
+import it.unibo.michelito.model.components.api.HitBoxComponent;
 import it.unibo.michelito.model.components.api.MovementComponent;
 import it.unibo.michelito.model.components.impl.BombManagerComponentImpl;
+import it.unibo.michelito.model.components.impl.HitBoxComponentImpl;
 import it.unibo.michelito.model.components.impl.MovementComponentImpl;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.player.api.ModifiablePlayer;
@@ -17,8 +18,6 @@ import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
-import it.unibo.michelito.model.modelutil.hitbox.api.HitBoxFactory;
-import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 import it.unibo.michelito.model.powerups.api.PowerUp;
 
 /**
@@ -27,7 +26,7 @@ import it.unibo.michelito.model.powerups.api.PowerUp;
 public class PlayerImpl implements Player, ModifiablePlayer {
     private static final int STANDARD_BOMB_LIMIT = 1;
     private static final double STANDARD_SPEED = 1;
-    private HitBox hitbox;
+    private final HitBoxComponent hitBoxComponent;
     private final MovementComponent movementComponent;
     private final BombManagerComponent bombManagerComponent;
 
@@ -38,12 +37,12 @@ public class PlayerImpl implements Player, ModifiablePlayer {
     public PlayerImpl(final Position position) {
         this.movementComponent = new MovementComponentImpl(position, STANDARD_SPEED);
         this.bombManagerComponent = new BombManagerComponentImpl(STANDARD_BOMB_LIMIT);
+        this.hitBoxComponent = new HitBoxComponentImpl(position);
         this.updateHitbox();
     }
 
     private void updateHitbox() {
-        final HitBoxFactory hitBoxFactory = new HitBoxFactoryImpl();
-        this.hitbox = hitBoxFactory.entityeHitBox(this.position());
+        this.hitBoxComponent.update(position());
     }
 
     @Override
@@ -75,18 +74,11 @@ public class PlayerImpl implements Player, ModifiablePlayer {
     }
 
     private boolean checkCollision(final Maze maze) {
-        final boolean collisionWalls = maze.getWalls().stream()
-                .anyMatch(w -> this.getHitBox().collision(w.getHitBox()));
-        final boolean collisionBox = maze.getBoxes().stream()
-                .anyMatch(b -> this.getHitBox().collision(b.getHitBox()));
-        return collisionWalls || collisionBox;
+        return this.hitBoxComponent.checkCollisionWallsBoxes(maze);
     }
 
     private void checkPowerUp(final Maze maze) {
-        final Optional<PowerUp> powerUp = maze.getPowerUp().stream()
-                .filter(obj -> obj.getType().equals(ObjectType.POWERUP))
-                .filter(p -> this.getHitBox().collision(p.getHitBox()))
-                .findAny();
+        final Optional<PowerUp> powerUp = this.hitBoxComponent.checkCollisionPowerUp(maze);
 
         if (powerUp.isPresent()) {
             powerUp.get().applyEffect(this);
@@ -101,7 +93,7 @@ public class PlayerImpl implements Player, ModifiablePlayer {
 
     @Override
     public final HitBox getHitBox() {
-        return this.hitbox;
+        return this.hitBoxComponent.getHitBox();
     }
 
     @Override
@@ -144,7 +136,6 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         final Optional<BlankSpace> blankSpace = findBlankToPlaceBomb(maze);
 
         if (blankSpace.isPresent()) {
-            //maze.addMazeObject(new BombFactoryImpl().createBomb(blankSpace.get().position(), this.bombType));
             this.bombManagerComponent.place(maze, blankSpace.get().position());
         } else {
             throw new IllegalStateException();
@@ -152,10 +143,7 @@ public class PlayerImpl implements Player, ModifiablePlayer {
     }
 
     private Optional<BlankSpace> findBlankToPlaceBomb(Maze maze) {
-        return maze.getBlankSpaces().stream()
-                .filter(b -> b.getHitBox().collision(this.hitbox))
-                .filter(innerblank -> innerblank.getHitBox().inner(this.position()))
-                .findAny();
+        return this.hitBoxComponent.closestBlankSpace(maze);
     }
 
     @Override

@@ -1,13 +1,8 @@
 package it.unibo.michelito.model.player;
 
-import it.unibo.michelito.model.box.impl.BoxImpl;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.maze.impl.MazeImpl;
-import it.unibo.michelito.model.modelutil.MazeObject;
-import it.unibo.michelito.model.modelutil.Temporary;
 import it.unibo.michelito.model.player.api.Player;
-import it.unibo.michelito.model.player.impl.PlayerImpl;
-import it.unibo.michelito.model.wall.impl.WallImpl;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +19,7 @@ class TestPlayer {
     @BeforeEach
     void setUp() {
         this.player = maze.getPlayer();
-        /*spwans at (6, 6)*/
+        /*spawns at (6, 6)*/
     }
 
     @Test
@@ -55,24 +50,23 @@ class TestPlayer {
     }
 
     @Test
-    void testBumpInToBox() {
+    void testBumpInToWalls() {
 
-        final Temporary box1 = new BoxImpl(new Position(5, 0));
-        maze.addMazeObject(box1);
-        player.setDirection(Direction.RIGHT);
+
+        player.setDirection(Direction.LEFT);
         player.update(1, maze);
-        assertEquals(new Position(0, 0), player.position());
-        maze.removeMazeObject(box1);
+        assertEquals(new Position(5, 6), player.position());
 
-        final Temporary box2 = new BoxImpl(new Position(0, 6));
-        maze.addMazeObject(box2);
+        player.setDirection(Direction.LEFT);
+        player.update(1, maze);
+        assertEquals(new Position(5, 6), player.position());
+
+        player.setDirection(Direction.UP);
+        player.update(1, maze);
+        assertEquals(new Position(5, 6), player.position());
+
         player.setDirection(Direction.DOWN);
         player.update(1, maze);
-        assertEquals(new Position(0, 0), player.position());
-
-        player.setDirection(Direction.RIGHT);
-        player.update(10, maze);
-        assertEquals(new Position(10, 0), player.position());
-
+        assertEquals(new Position(5, 7), player.position());
     }
 }
