@@ -14,7 +14,6 @@ public class BombImpl implements Bomb {
     private final Position position;
     private final BombType bombType;
     private boolean exploded;
-    private final int fuseTime = 3000;
 
     public BombImpl(Position position, BombType bombType) {
         this.position = position;
@@ -22,45 +21,9 @@ public class BombImpl implements Bomb {
         this.exploded = false;
     }
 
-    public boolean isExploded() {
-        return this.exploded;
-    }
-
-    public BombType getBombType() {
-        return bombType;
-    }
-
-    private void explode(Maze maze) {
-        this.exploded = true;
-        if (isExploded()) {
-            maze.removeMazeObject(this);
-        }
-        generateFlame(maze);
-    }
-
-    private void generateFlame(Maze maze) {
-        Flame flame = new FlameFactoryImpl().createFlame(this.position, bombType);
-        maze.addMazeObject(flame);
-    }
-
-    public static boolean isFlamePassThrough(BombType bombType) {
-        return switch (bombType) {
-            case NUKE, PASS_THROUGH -> true;
-            default -> false;
-        };
-    }
-
-    public static int getFlameRange(BombType bombType) {
-        return switch (bombType) {
-            case NUKE -> 7;
-            case LONG -> 5;
-            case PASS_THROUGH -> 3;
-            default -> 1;
-        };
-    }
-
     @Override
     public void update(long deltaTime, Maze maze) {
+        long fuseTime = 3000;
         long remainingTime = fuseTime - deltaTime;
         if (!exploded && remainingTime <= 0) {
             explode(maze);
@@ -80,5 +43,28 @@ public class BombImpl implements Bomb {
     @Override
     public ObjectType getType() {
         return ObjectType.BOMB;
+    }
+
+    @Override
+    public boolean isExploded() {
+        return this.exploded;
+    }
+
+    @Override
+    public BombType getBombType() {
+        return bombType;
+    }
+
+    private void explode(Maze maze) {
+        this.exploded = true;
+        if (isExploded()) {
+            maze.removeMazeObject(this);
+        }
+        generateFlame(maze);
+    }
+
+    private void generateFlame(Maze maze) {
+        Flame flame = new FlameFactoryImpl().createFlame(this.position, bombType);
+        maze.addMazeObject(flame);
     }
 }
