@@ -9,10 +9,9 @@ import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 /**
  * Implementation of the {@link Wall} interface.
  *
- * @param position is the position that the Wall will have.
+ * @param position is the {@link Position} that the Wall will have.
  */
 public record WallImpl(Position position) implements Wall {
-
     @Override
     public HitBox getHitBox() {
         return new HitBoxFactoryImpl().squareHitBox(this.position);

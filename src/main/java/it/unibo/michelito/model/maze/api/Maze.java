@@ -15,104 +15,106 @@ import it.unibo.michelito.model.wall.api.Wall;
 import java.util.Set;
 
 /**
- * Interface that represent a maze and where all {@link MazeObject} are contained.
- * Provides a method for each interface that extend {@link MazeObject}.
- * Provides methods to be called once the level is won and for the eventual death of michelito.
+ * Represents a maze that contains all {@link MazeObject} instances present in the game.
+ * Provides methods to manage and interact with the various objects within the maze.
+ * <p>
+ * Additionally, it defines methods to handle key game events, such as when the {@link Player}
+ * (Michelito) dies or successfully completes the level by entering the door.
  */
 public interface Maze {
     /**
-     * Adds a {@link MazeObject} in the maze.
+     * Adds a {@link MazeObject} to the maze.
      *
-     * @param mazeObject to be added.
-     * @return whether the operation as been successful.
+     * @param mazeObject the object to be added.
+     * @return {@code true} if the operation was successful, {@code false} otherwise.
      */
     boolean addMazeObject(MazeObject mazeObject);
 
     /**
-     * Remove a {@link Temporary} from the maze.
+     * Removes a {@link Temporary} object from the maze.
      *
-     * @param temporaryObject to be removed.
-     * @return whether the operation as been successful.
+     * @param temporaryObject the object to be removed.
+     * @return {@code true} if the operation was successful, {@code false} otherwise.
      */
     boolean removeMazeObject(Temporary temporaryObject);
 
     /**
-     * Method to be called to kill michelito.
+     * Handles the event of Michelito's death.
      */
     void killMichelito();
 
     /**
-     * Method to be called one michelito enters the door.
+     * Handles the event when Michelito enters the door to complete the level.
      */
     void enterTheDoor();
 
     /**
-     * Getter for all the {@link MazeObject} in the maze.
+     * Retrieves all {@link MazeObject} instances in the maze.
      *
-     * @return all {@link MazeObject}.
+     * @return a set containing all {@link MazeObject} instances.
      */
     Set<MazeObject> getAllObjects();
 
     /**
-     * Getter for all the {@link Wall} in the maze.
+     * Retrieves all {@link Wall} objects in the maze.
      *
-     * @return all {@link Wall}.
+     * @return a set of {@link Wall} objects.
      */
     Set<Wall> getWalls();
 
     /**
-     * Getter for all the {@link Box} in the maze.
+     * Retrieves all {@link Box} objects in the maze.
      *
-     * @return all {@link Box}.
+     * @return a set of {@link Box} objects.
      */
     Set<Box> getBoxes();
 
     /**
-     * Getter a Set of  {@link Updatable} Objects in the maze.
+     * Retrieves all {@link Updatable} objects in the maze.
      *
-     * @return all {@link Updatable} Objects.
+     * @return a set of {@link Updatable} objects.
      */
     Set<Updatable> getUpdatable();
 
     /**
-     * Getter the {@link Player} within this maze.
+     * Retrieves the {@link Player} in the maze.
      *
-     * @return the {@link Player}.
+     * @return the {@link Player} instance.
      */
     Player getPlayer();
 
     /**
-     * Getter for all the {@link PowerUp} Objects in the maze.
+     * Retrieves all {@link PowerUp} objects in the maze.
      *
-     * @return all a Set of {@link PowerUp} Objects.
+     * @return a set of {@link PowerUp} objects.
      */
     Set<PowerUp> getPowerUp();
 
     /**
-     * Getter the {@link Door} within this maze.
+     * Retrieves the {@link Door} in the maze.
      *
-     * @return the {@link Door}.
+     * @return the {@link Door} instance.
      */
     Door getDoor();
 
     /**
-     * Getter for all the {@link Enemy} Objects in the maze.
+     * Retrieves all {@link Enemy} objects in the maze.
      *
-     * @return all a Set of {@link Enemy} Objects.
+     * @return a set of {@link Enemy} objects.
      */
     Set<Enemy> getEnemies();
 
     /**
-     * Getter for all the {@link BlankSpace} Objects in the maze.
+     * Retrieves all {@link BlankSpace} objects in the maze.
      *
-     * @return all a Set of {@link BlankSpace} Objects.
+     * @return a set of {@link BlankSpace} objects.
      */
     Set<BlankSpace> getBlankSpaces();
 
     /**
-     * Getter for all the {@link Bomb} Objects in the maze.
+     * Retrieves all {@link Bomb} objects in the maze.
      *
-     * @return all a Set of {@link Bomb} Objects.
+     * @return a set of {@link Bomb} objects.
      */
     Set<Bomb> getBombs();
 }

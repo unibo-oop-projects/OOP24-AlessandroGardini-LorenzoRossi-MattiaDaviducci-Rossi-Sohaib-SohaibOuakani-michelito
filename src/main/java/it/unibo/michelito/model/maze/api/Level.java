@@ -7,41 +7,43 @@ import it.unibo.michelito.util.GameObject;
 import java.util.Set;
 
 /**
- * Interface that represents the Maze as a level.
+ * Represents the game level, providing methods to interact with the external game management system.
+ * This interface exposes functionality to update the game state, process {@link PlayerCommand},
+ * and getter of the level state (win/loss).
  */
 public interface Level {
     /**
      * Updates all {@link Updatable} and applies the player's command.
      *
-     * @param deltaTime the delta between last update in milliseconds, used for game state updates.
+     * @param deltaTime the time elapsed since the last update, in milliseconds, used for game state updates.
      */
     void update(long deltaTime);
 
     /**
-     * Set the next command to apply.
+     * Sets the next command to be applied.
      *
-     * @param playerCommand to be saved.
+     * @param playerCommand the {@link PlayerCommand} to be stored.
      */
     void setCommand(PlayerCommand playerCommand);
 
     /**
-     * Getter for the Set of {@link GameObject} currently in the {@link Maze}.
+     * Retrieves the set of {@link GameObject} instances currently present in the maze.
      *
-     * @return the Set of {@link GameObject} in the {@link Maze}.
+     * @return a set of {@link GameObject}.
      */
     Set<GameObject> getGameObjects();
 
     /**
      * Getter for the level state won.
      *
-     * @return true if michelito has won the level.
+     * @return {@code true} if the level has been won, {@code false} otherwise.
      */
     boolean isWon();
 
     /**
      * Getter for the level state lost.
      *
-     * @return true if michelito has lost the level.
+     * @return {@code true} if the level has been lost, {@code false} otherwise.
      */
     boolean isLost();
 }

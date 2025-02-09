@@ -6,7 +6,8 @@ import it.unibo.michelito.util.Position;
 import it.unibo.michelito.model.maze.api.Maze;
 
 /**
- * Interface representing every object in the {@link Maze}.
+ * Represents a generic object in the {@link Maze}.
+ * All object within the {@link Maze} must implement this interface.
  */
 public interface MazeObject {
     /**

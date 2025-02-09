@@ -72,7 +72,7 @@ public class LevelGenerator {
     }
 
     private static Set<GameObject> mazeFromFile(final String file) {
-        Set<GameObject> maze = new HashSet<>();
+        final Set<GameObject> maze = new HashSet<>();
         String objectType;
         double xValue;
         double yValue;
@@ -106,7 +106,7 @@ public class LevelGenerator {
         final Set<Position> positions = new HashSet<>();
         for (int x = 0; x < MAZE_BLOCK_WIDTH; x++) {
             for (int y = 0; y < MAZE_BLOCK_HEIGHT; y++) {
-                positions.add(new Position(x * BLOCK_EDGE, y * BLOCK_EDGE ));
+                positions.add(new Position(x * BLOCK_EDGE, y * BLOCK_EDGE));
             }
         }
         return positions;
