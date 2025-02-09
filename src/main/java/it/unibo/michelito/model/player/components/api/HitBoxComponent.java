@@ -43,7 +43,7 @@ public interface HitBoxComponent {
     /**
      * Method that finds the closest {@link BlankSpace} colliding with the {@link HitBox}.
      * @param maze maze the {@link Maze} that contains {@link BlankSpace}s
-     * @return an {@link Optional} that contains the closest colliding {@link BlankSpace} or {@link Optional}.empty if there is none
+     * @return an {@link Optional} containing the closest colliding {@link BlankSpace} or {@link Optional}.empty if there is none
      */
     Optional<BlankSpace> closestBlankSpace(Maze maze);
 }

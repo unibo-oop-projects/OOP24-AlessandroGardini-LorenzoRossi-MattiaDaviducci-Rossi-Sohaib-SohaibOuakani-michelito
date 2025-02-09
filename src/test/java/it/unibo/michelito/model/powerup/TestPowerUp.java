@@ -32,12 +32,12 @@ final class TestPowerUp {
     void testSpeedPowerUp() {
         final PowerUp powerUp = new SpeedPowerUp(new Position(X_SPAWN, Y_SPAWN));
         final PlayerImpl player = new PlayerImpl(this.maze.getPlayer().position()); /*(6, 6)*/
-        final double expected_movement = 1.1;
+        final double expectedMovement = 1.1;
         powerUp.applyEffect(player);
 
         player.setDirection(Direction.RIGHT);
         player.update(TICK, this.maze);
-        assertEquals(new Position(X_SPAWN + expected_movement, Y_SPAWN), player.position());
+        assertEquals(new Position(X_SPAWN + expectedMovement, Y_SPAWN), player.position());
     }
 
     @Test

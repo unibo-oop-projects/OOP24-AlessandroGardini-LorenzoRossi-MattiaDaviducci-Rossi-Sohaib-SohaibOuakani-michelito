@@ -7,7 +7,12 @@ import it.unibo.michelito.model.player.components.api.BombManagerComponent;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.util.Position;
+import it.unibo.michelito.model.bomb.api.Bomb;
 
+/**
+ * Implementation of the {@link BombManagerComponent} interface.
+ * This class manages {@link Bomb} placement and configuration within the game.
+ */
 public class BombManagerComponentImpl implements BombManagerComponent {
     private static final int STANDARD_BOMB_LIMIT = 1;
     private int currentBombLimit;
@@ -15,7 +20,9 @@ public class BombManagerComponentImpl implements BombManagerComponent {
     private BombType bombType;
 
     /**
-     * Constructor for {@link BombManagerComponentImpl}.
+     * Constructs a {@link BombManagerComponentImpl} with default values.
+     * Default bomb type is {@code BombType.STANDARD},
+     * and the initial {@link Bomb} limit is set to {@value #STANDARD_BOMB_LIMIT}.
      */
     public BombManagerComponentImpl() {
         this.bombType = BombType.STANDARD;
@@ -46,7 +53,7 @@ public class BombManagerComponentImpl implements BombManagerComponent {
     public void place(final Maze maze, final Position position) {
         final BombFactory factory = new BombFactoryImpl();
         final MazeObject bomb = factory.createBomb(position, this.bombType);
-        if(this.place) {
+        if (this.place) {
             maze.addMazeObject(bomb);
         }
     }
