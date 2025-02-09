@@ -40,5 +40,4 @@ public final class MainControllerImpl implements MainController, HomeParentContr
     public void quit() {
         System.exit(0);
     }
-
 }
