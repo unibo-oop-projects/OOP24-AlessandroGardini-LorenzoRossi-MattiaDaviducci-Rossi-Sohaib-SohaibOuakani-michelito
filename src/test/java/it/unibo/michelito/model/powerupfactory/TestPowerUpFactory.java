@@ -1,4 +1,4 @@
-package it.unibo.michelito.powerupfactory;
+package it.unibo.michelito.model.powerupfactory;
 
 import it.unibo.michelito.model.powerups.powerupfactory.api.PowerUpFactory;
 import it.unibo.michelito.model.powerups.api.PowerUp;
