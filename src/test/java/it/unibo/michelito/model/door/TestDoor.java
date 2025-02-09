@@ -6,68 +6,80 @@ import it.unibo.michelito.model.enemy.api.Enemy;
 import it.unibo.michelito.model.enemy.impl.EnemyImpl;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.maze.impl.MazeImpl;
-import it.unibo.michelito.model.modelutil.MazeObject;
-import it.unibo.michelito.model.player.impl.PlayerImpl;
+import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Test class for {@link DoorImpl}.
+ * Test for the {@link DoorImpl} class.
  */
 final class TestDoor {
+    public static final int TEST_LEVEL = -1;
     private Door door;
     private Position position;
 
     /**
-     * Creates a Door to be used in each test.
+     * Sets up the test environment before each test.
+     * Initializes a new {@link DoorImpl} instance with a predefined position.
      */
     @BeforeEach
     void setUp() {
-        position = new Position(0, 0);
+        position = new Position(0, 4);
         door = new DoorImpl(position);
     }
 
     /**
-     * Tests {@link Position} and {@link HitBox}.
+     * Tests the {@code getHitBox} method to ensure it returns the correct {@link HitBox}.
      */
     @Test
-    void testPosition() {
-        assertNotNull(door);
-        assertEquals(door.getHitBox(), new HitBoxFactoryImpl().squareHitBox(position));
-        assertEquals(door.position(), position);
+    void testGetHitBox() {
+        HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(position);
+        assertEquals(expectedHitBox, door.getHitBox(), "HitBox should be squareHitBox");
     }
 
     /**
-     * Test not having player throw exception.
+     * Tests the {@code getType} method to ensure it returns the correct {@link ObjectType}.
      */
     @Test
-    void testPlayer() {
-        final Maze maze = new MazeImpl(0);
-        assertThrows(IllegalStateException.class, () -> door.update(0, maze));
+    void testGetType() {
+        assertEquals(ObjectType.DOOR, door.getType(), "Type should be DOOR");
     }
 
     /**
-     * Test opening.
+     * Tests the behavior of a door opening when all {@link Enemy}s are removed from the {@link Maze}.
      */
     @Test
-    void testOpening(){
+    void testOpening() {
         final var enemy = new EnemyImpl(new Position(10, 10));
-        final var player = new PlayerImpl(new Position(10, 10));
-        final Maze maze = new MazeImpl(0);
-        final int time = 0;
+        final Maze maze = new MazeImpl(TEST_LEVEL);
+        final int time = 0; //The time is irrelevant when updating a door
         assertFalse(door.isOpen());
+        maze.addMazeObject(enemy);
         door.update(time, maze);
         assertFalse(door.isOpen());
         maze.removeMazeObject(enemy);
         door.update(time, maze);
         assertTrue(door.isOpen());
+    }
+
+    /**
+     * Tests the behavior of a door setting the {@link Maze} as won
+     * when it's open and the player is over it.
+     */
+    @Test
+    void testMazeWin() {
+        final MazeImpl maze = new MazeImpl(TEST_LEVEL); //Test Maze
+        Door doorUnderPlayer = new DoorImpl(maze.getPlayer().position());
+        assertFalse(maze.isWon());
+        doorUnderPlayer.update(5, maze);
+        assertTrue(doorUnderPlayer.isOpen());
+        assertTrue(maze.isWon());
     }
 }
