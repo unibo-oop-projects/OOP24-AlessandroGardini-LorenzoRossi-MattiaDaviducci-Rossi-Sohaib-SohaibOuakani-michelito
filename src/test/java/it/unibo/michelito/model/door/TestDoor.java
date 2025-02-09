@@ -2,20 +2,15 @@ package it.unibo.michelito.model.door;
 
 import it.unibo.michelito.model.door.api.Door;
 import it.unibo.michelito.model.door.impl.DoorImpl;
-import it.unibo.michelito.model.enemy.api.Enemy;
 import it.unibo.michelito.model.enemy.impl.EnemyImpl;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.maze.impl.MazeImpl;
-import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.model.player.impl.PlayerImpl;
-import it.unibo.michelito.util.hitbox.api.HitBox;
+import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
 import it.unibo.michelito.util.Position;
-import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
+import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 

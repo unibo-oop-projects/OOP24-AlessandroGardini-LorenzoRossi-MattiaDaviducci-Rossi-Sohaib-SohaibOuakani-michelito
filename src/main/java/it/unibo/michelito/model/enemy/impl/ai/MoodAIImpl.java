@@ -11,7 +11,7 @@ import it.unibo.michelito.util.Direction;
  *Implementation of {@link MoodAI}.
  */
 public final class MoodAIImpl implements MoodAI {
-    private static final long SLEEPTIME = 10000;
+    private static final long SLEEPTIME = 10_000;
     private static final double DEATHFORVENGENS = 0.70;
     private MoodType actualMood;
     private MovementAI actualMovement;

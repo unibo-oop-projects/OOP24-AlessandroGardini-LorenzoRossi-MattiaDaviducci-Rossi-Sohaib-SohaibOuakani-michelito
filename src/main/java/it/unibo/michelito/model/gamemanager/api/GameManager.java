@@ -55,7 +55,7 @@ public interface GameManager {
      * Updates the state of the game, applying the player's command and updating
      * the current {@link Maze}.
      *
-     * @param currentTime the current time in milliseconds, used for game state updates.
+     * @param deltaTime the delta between last update in milliseconds, used for game state updates.
      */
-    void update(long currentTime);
+    void update(long deltaTime);
 }

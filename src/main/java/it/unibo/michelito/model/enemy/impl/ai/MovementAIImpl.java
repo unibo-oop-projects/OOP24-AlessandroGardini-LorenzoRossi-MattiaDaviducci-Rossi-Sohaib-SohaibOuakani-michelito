@@ -15,7 +15,7 @@ public abstract class MovementAIImpl implements MovementAI {
      */
     @Override
     public Direction getDirection() {
-        Random random = new Random();
+        final Random random = new Random();
         return possibility().get(random.nextInt(possibility().size()));
     }
 

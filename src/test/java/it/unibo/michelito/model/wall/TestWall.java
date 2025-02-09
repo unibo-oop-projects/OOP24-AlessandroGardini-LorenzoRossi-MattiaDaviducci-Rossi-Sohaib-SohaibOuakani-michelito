@@ -3,7 +3,7 @@ package it.unibo.michelito.model.wall;
 import it.unibo.michelito.model.wall.api.Wall;
 import it.unibo.michelito.model.wall.impl.WallImpl;
 import it.unibo.michelito.util.Position;
-import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
+import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
