@@ -1,6 +1,5 @@
 package it.unibo.michelito.controller.levelgenerator;
 
-import it.unibo.michelito.model.modelutil.MazeObject;
 import it.unibo.michelito.util.GameObject;
 import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.Position;
@@ -14,36 +13,41 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-
+/**
+ * test for {@link LevelGenerator}.
+ */
 public class TestLevelGenerator {
+    private static final  int BLOCK_SIZE = 6;
+    private static final int MAZE_WIDE = 19 * BLOCK_SIZE;
+    private static final int MAZE_HEIGHT = 14 * BLOCK_SIZE;
 
     @Test void testLevelGeneratorTestLevel() {
-        testLevelGeneratorBaseLevel(-1);
+        testLevelGeneratorBaseLevel(LevelGenerator.testLevel());
     }
 
     @Test void testLevelGeneratorLevel1() {
-        Set<GameObject> basemaze = new HashSet<>(testLevelGeneratorBaseLevel(-1));
-        Set<GameObject> maze1 = new HashSet<>(testLevelGeneratorBaseLevel(1));
-        assertNotEquals(basemaze, maze1);
+        final Set<GameObject> baseMaze = new HashSet<>(testLevelGeneratorBaseLevel(LevelGenerator.testLevel()));
+        final Set<GameObject> maze1 = new HashSet<>(testLevelGeneratorBaseLevel(1));
+        assertNotEquals(baseMaze, maze1);
         assertTrue(maze1.stream().map(GameObject::objectType).anyMatch(x -> x.equals(ObjectType.DOOR)));
     }
 
-    Set<GameObject> testLevelGeneratorBaseLevel(int level) {
-        Set<GameObject> maze = LevelGenerator.generate(level);
+    Set<GameObject> testLevelGeneratorBaseLevel(final int level) {
+        final Set<GameObject> maze = LevelGenerator.generate(level);
         assertFalse(maze.isEmpty());
         assertEquals(1, maze.stream().map(GameObject::objectType).filter(x -> x.equals(ObjectType.PLAYER)).count());
         assertTrue(maze.stream().map(GameObject::objectType).anyMatch(x -> x.equals(ObjectType.WALL)));
         assertTrue(maze.stream().map(GameObject::objectType).anyMatch(x -> x.equals(ObjectType.BLANK_SPACE)));
-        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.WALL, new Position(0,0)))));
-        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.WALL, new Position(19*6,0)))));
-        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.WALL, new Position(0,14*6)))));
-        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.WALL, new Position(19*6,14*6)))));
-        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.BLANK_SPACE, new Position(0,0)))));
-        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.BLANK_SPACE, new Position(19*6,0)))));
-        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.BLANK_SPACE, new Position(0,14*6)))));
-        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.BLANK_SPACE, new Position(19*6,14*6)))));
-        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.WALL, new Position(2*6,2*6)))));
-        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.WALL, new Position(4*6,6*6)))));
+        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.WALL, new Position(0, 0)))));
+        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.WALL, new Position(MAZE_WIDE, 0)))));
+        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.WALL, new Position(0, MAZE_HEIGHT)))));
+        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.WALL, new Position(MAZE_WIDE, MAZE_HEIGHT)))));
+        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.BLANK_SPACE, new Position(0, 0)))));
+        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.BLANK_SPACE, new Position(MAZE_WIDE, 0)))));
+        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.BLANK_SPACE, new Position(0, MAZE_HEIGHT)))));
+        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.BLANK_SPACE, new Position(MAZE_WIDE, MAZE_HEIGHT)))));
+        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.WALL, new Position(2 * BLOCK_SIZE, 2 * BLOCK_SIZE)))));
+        assertTrue(maze.stream().anyMatch(x -> x.equals(new GameObject(ObjectType.WALL, new Position(4 * BLOCK_SIZE, 6 * BLOCK_SIZE)))));
         return maze;
     }
 
