@@ -8,8 +8,8 @@ import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.Position;
-import it.unibo.michelito.util.hitbox.api.HitBox;
-import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
+import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
+import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +21,9 @@ public class FlameImpl implements Flame {
     private final int range;
     private final boolean passThrough;
     private boolean extinguished;
-    private boolean alreadyCheckedCollisions = false;
+    private boolean alreadyCheckedCollisions;
 
-    public FlameImpl(Position position, BombType bombType) {
+    public FlameImpl(final Position position, final BombType bombType) {
         this.position = position;
         this.bombType = bombType;
         this.timeLeft = 1000;
@@ -48,7 +48,7 @@ public class FlameImpl implements Flame {
     }
 
     @Override
-    public void update(long deltaTime, Maze maze) {
+    public void update(final long deltaTime, final Maze maze) {
         timeLeft -= deltaTime;
         if (!extinguished && timeLeft <= 0) {
             extinguish(maze);
@@ -56,7 +56,7 @@ public class FlameImpl implements Flame {
         if (!alreadyCheckedCollisions) {
             alreadyCheckedCollisions = true;
 
-            List<HitBox> flameHitBoxes = updateHitBox(maze);
+            final List<HitBox> flameHitBoxes = updateHitBox(maze);
 
             checkAndKillMichelito(maze, flameHitBoxes);
             checkAndKillEnemies(maze, flameHitBoxes);
@@ -69,11 +69,11 @@ public class FlameImpl implements Flame {
     }
 
     @Override
-    public List<HitBox> updateHitBox(Maze maze) {
+    public List<HitBox> updateHitBox(final Maze maze) {
         return FlamePropagation.getFlameHitBoxes(this.position, range, passThrough, maze);
     }
 
-    private void extinguish(Maze maze) {
+    private void extinguish(final Maze maze) {
         extinguished = true;
         if (isExtinguished()) {
             maze.removeMazeObject(this);
@@ -88,18 +88,18 @@ public class FlameImpl implements Flame {
         return BombStaticUtil.getFlameRange(bombType);
     }
 
-    private void checkAndKillMichelito(Maze maze, List<HitBox> flameHitBoxes) {
-        Player player = maze.getPlayer();
-        Position playerPos = player.position();
+    private void checkAndKillMichelito(final Maze maze, final List<HitBox> flameHitBoxes) {
+        final Player player = maze.getPlayer();
+        final Position playerPos = player.position();
         if (flameHitBoxes.stream().anyMatch(hitBox -> hitBox.getCenter().equals(playerPos))) {
             maze.killMichelito();
         }
     }
 
-    private void checkAndKillEnemies(Maze maze, List<HitBox> flameHitBoxes) {
-        List<Enemy> enemiesToRemove = new ArrayList<>();
-        for (Enemy enemy : maze.getEnemies()) {
-            Position enemyPos = enemy.position();
+    private void checkAndKillEnemies(final Maze maze, final List<HitBox> flameHitBoxes) {
+        final List<Enemy> enemiesToRemove = new ArrayList<>();
+        for (final Enemy enemy : maze.getEnemies()) {
+            final Position enemyPos = enemy.position();
             if (flameHitBoxes.stream().anyMatch(hitBox -> hitBox.getCenter().equals(enemyPos))) {
                 enemiesToRemove.add(enemy);
             }

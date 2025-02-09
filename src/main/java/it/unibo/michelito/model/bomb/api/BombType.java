@@ -10,7 +10,7 @@ public enum BombType {
     LONG;
 
     public static BombType getRandomType() {
-        var types = Arrays.asList(values());
+        final var types = Arrays.asList(values());
         return types.get(new Random().nextInt(types.size()));
     }
 }

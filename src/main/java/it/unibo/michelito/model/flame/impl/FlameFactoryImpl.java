@@ -8,7 +8,7 @@ import it.unibo.michelito.util.Position;
 public class FlameFactoryImpl implements FlameFactory {
 
     @Override
-    public Flame createFlame(Position position, BombType bombType) {
+    public Flame createFlame(final Position position, final BombType bombType) {
         return new FlameImpl(position, bombType);
     }
 }

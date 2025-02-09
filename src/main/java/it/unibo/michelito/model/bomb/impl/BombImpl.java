@@ -7,24 +7,24 @@ import it.unibo.michelito.model.flame.impl.FlameFactoryImpl;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.ObjectType;
-import it.unibo.michelito.util.hitbox.api.HitBox;
-import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
+import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
+import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 
 public class BombImpl implements Bomb {
     private final Position position;
     private final BombType bombType;
     private boolean exploded;
 
-    public BombImpl(Position position, BombType bombType) {
+    public BombImpl(final Position position, final BombType bombType) {
         this.position = position;
         this.bombType = bombType;
         this.exploded = false;
     }
 
     @Override
-    public void update(long deltaTime, Maze maze) {
-        long fuseTime = 3000;
-        long remainingTime = fuseTime - deltaTime;
+    public void update(final long deltaTime, final Maze maze) {
+        final long fuseTime = 3000;
+        final long remainingTime = fuseTime - deltaTime;
         if (!exploded && remainingTime <= 0) {
             explode(maze);
         }
@@ -55,7 +55,7 @@ public class BombImpl implements Bomb {
         return bombType;
     }
 
-    private void explode(Maze maze) {
+    private void explode(final Maze maze) {
         this.exploded = true;
         if (isExploded()) {
             maze.removeMazeObject(this);
@@ -63,8 +63,8 @@ public class BombImpl implements Bomb {
         generateFlame(maze);
     }
 
-    private void generateFlame(Maze maze) {
-        Flame flame = new FlameFactoryImpl().createFlame(this.position, bombType);
+    private void generateFlame(final Maze maze) {
+        final Flame flame = new FlameFactoryImpl().createFlame(this.position, bombType);
         maze.addMazeObject(flame);
     }
 }

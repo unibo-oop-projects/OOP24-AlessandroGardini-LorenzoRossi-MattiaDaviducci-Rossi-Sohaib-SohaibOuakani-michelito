@@ -8,7 +8,7 @@ import it.unibo.michelito.util.Position;
 public class BombFactoryImpl implements BombFactory {
 
     @Override
-    public Bomb createBomb(Position position, BombType bombType) {
+    public Bomb createBomb(final Position position, final BombType bombType) {
         return new BombImpl(position, bombType);
     }
 }
