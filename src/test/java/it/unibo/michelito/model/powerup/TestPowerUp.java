@@ -34,7 +34,7 @@ final class TestPowerUp {
     @Test
     void testBombLimitPowerUp() {
         //TODO: test the bomb once we can create a maze with blanks
-        final Position position = new Position(0, 0);
+        final Position position = new Position(6, 6);
         final PowerUp powerUp = new BombLimitPowerUp(position);
         final PlayerImpl player = new PlayerImpl(position);
         powerUp.applyEffect(player);
@@ -44,7 +44,7 @@ final class TestPowerUp {
         player.update(1, maze);
         player.notifyToPlace();
         player.update(1, maze);
-        assertEquals(2, maze.getBombs().stream());
+        assertEquals(2, maze.getBombs().size());
     }
 
     @Test
