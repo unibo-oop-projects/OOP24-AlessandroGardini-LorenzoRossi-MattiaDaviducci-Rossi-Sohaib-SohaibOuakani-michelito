@@ -17,7 +17,7 @@ class TestPlayer {
     private final Maze maze = new MazeImpl(LevelGenerator.testLevel());
     private static final  double X_SPAWN = 6;
     private static final double Y_SPAWN = 6;
-    private final long TICK = 1;
+    private static final long TICK = 1;
 
     @BeforeEach
     void setUp() {

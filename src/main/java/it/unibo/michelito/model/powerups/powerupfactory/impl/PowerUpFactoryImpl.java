@@ -22,13 +22,16 @@ public class PowerUpFactoryImpl implements PowerUpFactory {
     public final Optional<PowerUp> generateRandomPowerUp(final Position position) {
         final double chance = new Random().nextDouble();
 
-        if (chance <= BOMB_LIMIT_CHANCE) {
-            return Optional.of(new BombLimitPowerUp(position));
-        } else if (chance <= UPGRADE_SPEED_CHANCE) {
-            return Optional.of(new SpeedPowerUp(position));
-        } else if(chance <= BOMB_TYPE_CHANCE) {
+        if (chance <= BOMB_TYPE_CHANCE) {
+            if(chance <= UPGRADE_SPEED_CHANCE) {
+                if(chance <= BOMB_LIMIT_CHANCE) {
+                    return Optional.of(new BombLimitPowerUp(position));
+                }
+                return Optional.of(new SpeedPowerUp(position));
+            }
             return Optional.of(new BombTypePowerUp(position));
+        } else {
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 }
