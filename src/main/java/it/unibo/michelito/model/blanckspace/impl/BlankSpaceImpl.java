@@ -6,6 +6,11 @@ import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.hitbox.api.HitBox;
 import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 
+/**
+ * Implementation of the {@link BlankSpace} interface.
+ *
+ * @param position is the {@link Position} that the BlankSpace will have.
+ */
 public record BlankSpaceImpl(Position position) implements BlankSpace {
     @Override
     public HitBox getHitBox() {
