@@ -9,7 +9,7 @@ import it.unibo.michelito.util.GameObject;
 import java.util.Set;
 
 /**
- * Implementation of the {@link GameManager} interface, responsible for managing
+ * Implementation of {@link GameManager} interface, responsible for managing
  * levels, lives and current game state.
  */
 public final class GameManagerImpl implements GameManager {
@@ -69,7 +69,7 @@ public final class GameManagerImpl implements GameManager {
     }
 
     /**
-     * Method to call when michelito lose a life.
+     * Handles the event of a Michelito's death.
      */
     private void loseLife() {
         if (this.currentLives == 0) {
@@ -81,7 +81,7 @@ public final class GameManagerImpl implements GameManager {
     }
 
     /**
-     * Method to be called once michelito has won a level.
+     * Handles the event when Michelito complete a level.
      */
     private void wonMaze() {
         if (this.currentLevelIndex >= MAX_MAZE_INDEX) {

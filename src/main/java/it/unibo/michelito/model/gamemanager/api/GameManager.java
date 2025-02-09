@@ -15,30 +15,30 @@ import java.util.Set;
  */
 public interface GameManager {
     /**
-     * Getter for the gameOver state.
+     * Retrieves gameOver state.
      *
-     * @return true if the game is lost.
+     * @return {@code true} if the game is lost, {@code false} otherwise.
      */
     boolean isGameOver() ;
 
     /**
-     * Getter for the gameWon state.
+     * Retrieves gameWon state.
      *
-     * @return true if the game is won.
+     * @return {@code true} if the game is won, {@code false} otherwise.
      */
     boolean isGameWon();
 
     /**
-     * Getter for the Set of {@link GameObject} currently in the {@link Maze}.
+     * Retrieves Set of {@link GameObject} currently in the {@link Maze}.
      *
      * @return the Set of {@link GameObject} currently in the {@link Maze}.
      */
     Set<GameObject> getObjects();
 
     /**
-     * Getter for remaining lives in the game.
+     * Retrieves remaining lives in the game.
      *
-     * @return remaining lives.
+     * @return remaining lives count.
      */
     int getRemainingLives();
 
