@@ -26,7 +26,7 @@ public class LevelGenerator {
     }
 
     /**
-     * @param levelNumber the number of level.
+     * @param levelNumber the number of level if -1 is pass it will generate a base level with a player used for test.
      * @return a set of {@link GameObject} that represent every object in the current level maze.
      */
      public static Set<GameObject> generate(final int levelNumber) {
@@ -41,6 +41,17 @@ public class LevelGenerator {
          return maze;
     }
 
+    /**
+     * @return the code for the test level.
+     */
+    public static int testLevel() {
+         return TEST_MAZE_CODE;
+    }
+
+    /**
+     * @return the base level that include the border wall and the wall grid inside it,
+     * all the maze is covered whit blank space to help correct positioning.
+     */
     private static Set<GameObject> baseMaze() {
         final Set<GameObject> maze = new HashSet<>();
         cellPositions().forEach(x -> maze.add(new GameObject(ObjectType.BLANK_SPACE, x)));
