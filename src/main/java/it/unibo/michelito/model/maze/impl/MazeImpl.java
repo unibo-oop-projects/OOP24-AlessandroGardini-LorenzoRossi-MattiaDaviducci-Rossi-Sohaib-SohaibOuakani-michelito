@@ -24,7 +24,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * An implementation of {@link Maze} and {@link Level} interfaces representing a single maze in the game.
+ * Implementation of {@link Maze} and {@link Level} interfaces representing a single maze in the game.
  * <p>
  * This class manages the {@link MazeObject}.
  * It provides methods to interact with and manipulate these objects within the maze thought the {@link Maze} interface.
