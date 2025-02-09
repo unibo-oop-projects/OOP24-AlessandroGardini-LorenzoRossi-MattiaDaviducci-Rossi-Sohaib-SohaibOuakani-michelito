@@ -4,34 +4,32 @@ import it.unibo.michelito.model.gamemanager.impl.GameManagerImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 
 /**
  * Test class for {@link GameManagerImpl}.
  */
 class TestGameManager {
+    private static final int INITIAL_LIVES = 5;
     private GameManagerImpl gameManager;
-    private AtomicBoolean gameWon; //these two AtomicBoolean are used for player command evaluation.
-    private AtomicBoolean gameOver;
 
+    /**
+     * Sets up the test environment before each test.
+     */
     @BeforeEach
     void setUp() {
-        gameWon = new AtomicBoolean(false);
-        gameOver = new AtomicBoolean(false);
-        gameManager = new GameManagerImpl();
+        this.gameManager = new GameManagerImpl();
     }
 
     /**
-     * Tests that the game starts with the correct initial conditions.
+     * Tests initial state.
      */
     @Test
-    void testGameStartsCorrectly() {
-        assertNotNull(gameManager);
-        assertFalse(gameWon.get());
-        assertFalse(gameOver.get());
+    void testInitialGameState() {
+        assertFalse(this.gameManager.isGameOver());
+        assertFalse(this.gameManager.isGameWon());
+        assertEquals(INITIAL_LIVES, this.gameManager.getRemainingLives());
+        assertFalse(this.gameManager.getObjects().isEmpty());
     }
 }

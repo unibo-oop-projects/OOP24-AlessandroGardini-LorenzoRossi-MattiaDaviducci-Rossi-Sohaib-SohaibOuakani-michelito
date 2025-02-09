@@ -31,8 +31,8 @@ final class TestDoor {
      */
     @BeforeEach
     void setUp() {
-        position = new Position(0, 4);
-        door = new DoorImpl(position);
+        this.position = new Position(0, 4);
+        this.door = new DoorImpl(position);
     }
 
     /**
@@ -40,8 +40,8 @@ final class TestDoor {
      */
     @Test
     void testGetHitBox() {
-        HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(position);
-        assertEquals(expectedHitBox, door.getHitBox(), "HitBox should be squareHitBox");
+        HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(this.position);
+        assertEquals(expectedHitBox, this.door.getHitBox(), "HitBox should be squareHitBox");
     }
 
     /**
@@ -49,7 +49,7 @@ final class TestDoor {
      */
     @Test
     void testGetType() {
-        assertEquals(ObjectType.DOOR, door.getType(), "Type should be DOOR");
+        assertEquals(ObjectType.DOOR, this.door.getType(), "Type should be DOOR");
     }
 
     /**
@@ -60,13 +60,13 @@ final class TestDoor {
         final var enemy = new EnemyImpl(new Position(10, 10));
         final Maze maze = new MazeImpl(LevelGenerator.testLevel());
         final int time = 0; //The time is irrelevant when updating a door
-        assertFalse(door.isOpen());
+        assertFalse(this.door.isOpen());
         maze.addMazeObject(enemy);
-        door.update(time, maze);
-        assertFalse(door.isOpen());
+        this.door.update(time, maze);
+        assertFalse(this.door.isOpen());
         maze.removeMazeObject(enemy);
-        door.update(time, maze);
-        assertTrue(door.isOpen());
+        this.door.update(time, maze);
+        assertTrue(this.door.isOpen());
     }
 
     /**

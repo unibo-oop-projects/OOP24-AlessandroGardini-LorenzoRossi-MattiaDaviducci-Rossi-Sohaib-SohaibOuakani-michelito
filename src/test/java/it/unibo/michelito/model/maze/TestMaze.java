@@ -32,7 +32,7 @@ final class TestMaze {
      */
     @BeforeEach
     void setUp() {
-        maze = new MazeImpl(LevelGenerator.testLevel());
+        this.maze = new MazeImpl(LevelGenerator.testLevel());
     }
 
     /**
@@ -41,14 +41,14 @@ final class TestMaze {
     @Test
     void testAddAndRemove() {
         final Temporary temporaryObject = new BoxImpl(new Position(4, 4));
-        assertNotNull(maze);
-        assertFalse(maze.getAllObjects().isEmpty());
-        assertFalse(maze.getAllObjects().contains(temporaryObject));
-        assertTrue(maze.addMazeObject(temporaryObject));
-        assertTrue(maze.getBoxes().contains(temporaryObject));
-        assertTrue(maze.getAllObjects().contains(temporaryObject));
-        assertTrue(maze.removeMazeObject(temporaryObject));
-        assertFalse(maze.getBoxes().contains(temporaryObject));
+        assertNotNull(this.maze);
+        assertFalse(this.maze.getAllObjects().isEmpty());
+        assertFalse(this.maze.getAllObjects().contains(temporaryObject));
+        assertTrue(this.maze.addMazeObject(temporaryObject));
+        assertTrue(this.maze.getBoxes().contains(temporaryObject));
+        assertTrue(this.maze.getAllObjects().contains(temporaryObject));
+        assertTrue(this.maze.removeMazeObject(temporaryObject));
+        assertFalse(this.maze.getBoxes().contains(temporaryObject));
     }
 
     /**
@@ -56,9 +56,9 @@ final class TestMaze {
      */
     @Test
     void testConsistency() {
-        assertThrows(NullPointerException.class, () -> maze.addMazeObject(null));
-        assertThrows(NullPointerException.class, () -> maze.removeMazeObject(null));
-        assertFalse(maze.removeMazeObject(new BoxImpl(new Position(BOX_POSITION, BOX_POSITION))));
+        assertThrows(NullPointerException.class, () -> this.maze.addMazeObject(null));
+        assertThrows(NullPointerException.class, () -> this.maze.removeMazeObject(null));
+        assertFalse(this.maze.removeMazeObject(new BoxImpl(new Position(BOX_POSITION, BOX_POSITION))));
     }
 
     /**
@@ -66,10 +66,10 @@ final class TestMaze {
      */
     @Test
     void testFilter() {
-        assertFalse(maze.getAllObjects().isEmpty());
-        assertFalse(maze.getWalls().isEmpty());
-        assertTrue(maze.getBoxes().isEmpty());
-        assertTrue(maze.getPowerUp().isEmpty());
+        assertFalse(this.maze.getAllObjects().isEmpty());
+        assertFalse(this.maze.getWalls().isEmpty());
+        assertTrue(this.maze.getBoxes().isEmpty());
+        assertTrue(this.maze.getPowerUp().isEmpty());
     }
 
     /**
@@ -77,12 +77,12 @@ final class TestMaze {
      */
     @Test
     void testWinAndLost() {
-        assertFalse(maze.isWon());
-        assertFalse(maze.isLost());
-        maze.killMichelito();
-        assertTrue(maze.isLost());
-        maze.enterTheDoor();
-        assertTrue(maze.isWon());
+        assertFalse(this.maze.isWon());
+        assertFalse(this.maze.isLost());
+        this.maze.killMichelito();
+        assertTrue(this.maze.isLost());
+        this.maze.enterTheDoor();
+        assertTrue(this.maze.isWon());
     }
 
     /**
@@ -90,12 +90,12 @@ final class TestMaze {
      */
     @Test
     void testUpdate() {
-        var initialPlayerPosition = maze.getPlayer().position();
+        var initialPlayerPosition = this.maze.getPlayer().position();
         var initialEnemyPosition = new Position(ENEMY_POSITION, ENEMY_POSITION);
-        maze.addMazeObject(new EnemyImpl(initialEnemyPosition));
-        maze.setCommand(new MoveCommand(Direction.DOWN));
-        maze.update(DELTA_TIME);
-        assertNotEquals(initialPlayerPosition, maze.getPlayer().position());
-        assertNotEquals(initialPlayerPosition, maze.getPlayer().position());
+        this.maze.addMazeObject(new EnemyImpl(initialEnemyPosition));
+        this.maze.setCommand(new MoveCommand(Direction.DOWN));
+        this.maze.update(DELTA_TIME);
+        assertNotEquals(initialPlayerPosition, this.maze.getPlayer().position());
+        assertNotEquals(initialPlayerPosition, this.maze.getPlayer().position());
     }
 }
