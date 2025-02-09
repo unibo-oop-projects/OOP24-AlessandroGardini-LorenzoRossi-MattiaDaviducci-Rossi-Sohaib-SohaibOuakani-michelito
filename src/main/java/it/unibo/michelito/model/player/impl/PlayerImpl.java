@@ -38,17 +38,12 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         this.movementComponent = new MovementComponentImpl(position, STANDARD_SPEED);
         this.bombManagerComponent = new BombManagerComponentImpl(STANDARD_BOMB_LIMIT);
         this.hitBoxComponent = new HitBoxComponentImpl(position);
-        this.updateHitbox();
-    }
-
-    private void updateHitbox() {
-        this.hitBoxComponent.update(position());
     }
 
     @Override
     public final void update(final long deltaTime, final Maze maze) {
             this.move(deltaTime, maze);
-            this.updateHitbox();
+            this.hitBoxComponent.update(this.position());
             this.checkPowerUp(maze);
         if (this.bombManagerComponent.hasToPlace()) {
             if (this.allowedToPlaceBomb(maze)) {
@@ -65,15 +60,15 @@ public class PlayerImpl implements Player, ModifiablePlayer {
     private void move(final long time, final Maze maze) {
         final Position oldPosition = this.position();
         this.movementComponent.move(time);
-        this.updateHitbox();
+        this.hitBoxComponent.update(this.position());
 
-        if (this.checkCollision(maze)) {
-            this.setPosition(oldPosition);
-            this.updateHitbox();
+        if (this.isCollidingWithWallsOrBoxes(maze)) {
+            this.movementComponent.setPosition(oldPosition);
+            this.hitBoxComponent.update(this.position());
         }
     }
 
-    private boolean checkCollision(final Maze maze) {
+    private boolean isCollidingWithWallsOrBoxes(final Maze maze) {
         return this.hitBoxComponent.checkCollisionWallsBoxes(maze);
     }
 
@@ -127,23 +122,14 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         return this.bombManagerComponent.getBombLimit();
     }
 
-
-    private void setPosition(final Position newPosition) {
-        this.movementComponent.setPosition(newPosition);
-    }
-
     private void placeBomb(final Maze maze) {
-        final Optional<BlankSpace> blankSpace = findBlankToPlaceBomb(maze);
+        final Optional<BlankSpace> blankSpace = this.hitBoxComponent.closestBlankSpace(maze);
 
         if (blankSpace.isPresent()) {
             this.bombManagerComponent.place(maze, blankSpace.get().position());
         } else {
             throw new IllegalStateException();
         }
-    }
-
-    private Optional<BlankSpace> findBlankToPlaceBomb(Maze maze) {
-        return this.hitBoxComponent.closestBlankSpace(maze);
     }
 
     @Override
