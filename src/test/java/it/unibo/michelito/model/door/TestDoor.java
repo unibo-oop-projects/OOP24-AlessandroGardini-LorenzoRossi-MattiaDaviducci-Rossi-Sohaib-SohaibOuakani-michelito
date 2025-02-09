@@ -1,5 +1,6 @@
 package it.unibo.michelito.model.door;
 
+import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.model.door.api.Door;
 import it.unibo.michelito.model.door.impl.DoorImpl;
 import it.unibo.michelito.model.enemy.api.Enemy;
@@ -21,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Test for the {@link DoorImpl} class.
  */
 final class TestDoor {
-    public static final int TEST_LEVEL = -1;
     private Door door;
     private Position position;
 
@@ -58,7 +58,7 @@ final class TestDoor {
     @Test
     void testOpening() {
         final var enemy = new EnemyImpl(new Position(10, 10));
-        final Maze maze = new MazeImpl(TEST_LEVEL);
+        final Maze maze = new MazeImpl(LevelGenerator.testLevel());
         final int time = 0; //The time is irrelevant when updating a door
         assertFalse(door.isOpen());
         maze.addMazeObject(enemy);
@@ -75,7 +75,7 @@ final class TestDoor {
      */
     @Test
     void testMazeWin() {
-        final MazeImpl maze = new MazeImpl(TEST_LEVEL); //Test Maze
+        final MazeImpl maze = new MazeImpl(LevelGenerator.testLevel()); //Test Maze
         Door doorUnderPlayer = new DoorImpl(maze.getPlayer().position());
         assertFalse(maze.isWon());
         doorUnderPlayer.update(5, maze);
