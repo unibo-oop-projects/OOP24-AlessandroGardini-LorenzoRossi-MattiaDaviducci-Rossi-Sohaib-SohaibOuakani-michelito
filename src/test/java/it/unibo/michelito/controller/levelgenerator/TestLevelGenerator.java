@@ -18,11 +18,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class TestLevelGenerator {
 
     @Test void testLevelGeneratorTestLevel() {
-        testLevelGeneratorBaseLevel(-1);
+        testLevelGeneratorBaseLevel(LevelGenerator.testLevel());
     }
 
     @Test void testLevelGeneratorLevel1() {
-        Set<GameObject> basemaze = new HashSet<>(testLevelGeneratorBaseLevel(-1));
+        Set<GameObject> basemaze = new HashSet<>(testLevelGeneratorBaseLevel(LevelGenerator.testLevel()));
         Set<GameObject> maze1 = new HashSet<>(testLevelGeneratorBaseLevel(1));
         assertNotEquals(basemaze, maze1);
         assertTrue(maze1.stream().map(GameObject::objectType).anyMatch(x -> x.equals(ObjectType.DOOR)));
