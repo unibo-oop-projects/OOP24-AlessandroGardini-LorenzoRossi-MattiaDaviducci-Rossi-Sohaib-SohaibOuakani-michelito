@@ -3,7 +3,6 @@ package it.unibo.michelito.model.maze;
 import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.controller.playercommand.impl.MoveCommand;
 import it.unibo.michelito.model.box.impl.BoxImpl;
-import it.unibo.michelito.model.door.impl.DoorImpl;
 import it.unibo.michelito.model.enemy.impl.EnemyImpl;
 import it.unibo.michelito.model.maze.impl.MazeImpl;
 import it.unibo.michelito.model.modelutil.Temporary;
