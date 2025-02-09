@@ -24,12 +24,12 @@ final class TestBox {
      */
     @BeforeEach
     void setUp() {
-        position = new Position(5, 5);
+        position = new Position(0, 4);
         box = new BoxImpl(position);
     }
 
     /**
-     * Tests the {@code getHitBox} method to ensure it returns the correct hitbox.
+     * Tests the {@code getHitBox} method to ensure it returns the correct {@link HitBox}.
      */
     @Test
     void testGetHitBox() {
@@ -38,7 +38,7 @@ final class TestBox {
     }
 
     /**
-     * Tests the {@code getType} method to ensure it returns the correct object type.
+     * Tests the {@code getType} method to ensure it returns the correct {@link ObjectType}.
      */
     @Test
     void testGetType() {
