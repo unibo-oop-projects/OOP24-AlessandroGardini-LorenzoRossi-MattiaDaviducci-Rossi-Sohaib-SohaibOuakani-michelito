@@ -7,13 +7,14 @@ import it.unibo.michelito.util.Position;
 import java.math.BigDecimal;
 
 public class MovementComponentImpl implements MovementComponent {
+    private static final double STANDARD_SPEED = 1;
     private Direction direction;
     private Position position;
     private double speed;
 
-    public MovementComponentImpl(final Position position, final double speed) {
+    public MovementComponentImpl(final Position position) {
         this.position = position;
-        this.speed = speed;
+        this.speed = STANDARD_SPEED;
         this.direction = Direction.NONE;
     }
 
