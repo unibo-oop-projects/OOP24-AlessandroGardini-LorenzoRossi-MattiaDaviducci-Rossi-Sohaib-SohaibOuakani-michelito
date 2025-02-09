@@ -14,6 +14,9 @@ public class BombManagerComponentImpl implements BombManagerComponent {
     private boolean place;
     private BombType bombType;
 
+    /**
+     * Constructor for {@link BombManagerComponentImpl}.
+     */
     public BombManagerComponentImpl() {
         this.bombType = BombType.STANDARD;
         this.currentBombLimit = STANDARD_BOMB_LIMIT;

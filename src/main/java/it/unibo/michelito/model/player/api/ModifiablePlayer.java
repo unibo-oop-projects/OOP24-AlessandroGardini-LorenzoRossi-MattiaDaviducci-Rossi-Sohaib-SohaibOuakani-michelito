@@ -2,6 +2,9 @@ package it.unibo.michelito.model.player.api;
 
 import it.unibo.michelito.model.bomb.api.BombType;
 
+/**
+ * Interface that makes the {@link Player} modifiable without giving the ability to update the {@link Player} in the Model.
+ */
 public interface ModifiablePlayer {
     /**
      * Increases the number of placeable {Bomb} by the {@link Player}.

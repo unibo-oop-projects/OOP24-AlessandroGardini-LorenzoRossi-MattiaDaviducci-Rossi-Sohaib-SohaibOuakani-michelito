@@ -2,9 +2,13 @@ package it.unibo.michelito.model.player.components.api;
 
 import it.unibo.michelito.model.bomb.api.BombType;
 import it.unibo.michelito.model.maze.api.Maze;
+import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.util.Position;
 import  it.unibo.michelito.model.bomb.api.Bomb;
 
+/**
+ * Interface modelling a {@link Bomb} manger for the {@link Player}.
+ */
 public interface BombManagerComponent {
     /**
      * Sets the limit of placeable {@link Bomb}.

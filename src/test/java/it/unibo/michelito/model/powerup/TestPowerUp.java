@@ -31,12 +31,12 @@ final class TestPowerUp {
     @Test
     void testSpeedPowerUp() {
         final PowerUp powerUp = new SpeedPowerUp(new Position(X_SPAWN, Y_SPAWN));
-        final PlayerImpl player = new PlayerImpl(maze.getPlayer().position()); /*(6, 6)*/
+        final PlayerImpl player = new PlayerImpl(this.maze.getPlayer().position()); /*(6, 6)*/
         final double expected_movement = 1.1;
         powerUp.applyEffect(player);
 
         player.setDirection(Direction.RIGHT);
-        player.update(TICK, maze);
+        player.update(TICK, this.maze);
         assertEquals(new Position(X_SPAWN + expected_movement, Y_SPAWN), player.position());
     }
 
@@ -44,19 +44,19 @@ final class TestPowerUp {
     void testBombLimitPowerUp() {
         final int expectedBombs = 2;
         final PowerUp powerUp = new BombLimitPowerUp(new Position(X_SPAWN, Y_SPAWN));
-        final PlayerImpl player = new PlayerImpl(maze.getPlayer().position());
+        final PlayerImpl player = new PlayerImpl(this.maze.getPlayer().position());
         powerUp.applyEffect(player);
 
         player.notifyToPlace();
-        player.update(TICK, maze);
+        player.update(TICK, this.maze);
         player.notifyToPlace();
-        player.update(TICK, maze);
-        assertEquals(expectedBombs, maze.getBombs().size());
+        player.update(TICK, this.maze);
+        assertEquals(expectedBombs, this.maze.getBombs().size());
     }
 
     @Test
     void testBombTypePowerUp() {
-        final PlayerImpl player = new PlayerImpl(maze.getPlayer().position());
+        final PlayerImpl player = new PlayerImpl(this.maze.getPlayer().position());
         final PowerUp bombTypePowerUp = new BombTypePowerUp(new Position(X_SPAWN, Y_SPAWN));
 
         assertEquals(BombType.STANDARD, player.getBombType());
