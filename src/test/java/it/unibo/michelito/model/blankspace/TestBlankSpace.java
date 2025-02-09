@@ -23,8 +23,8 @@ final class TestBlankSpace {
      */
     @BeforeEach
     void setUp() {
-        position = new Position(0,  4);
-        blankSpace = new BlankSpaceImpl(position);
+        this.position = new Position(0,  4);
+        this.blankSpace = new BlankSpaceImpl(position);
     }
 
     /**
@@ -32,8 +32,8 @@ final class TestBlankSpace {
      */
     @Test
     void testGetHitBox() {
-        HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(position);
-        assertEquals(expectedHitBox, blankSpace.getHitBox(), "HitBox should be squareHitBox");
+        HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(this.position);
+        assertEquals(expectedHitBox, this.blankSpace.getHitBox(), "HitBox should be squareHitBox");
     }
 
     /**
@@ -41,6 +41,6 @@ final class TestBlankSpace {
      */
     @Test
     void testGetType() {
-        assertEquals(ObjectType.BLANK_SPACE, blankSpace.getType(), "Type should be BLANK_SPACE");
+        assertEquals(ObjectType.BLANK_SPACE, this.blankSpace.getType(), "Type should be BLANK_SPACE");
     }
 }

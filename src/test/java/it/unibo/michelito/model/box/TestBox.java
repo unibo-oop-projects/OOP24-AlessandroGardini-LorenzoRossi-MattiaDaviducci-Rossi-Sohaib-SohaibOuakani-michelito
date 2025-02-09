@@ -24,8 +24,8 @@ final class TestBox {
      */
     @BeforeEach
     void setUp() {
-        position = new Position(0, 4);
-        box = new BoxImpl(position);
+        this.position = new Position(0, 4);
+        this.box = new BoxImpl(position);
     }
 
     /**
@@ -33,8 +33,8 @@ final class TestBox {
      */
     @Test
     void testGetHitBox() {
-        HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(position);
-        assertEquals(expectedHitBox, box.getHitBox(), "HitBox should be squareHitBox");
+        HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(this.position);
+        assertEquals(expectedHitBox, this.box.getHitBox(), "HitBox should be squareHitBox");
     }
 
     /**
@@ -42,6 +42,6 @@ final class TestBox {
      */
     @Test
     void testGetType() {
-        assertEquals(ObjectType.BOX, box.getType(), "Type should be BOX");
+        assertEquals(ObjectType.BOX, this.box.getType(), "Type should be BOX");
     }
 }

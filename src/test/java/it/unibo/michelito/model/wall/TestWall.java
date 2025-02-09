@@ -23,8 +23,8 @@ final class TestWall {
      */
     @BeforeEach
     void setUp() {
-        position = new Position(0, 4);
-        wall = new WallImpl(position);
+        this.position = new Position(0, 4);
+        this.wall = new WallImpl(position);
     }
 
     /**
@@ -32,8 +32,8 @@ final class TestWall {
      */
     @Test
     void testGetHitBox() {
-        HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(position);
-        assertEquals(expectedHitBox, wall.getHitBox(), "HitBox should be squareHitBox");
+        HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(this.position);
+        assertEquals(expectedHitBox, this.wall.getHitBox(), "HitBox should be squareHitBox");
     }
 
     /**
@@ -41,6 +41,6 @@ final class TestWall {
      */
     @Test
     void testGetType() {
-        assertEquals(ObjectType.WALL, wall.getType(), "Type should be WALL");
+        assertEquals(ObjectType.WALL, this.wall.getType(), "Type should be WALL");
     }
 }
