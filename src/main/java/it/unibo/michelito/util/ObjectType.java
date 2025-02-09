@@ -41,7 +41,12 @@ public enum ObjectType {
     BLANK_SPACE,
 
     /**
-     * A bomb.
+     * A Flame.
+     */
+    FLAME,
+
+    /**
+     * A Bomb.
      */
     BOMB
 }
