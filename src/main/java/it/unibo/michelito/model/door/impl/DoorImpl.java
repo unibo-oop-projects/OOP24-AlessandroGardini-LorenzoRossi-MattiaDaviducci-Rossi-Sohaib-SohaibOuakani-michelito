@@ -4,8 +4,8 @@ import it.unibo.michelito.model.door.api.Door;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.Position;
-import it.unibo.michelito.util.hitbox.api.HitBox;
-import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
+import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
+import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 
 /**
  * Implementation of the {@link Door} interface, representing a door in the maze.
@@ -28,7 +28,7 @@ public final class DoorImpl implements Door {
     }
 
     @Override
-    public void update(final long currentTime, final Maze maze) {
+    public void update(final long deltaTime, final Maze maze) {
         if (maze.getEnemies().isEmpty()) {
             this.open = true;
         }

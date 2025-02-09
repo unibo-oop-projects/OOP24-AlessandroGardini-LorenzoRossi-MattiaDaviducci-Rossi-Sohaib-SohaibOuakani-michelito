@@ -3,29 +3,33 @@ package it.unibo.michelito.model.player.impl;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import it.unibo.michelito.model.blanckspace.api.BlankSpace;
+import it.unibo.michelito.model.bomb.api.BombType;
+import it.unibo.michelito.model.bomb.impl.BombFactoryImpl;
 import it.unibo.michelito.model.maze.api.Maze;
+import it.unibo.michelito.model.player.api.ModifiablePlayer;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.ObjectType;
-import it.unibo.michelito.util.hitbox.api.HitBox;
-import it.unibo.michelito.util.hitbox.api.HitBoxFactory;
-import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
+import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
+import it.unibo.michelito.model.modelutil.hitbox.api.HitBoxFactory;
+import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 import it.unibo.michelito.model.powerups.api.PowerUp;
 
 /**
  * Implementation of {@link Player}.
  */
-public class PlayerImpl implements Player {
+public class PlayerImpl implements Player, ModifiablePlayer {
     private static final int STANDARD_BOMB_LIMIT = 1;
     private static final double STANDARD_SPEED = 1;
     private HitBox hitbox;
     private Direction direction;
     private boolean place;
     private Position currentPosition;
-    private long lastUpdate;
     private int currentBombLimit = STANDARD_BOMB_LIMIT;
     private double currentSpeed = STANDARD_SPEED;
+    private BombType bombType = BombType.STANDARD;
 
     /**
      * Constructor for {@link PlayerImpl}.
@@ -33,7 +37,6 @@ public class PlayerImpl implements Player {
      */
     public PlayerImpl(final Position position) {
         this.currentPosition = position;
-        this.lastUpdate = System.currentTimeMillis();
         this.setDirection(Direction.NONE);
         this.updateHitbox();
     }
@@ -44,8 +47,7 @@ public class PlayerImpl implements Player {
     }
 
     @Override
-    public final void update(final long currentTime, final Maze maze) {
-        final long deltaTime = currentTime - this.lastUpdate;
+    public final void update(final long deltaTime, final Maze maze) {
         if (!this.direction.equals(Direction.NONE)) {
             this.move(deltaTime, maze);
             this.setDirection(Direction.NONE);
@@ -58,12 +60,10 @@ public class PlayerImpl implements Player {
             }
             this.place = false;
         }
-        this.lastUpdate = currentTime;
     }
 
     private boolean allowedToPlaceBomb(final Maze maze) {
-        //TODO: when maze.getBombs() is added
-        return false;
+        return maze.getBombs().size() < this.currentBombLimit;
     }
 
     private void move(final long time, final Maze maze) {
@@ -90,9 +90,9 @@ public class PlayerImpl implements Player {
     }
 
     private boolean checkCollision(final Maze maze) {
-        boolean collisionWalls = maze.getWalls().stream()
+        final boolean collisionWalls = maze.getWalls().stream()
                 .anyMatch(w -> this.getHitBox().collision(w.getHitBox()));
-        boolean collisionBox = maze.getBoxes().stream()
+        final boolean collisionBox = maze.getBoxes().stream()
                 .anyMatch(b -> this.getHitBox().collision(b.getHitBox()));
         return collisionWalls || collisionBox;
     }
@@ -100,7 +100,7 @@ public class PlayerImpl implements Player {
     private void checkPowerUp(final Maze maze) {
         final Optional<PowerUp> powerUp = maze.getPowerUp().stream()
                 .filter(obj -> obj.getType().equals(ObjectType.POWERUP))
-                .filter(p -> this.getHitBox().collision(p.getHitBox())/*p.getHitBox().collision(this.hitbox)*/)
+                .filter(p -> this.getHitBox().collision(p.getHitBox()))
                 .findAny();
 
         if (powerUp.isPresent()) {
@@ -124,14 +124,30 @@ public class PlayerImpl implements Player {
         return ObjectType.PLAYER;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void increaseBombLimit(int amount) {
-        this.currentBombLimit = this.currentBombLimit + amount;
+    public void setBombLimit(final int newLimit) {
+        this.currentBombLimit = newLimit;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setSpeed(final double newSpeed) {
+        this.currentSpeed = newSpeed;
     }
 
     @Override
-    public void increaseSpeed(double speedIncrease) {
-        this.currentSpeed = BigDecimal.valueOf(this.currentSpeed).add(BigDecimal.valueOf(speedIncrease)).doubleValue();
+    public double getSpeed() {
+        return  this.currentSpeed;
+    }
+
+    @Override
+    public int getBombLimit() {
+        return this.currentBombLimit;
     }
 
 
@@ -140,8 +156,16 @@ public class PlayerImpl implements Player {
     }
 
     private void placeBomb(final Maze maze) {
-        //maze.addMazeObject();
-        //TODO: when the Bomb is added
+        final Optional<BlankSpace> blankSpace = maze.getBlankSpaces().stream()
+                .filter(b -> b.getHitBox().collision(this.hitbox))
+                .filter(innerblank -> innerblank.getHitBox().inner(this.position()))
+                .findAny();
+
+        if (blankSpace.isPresent()) {
+            maze.addMazeObject(new BombFactoryImpl().createBomb(blankSpace.get().position(), this.bombType));
+        } else {
+            throw new IllegalStateException();
+        }
     }
 
     @Override
@@ -152,5 +176,18 @@ public class PlayerImpl implements Player {
     @Override
     public final void notifyToPlace() {
         this.place = true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setBombType(final BombType type) {
+        this.bombType = type;
+    }
+
+    @Override
+    public BombType getBombType() {
+        return this.bombType;
     }
 }

@@ -8,23 +8,13 @@ import it.unibo.michelito.util.Direction;
  */
 public interface Player extends Updatable {
     /**
-     * Increases the number of placeable {Bomb} by the {@link Player}.
-     */
-    void increaseBombLimit(int amount);
-
-    /**
-     * Increases the speed of the {@link Player}.
-     */
-    void increaseSpeed(double speedIncrease);
-
-    /**
      * Sets the direction for the next move of the {@link Player}.
      * @param direction is the {@link Direction} of the next move.
      */
     void setDirection(Direction direction);
 
     /**
-     * Makes the player place a {Bomb}.
+     * Makes the player place a {@link it.unibo.michelito.model.bomb.api.Bomb}.
      */
     void notifyToPlace();
 }

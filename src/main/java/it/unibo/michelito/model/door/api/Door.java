@@ -1,10 +1,12 @@
 package it.unibo.michelito.model.door.api;
 
+import it.unibo.michelito.model.enemy.api.Enemy;
+import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.modelutil.Updatable;
 
 /**
- * Interface for Door.
- * Every implementation when updated should check if the Player has entered.
+ * Represents a generic door in the game.
+ * Every door implementation may open when updated when no {@link Enemy} is in the {@link Maze}.
  */
 public interface Door extends Updatable {
     /**

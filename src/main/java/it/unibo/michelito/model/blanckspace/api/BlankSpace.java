@@ -3,7 +3,7 @@ package it.unibo.michelito.model.blanckspace.api;
 import it.unibo.michelito.model.modelutil.MazeObject;
 
 /**
- * Interface that represents a blank space in the maze.
+ * Represents a generic blank space in the game.
  */
 public interface BlankSpace extends MazeObject {
 }

@@ -1,6 +1,6 @@
 package it.unibo.michelito.model.gamemanager.api;
 
-import it.unibo.michelito.controller.palyercommand.api.PlayerCommand;
+import it.unibo.michelito.controller.playercommand.api.PlayerCommand;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.player.api.Player;
 import it.unibo.michelito.util.GameObject;
@@ -11,7 +11,7 @@ import java.util.Set;
  * Represents the Game Manager of the Michelito Application.
  * This interface defines the core logic for controlling the game state
  * ant it is the single entry point of the model.
- * Provides getter od the current state of the game.
+ * Provides getter for the current state of the game.
  */
 public interface GameManager {
     /**
@@ -55,7 +55,7 @@ public interface GameManager {
      * Updates the state of the game, applying the player's command and updating
      * the current {@link Maze}.
      *
-     * @param currentTime the current time in milliseconds, used for game state updates.
+     * @param deltaTime the delta between last update in milliseconds, used for game state updates.
      */
-    void update(long currentTime);
+    void update(long deltaTime);
 }

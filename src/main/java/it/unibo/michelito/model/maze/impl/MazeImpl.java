@@ -1,8 +1,8 @@
 package it.unibo.michelito.model.maze.impl;
 
-import it.unibo.michelito.controller.objectadapter.api.ObjectAdapter;
-import it.unibo.michelito.controller.objectadapter.impl.ObjectAdapterImpl;
-import it.unibo.michelito.controller.palyercommand.api.PlayerCommand;
+import it.unibo.michelito.controller.objectsadapter.api.ObjectsAdapter;
+import it.unibo.michelito.controller.objectsadapter.impl.ObjectsAdapterImpl;
+import it.unibo.michelito.controller.playercommand.api.PlayerCommand;
 import it.unibo.michelito.model.blanckspace.api.BlankSpace;
 import it.unibo.michelito.model.bomb.api.Bomb;
 import it.unibo.michelito.model.box.api.Box;
@@ -26,14 +26,13 @@ import java.util.stream.Collectors;
 /**
  * An implementation of {@link Maze} and {@link Level} interfaces representing a single maze in the game.
  * <p>
- * This class manages the maze objects, including walls, boxes, enemies, power-ups, and more.
- * It provides methods to interact with and manipulate these objects within the maze thought the Maze interface.
- * It provides method to get the current state and to update all {@link Updatable} thought the Level interface.
+ * This class manages the {@link MazeObject}.
+ * It provides methods to interact with and manipulate these objects within the maze thought the {@link Maze} interface.
+ * It provides method to get the current state and to update all {@link Updatable} thought the {@link Level} interface.
  * </p>
  */
 public final class MazeImpl implements Maze, Level {
     private final Set<MazeObject> mazeObjectsSet;
-
     private boolean won;
     private boolean lost;
 
@@ -43,13 +42,13 @@ public final class MazeImpl implements Maze, Level {
      * @param levelNumber current level number.
      */
     public MazeImpl(final int levelNumber) {
-        ObjectAdapter objectAdapter = new ObjectAdapterImpl();
-        mazeObjectsSet = new HashSet<>(objectAdapter.requestMazeObjects(levelNumber));
+        ObjectsAdapter objectsAdapter = new ObjectsAdapterImpl();
+        mazeObjectsSet = new HashSet<>(objectsAdapter.requestMazeObjects(levelNumber));
     }
 
     @Override
-    public void update(long currentTime) {
-        this.getUpdatable().forEach(u -> u.update(currentTime, this));
+    public void update(final long deltaTime) {
+        this.getUpdatable().forEach(u -> u.update(deltaTime, this));
     }
 
     @Override
@@ -156,7 +155,7 @@ public final class MazeImpl implements Maze, Level {
      * A utility method to filter and retrieve all objects of a specific type from the maze.
      *
      * @param type the class type to filter the objects by.
-     * @param <T>  the type of element that will be contained in the output set.
+     * @param <T> the type of element that will be contained in the output set.
      * @return a {@link Set} of objects of the specified type.
      */
     private <T> Set<T> getObjectsOfType(final Class<T> type) {

@@ -1,6 +1,6 @@
 package it.unibo.michelito.model.gamemanager.impl;
 
-import it.unibo.michelito.controller.palyercommand.api.PlayerCommand;
+import it.unibo.michelito.controller.playercommand.api.PlayerCommand;
 import it.unibo.michelito.model.gamemanager.api.GameManager;
 import it.unibo.michelito.model.maze.api.Level;
 import it.unibo.michelito.model.maze.impl.MazeImpl;
@@ -58,8 +58,8 @@ public final class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void update(final long currentTime) {
-        currentLevel.update(currentTime);
+    public void update(final long deltaTime) {
+        currentLevel.update(deltaTime);
         if (currentLevel.isLost()) {
             this.loseLife();
         }

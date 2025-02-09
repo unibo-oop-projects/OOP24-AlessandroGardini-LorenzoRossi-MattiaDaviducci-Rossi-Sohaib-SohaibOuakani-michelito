@@ -7,20 +7,16 @@ import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.ObjectType;
-import it.unibo.michelito.util.hitbox.api.HitBox;
-import it.unibo.michelito.util.hitbox.api.HitBoxFactory;
-import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
+import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
+import it.unibo.michelito.model.modelutil.hitbox.api.HitBoxFactory;
+import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
-import it.unibo.michelito.util.hitbox.api.HitBoxFactory;
-import it.unibo.michelito.util.hitbox.impl.HitBoxFactoryImpl;
 /**
  * Implementation of {@link Enemy}.
  */
 public final class EnemyImpl implements Enemy {
     private Position actualposition;
-    private long lastUpdate;
     private MoodAI moodAI;
     private HitBox hitBox;
     private Direction direction;
@@ -31,23 +27,20 @@ public final class EnemyImpl implements Enemy {
      */
     public EnemyImpl(final Position position) {
         this.actualposition = position;
-        this.lastUpdate = System.currentTimeMillis();
         hitBox = updateHitBox(position);
         direction = Direction.NONE;
     }
 
     @Override
-    public void update(final long currentTime, final Maze maze) {
+    public void update(final long deltaTime, final Maze maze) {
         if (moodAI == null) {
-            moodAI = new MoodAIImpl(currentTime, maze);
+            moodAI = new MoodAIImpl(maze);
         }
 
-        final long deltaTime = currentTime - lastUpdate;
         direction = moodAI.getDirection();
         verifyHitPlayer(maze);
         this.move(maze, deltaTime);
-        moodAI.update(currentTime);
-        lastUpdate = currentTime;
+        moodAI.update(deltaTime);
     }
 
     @Override
@@ -66,20 +59,20 @@ public final class EnemyImpl implements Enemy {
     }
 
     private HitBox updateHitBox(final Position position) {
-        HitBoxFactory hitboxfactory = new HitBoxFactoryImpl();
+        final HitBoxFactory hitboxfactory = new HitBoxFactoryImpl();
         return hitboxfactory.entityeHitBox(position);
     }
 
     private void move(final Maze maze, final long time) {
-        BigDecimal xmove = BigDecimal.valueOf(time).multiply(BigDecimal.valueOf(this.direction.toPosition().x()));
-        BigDecimal ymove = BigDecimal.valueOf(time).multiply(BigDecimal.valueOf(this.direction.toPosition().y()));
+        final BigDecimal xMove = BigDecimal.valueOf(time).multiply(BigDecimal.valueOf(this.direction.toPosition().x()));
+        final BigDecimal yMove = BigDecimal.valueOf(time).multiply(BigDecimal.valueOf(this.direction.toPosition().y()));
 
-        BigDecimal xvalue = BigDecimal.valueOf(this.position().x()).add(xmove);
-        BigDecimal yvalue = BigDecimal.valueOf(this.position().y()).add(ymove);
+        final BigDecimal xValue = BigDecimal.valueOf(this.position().x()).add(xMove);
+        final BigDecimal yValue = BigDecimal.valueOf(this.position().y()).add(yMove);
 
-        Position newposition = new Position(xvalue.doubleValue(), yvalue.doubleValue());
+        final Position newposition = new Position(xValue.doubleValue(), yValue.doubleValue());
 
-        HitBox newhitbox = updateHitBox(newposition);
+        final HitBox newhitbox = updateHitBox(newposition);
         if (!findCollision(maze, newhitbox)) {
             this.actualposition = newposition;
             this.hitBox = newhitbox;

@@ -40,6 +40,6 @@ public enum Direction {
      * @return the {@link Position} representing the {@link Direction}
      */
     public Position toPosition() {
-        return new Position(position.x(), position.y());
+        return this.position;
     }
 }
