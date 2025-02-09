@@ -1,5 +1,6 @@
 package it.unibo.michelito.model.gamemanager.impl;
 
+import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.controller.playercommand.api.PlayerCommand;
 import it.unibo.michelito.model.gamemanager.api.GameManager;
 import it.unibo.michelito.model.maze.api.Level;
@@ -13,7 +14,8 @@ import java.util.Set;
  * levels, lives and current game state.
  */
 public final class GameManagerImpl implements GameManager {
-    private static final int MAX_MAZE_INDEX = 1;
+    private static final int STARTER_MAZE = 1;
+    private static final int MAX_MAZE_INDEX = 3;
     private static final int STARTING_LIFE_COUNT = 5;
 
     private int currentLevelIndex;
@@ -29,17 +31,17 @@ public final class GameManagerImpl implements GameManager {
     public GameManagerImpl() {
         this.currentLevelIndex = 0;
         this.currentLives = STARTING_LIFE_COUNT;
-        this.currentLevel = new MazeImpl(0);
+        this.currentLevel = new MazeImpl(STARTER_MAZE);
     }
 
     @Override
     public boolean isGameOver() {
-        return gameOver;
+        return this.gameOver;
     }
 
     @Override
     public boolean isGameWon() {
-        return gameWon;
+        return this.gameWon;
     }
 
     @Override
@@ -59,11 +61,11 @@ public final class GameManagerImpl implements GameManager {
 
     @Override
     public void update(final long deltaTime) {
-        currentLevel.update(deltaTime);
-        if (currentLevel.isLost()) {
+        this.currentLevel.update(deltaTime);
+        if (this.currentLevel.isLost()) {
             this.loseLife();
         }
-        if (currentLevel.isWon()) {
+        if (this.currentLevel.isWon()) {
             this.wonMaze();
         }
     }
