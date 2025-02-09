@@ -43,7 +43,7 @@ public final class MazeImpl implements Maze, Level {
      */
     public MazeImpl(final int levelNumber) {
         ObjectsAdapter objectsAdapter = new ObjectsAdapterImpl();
-        mazeObjectsSet = new HashSet<>(objectsAdapter.requestMazeObjects(levelNumber));
+        this.mazeObjectsSet = new HashSet<>(objectsAdapter.requestMazeObjects(levelNumber));
     }
 
     @Override
