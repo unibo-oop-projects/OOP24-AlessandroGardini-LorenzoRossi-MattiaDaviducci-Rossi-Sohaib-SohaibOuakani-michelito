@@ -64,8 +64,8 @@ public final class EnemyImpl implements Enemy {
     }
 
     private void move(final Maze maze, final long time) {
-        final BigDecimal xMove = BigDecimal.valueOf(time).multiply(BigDecimal.valueOf(this.direction.toPosition().x() * 0.1));
-        final BigDecimal yMove = BigDecimal.valueOf(time).multiply(BigDecimal.valueOf(this.direction.toPosition().y() * 0.1));
+        final BigDecimal xMove = BigDecimal.valueOf(time).multiply(BigDecimal.valueOf(this.direction.toPosition().x()));
+        final BigDecimal yMove = BigDecimal.valueOf(time).multiply(BigDecimal.valueOf(this.direction.toPosition().y()));
 
         final BigDecimal xValue = BigDecimal.valueOf(this.position().x()).add(xMove);
         final BigDecimal yValue = BigDecimal.valueOf(this.position().y()).add(yMove);
