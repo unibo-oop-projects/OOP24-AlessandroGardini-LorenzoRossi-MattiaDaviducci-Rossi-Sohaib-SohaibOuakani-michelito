@@ -2,7 +2,7 @@ package it.unibo.michelito.model.enemy;
 
 import it.unibo.michelito.model.enemy.api.Enemy;
 import it.unibo.michelito.model.enemy.api.ai.MoodAI;
-import it.unibo.michelito.model.enemy.api.ai.MoodType;
+import it.unibo.michelito.model.enemy.api.ai.MovementType;
 import it.unibo.michelito.model.enemy.impl.EnemyImpl;
 import it.unibo.michelito.model.enemy.impl.ai.MoodAIImpl;
 import it.unibo.michelito.model.maze.api.Maze;
@@ -37,8 +37,6 @@ class TestEnemy {
     void setUp() {
         final int levelNumber = -1;
         maze = new MazeImpl(levelNumber);
-        maze.addMazeObject(new EnemyImpl(ENEMY_TO_TRY1));
-        maze.addMazeObject(new EnemyImpl(ENEMY_TO_TRY2));
         final Position initalPosition = new Position(6, 6);
         this.enemy = new EnemyImpl(initalPosition);
     }
@@ -49,8 +47,6 @@ class TestEnemy {
         final HitBox testHitBox = testHitBoxFact.entityeHitBox(BASE_POSITION);
         assertEquals(testHitBox, this.enemy.getHitBox());
         enemy.update(SLEEP_TIME, maze);
-        maze.removeMazeObject(new EnemyImpl(ENEMY_TO_TRY1));
-        maze.removeMazeObject(new EnemyImpl(ENEMY_TO_TRY1));
         enemy.update(TESTDELTA1, maze);
         assertNotEquals(BASE_POSITION, enemy.position());
         final Position newPosition = enemy.position();
@@ -61,13 +57,9 @@ class TestEnemy {
     @Test
     public void testAI() {
         final MoodAI moodAI = new MoodAIImpl(maze);
-        assertEquals(MoodType.SLEEPING, moodAI.getMood());
-        assertEquals(Direction.NONE, moodAI.getDirection());
+        assertEquals(MovementType.SLEEPING, moodAI.getMovement().getMovementType());
         moodAI.update(SLEEP_TIME);
-        assertEquals(MoodType.CHILLING, moodAI.getMood());
-        moodAI.setMood(MoodType.SEARCHING);
-        assertEquals(MoodType.SEARCHING, moodAI.getMood());
-        assertNotEquals(Direction.NONE, moodAI.getDirection());
+        assertEquals(MovementType.CHILLING, moodAI.getMovement().getMovementType());
     }
 
 }

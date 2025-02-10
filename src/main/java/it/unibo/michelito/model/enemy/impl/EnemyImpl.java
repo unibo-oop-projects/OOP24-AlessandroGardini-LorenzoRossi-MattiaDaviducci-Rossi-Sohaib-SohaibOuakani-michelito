@@ -2,26 +2,23 @@ package it.unibo.michelito.model.enemy.impl;
 
 import it.unibo.michelito.model.enemy.api.Enemy;
 import it.unibo.michelito.model.enemy.api.ai.MoodAI;
+import it.unibo.michelito.model.enemy.api.ai.Movement;
 import it.unibo.michelito.model.enemy.impl.ai.MoodAIImpl;
 import it.unibo.michelito.model.maze.api.Maze;
-import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
 import it.unibo.michelito.model.modelutil.hitbox.api.HitBoxFactory;
 import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 
-import java.math.BigDecimal;
 /**
  * Implementation of {@link Enemy}.
  */
 public final class EnemyImpl implements Enemy {
-    private final int TRY_NEW_DIRECTION_TIME = 300;
-    private int countUpdate = 0;
     private Position actualposition;
+    private Movement movement;
     private MoodAI moodAI;
     private HitBox hitBox;
-    private Direction direction;
 
     /**
      *Constructor for {@link EnemyImpl}.
@@ -29,24 +26,25 @@ public final class EnemyImpl implements Enemy {
      */
     public EnemyImpl(final Position position) {
         this.actualposition = position;
-        hitBox = updateHitBox(position);
-        direction = Direction.NONE;
+        updateHitBox(position);
     }
 
     @Override
     public void update(final long deltaTime, final Maze maze) {
         if (moodAI == null) {
             moodAI = new MoodAIImpl(maze);
+            movement = moodAI.getMovement();
         }
-        if(countUpdate < TRY_NEW_DIRECTION_TIME) {
-            countUpdate++;
+        if(!movement.getMovementType().equals(moodAI.getMovement().getMovementType())){
+            System.out.println("change movement");
+            movement = moodAI.getMovement();
         }
-        else {
-            direction = moodAI.getDirection();
-            countUpdate = 0;
-        }
+        movement.setPosition(actualposition);
         verifyHitPlayer(maze);
-        this.move(maze, deltaTime);
+        movement.move(maze, deltaTime);
+        this.actualposition = movement.getPosition();
+        updateHitBox(actualposition);
+        verifyHitPlayer(maze);
         moodAI.update(deltaTime);
     }
 
@@ -65,37 +63,9 @@ public final class EnemyImpl implements Enemy {
         return ObjectType.ENEMY;
     }
 
-    private HitBox updateHitBox(final Position position) {
+    private void updateHitBox(final Position position) {
         final HitBoxFactory hitboxfactory = new HitBoxFactoryImpl();
-        return hitboxfactory.entityeHitBox(position);
-    }
-
-    private void move(final Maze maze, final long time) {
-        final BigDecimal xMove = BigDecimal.valueOf(time).multiply(BigDecimal.valueOf(this.direction.toPosition().x() * 0.1));
-        final BigDecimal yMove = BigDecimal.valueOf(time).multiply(BigDecimal.valueOf(this.direction.toPosition().y() * 0.1));
-
-        final BigDecimal xValue = BigDecimal.valueOf(this.position().x()).add(xMove);
-        final BigDecimal yValue = BigDecimal.valueOf(this.position().y()).add(yMove);
-
-        final Position newposition = new Position(xValue.doubleValue(), yValue.doubleValue());
-
-        final HitBox newhitbox = updateHitBox(newposition);
-        if (!findCollision(maze, newhitbox)) {
-            this.actualposition = newposition;
-            this.hitBox = newhitbox;
-            verifyHitPlayer(maze);
-        }
-        else{
-            searchForNewDirection();
-        }
-    }
-
-    private boolean findCollision(final Maze maze, final HitBox calshitbox) {
-        return maze.getWalls().stream()
-                .anyMatch(w -> calshitbox.collision(w.getHitBox()))
-                ||
-                maze.getBoxes().stream()
-                        .anyMatch(b -> calshitbox.collision(b.getHitBox()));
+        hitBox = hitboxfactory.entityeHitBox(position);
     }
 
     private void verifyHitPlayer(final Maze maze) {
@@ -104,11 +74,4 @@ public final class EnemyImpl implements Enemy {
         }
     }
 
-    private void searchForNewDirection() {
-        Direction newDirection;
-        do{
-            newDirection = moodAI.getDirection();
-        }while (newDirection == direction);
-        direction = newDirection;
-    }
 }
