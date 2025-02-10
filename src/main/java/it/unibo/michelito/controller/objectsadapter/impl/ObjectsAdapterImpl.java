@@ -49,10 +49,12 @@ public class ObjectsAdapterImpl implements ObjectsAdapter {
      * @return the corresponding {@link MazeObject}.
      * @throws IllegalArgumentException if the object type is not supported.
      */
-    private MazeObject objectTransformer(GameObject gameObject) {
+    private MazeObject objectTransformer(final GameObject gameObject) {
         return OBJECT_CREATORS.getOrDefault(
                 gameObject.objectType(),
-                obj -> { throw new IllegalArgumentException("Object type " + gameObject.objectType() + " not supported"); }
+                obj -> {
+                    throw new IllegalArgumentException("Object type " + gameObject.objectType() + " not supported");
+                }
         ).apply(gameObject);
     }
 }

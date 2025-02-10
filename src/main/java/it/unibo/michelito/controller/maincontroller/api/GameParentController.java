@@ -1,7 +1,7 @@
 package it.unibo.michelito.controller.maincontroller.api;
 
 /**
- * Interface representing a parent controller that manages game-related operations.
+ * Represents a parent controller that manages game-related operations.
  */
 public interface GameParentController extends Controller {
     /**
