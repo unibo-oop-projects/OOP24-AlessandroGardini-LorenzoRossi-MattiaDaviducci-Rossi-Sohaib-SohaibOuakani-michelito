@@ -9,11 +9,12 @@ import it.unibo.michelito.view.gameview.api.InputHandler;
 import javax.swing.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameViewImpl implements GameView {
     private boolean showing = false;
     private final Switcher switcher;
-    private final GameFrame frame = new GameFrame();
+    private final GameFrame frame = new GameFrame(this);
 
     public GameViewImpl(final Switcher switcher) {
         this.switcher = switcher;
@@ -22,12 +23,14 @@ public class GameViewImpl implements GameView {
     @Override
     public void show(boolean show) {
         this.showing = show;
+        SwingUtilities.invokeLater(() -> frame.setVisible(show));
     }
 
     @Override
-    public void display(Set<GameObject> gameObjects, final int lives) {
+    public void display(final Set<GameObject> gameObjects, final int lives) {
         SwingUtilities.invokeLater(() -> {
             frame.setGameObjects(gameObjects);
+            frame.setLives(lives);
         });
     }
 

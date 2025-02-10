@@ -8,13 +8,14 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Set;
 
-public class GameFrame extends JFrame {
+class GameFrame extends JFrame {
     double aspectRatio;
     GamePanel gamePanel = new GamePanel();
+    GamePanel southPanel = new GamePanel();
+    JTextField livesTextField = new JTextField();
 
-    public GameFrame() {
-        setTitle("Game Window");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public GameFrame(GameViewImpl gameView) {
+        setTitle("Michelito");
 
         add(gamePanel, BorderLayout.CENTER);
 
@@ -29,12 +30,31 @@ public class GameFrame extends JFrame {
             }
         });
 
-        setLocationRelativeTo(null); // Center the window
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                int confirm = JOptionPane.showConfirmDialog(
+                        null,
+                        "Are you sure you want to exit?",
+                        "Exit Confirmation",
+                        JOptionPane.YES_NO_OPTION
+                );
+                if (confirm == JOptionPane.YES_OPTION) {
+
+                }
+            }
+        });
+
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
     public void setGameObjects(Set<GameObject> gameObjects) {
         gamePanel.setGameObjects(gameObjects);
+    }
+
+    public void setLives(final int lives) {
+        livesTextField.setText(String.valueOf(lives));
     }
 
     public Set<Integer> getKeysPressed() {
@@ -45,13 +65,8 @@ public class GameFrame extends JFrame {
         Dimension size = getSize();
         int newWidth = size.width;
         int newHeight = (int) (newWidth / aspectRatio);
-
         if (newHeight != size.height) {
             setSize(newWidth, newHeight);
         }
     }
 }
-
-
-
-

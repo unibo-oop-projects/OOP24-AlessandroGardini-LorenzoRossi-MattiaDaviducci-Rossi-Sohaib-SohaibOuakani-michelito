@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.Objects;
 import java.util.Set;
 
-public class GamePanel extends JPanel {
+class GamePanel extends JPanel {
     private Set<GameObject> gameObjects;
     private InputHandler inputHandler = new InputHandlerImpl();
 
@@ -37,6 +37,6 @@ public class GamePanel extends JPanel {
     }
 
     public Set<Integer> getKeysPressed() {
-        return inputHandler.keyPressed();
+        return inputHandler.keysPressed();
     }
 }

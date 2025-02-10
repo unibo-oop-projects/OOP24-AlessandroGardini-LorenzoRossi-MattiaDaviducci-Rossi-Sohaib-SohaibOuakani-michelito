@@ -6,25 +6,25 @@ import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
-public class InputHandlerImpl implements InputHandler {
-    private final Set<Integer> keypressed = new HashSet<>();
+class InputHandlerImpl implements InputHandler {
+    private final Set<Integer> keysPressed = new HashSet<>();
+
     @Override
-    public synchronized Set<Integer> keyPressed() {
-        return Set.copyOf(this.keypressed);
+    public synchronized Set<Integer> keysPressed() {
+        return Set.copyOf(this.keysPressed);
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
     public synchronized void keyPressed(KeyEvent e) {
-        this.keypressed.add(e.getKeyCode());
+        this.keysPressed.add(e.getKeyCode());
     }
 
     @Override
     public synchronized void keyReleased(KeyEvent e) {
-        this.keypressed.remove(e.getKeyCode());
+        this.keysPressed.remove(e.getKeyCode());
     }
 }
