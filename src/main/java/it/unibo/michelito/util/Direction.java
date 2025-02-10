@@ -24,6 +24,14 @@ public enum Direction {
      */
     RIGHT(new Position(1, 0)),
 
+    UP_LEFT(new Position(-Math.sqrt(0.5), -Math.sqrt(0.5))),
+
+    UP_RIGHT(new Position(Math.sqrt(0.5), -Math.sqrt(0.5))),
+
+    DOWN_LEFT(new Position(-Math.sqrt(0.5), Math.sqrt(0.5))),
+
+    DOWN_RIGHT(new Position(Math.sqrt(0.5), Math.sqrt(0.5))),
+
     /**
      * A {@link Direction} to represent standing still.
      */
@@ -33,6 +41,10 @@ public enum Direction {
 
     Direction(final Position position) {
         this.position = position;
+    }
+
+    public boolean isDiagonal() {
+        return this.equals(DOWN_LEFT) || this.equals(DOWN_RIGHT) || this.equals(UP_LEFT) || this.equals(UP_RIGHT);
     }
 
     /**
