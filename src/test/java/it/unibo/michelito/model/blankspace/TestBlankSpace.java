@@ -32,7 +32,7 @@ final class TestBlankSpace {
      */
     @Test
     void testGetHitBox() {
-        HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(this.position);
+        final HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(this.position);
         assertEquals(expectedHitBox, this.blankSpace.getHitBox(), "HitBox should be squareHitBox");
     }
 

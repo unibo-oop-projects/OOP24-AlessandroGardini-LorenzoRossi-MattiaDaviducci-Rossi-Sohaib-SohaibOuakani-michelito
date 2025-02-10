@@ -18,7 +18,7 @@ public final class Michelito {
      * @param args is ignored.
      */
     public static void main(final String[] args) {
-        MainController controller = new MainControllerImpl();
+        final MainController controller = new MainControllerImpl();
         controller.start();
     }
 }

@@ -90,8 +90,8 @@ final class TestMaze {
      */
     @Test
     void testUpdate() {
-        var initialPlayerPosition = this.maze.getPlayer().position();
-        var initialEnemyPosition = new Position(ENEMY_POSITION, ENEMY_POSITION);
+        final var initialPlayerPosition = this.maze.getPlayer().position();
+        final var initialEnemyPosition = new Position(ENEMY_POSITION, ENEMY_POSITION);
         this.maze.addMazeObject(new EnemyImpl(initialEnemyPosition));
         this.maze.setCommand(new MoveCommand(Direction.DOWN));
         this.maze.update(DELTA_TIME);

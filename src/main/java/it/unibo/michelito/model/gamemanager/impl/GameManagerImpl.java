@@ -1,6 +1,5 @@
 package it.unibo.michelito.model.gamemanager.impl;
 
-import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.controller.playercommand.api.PlayerCommand;
 import it.unibo.michelito.model.gamemanager.api.GameManager;
 import it.unibo.michelito.model.maze.api.Level;

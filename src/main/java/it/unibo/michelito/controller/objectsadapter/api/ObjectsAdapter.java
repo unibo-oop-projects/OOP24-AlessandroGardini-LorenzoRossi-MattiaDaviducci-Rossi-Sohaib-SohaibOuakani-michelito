@@ -16,5 +16,5 @@ public interface ObjectsAdapter {
      * @param level the level to generate the set of {@link MazeObject}s.
      * @return a set of {@link MazeObject} representing the level.
      */
-    Set<MazeObject> requestMazeObjects(final int level);
+    Set<MazeObject> requestMazeObjects(int level);
 }

@@ -19,7 +19,7 @@ public interface GameManager {
      *
      * @return {@code true} if the game is lost, {@code false} otherwise.
      */
-    boolean isGameOver() ;
+    boolean isGameOver();
 
     /**
      * Retrieves gameWon state.

@@ -32,7 +32,7 @@ final class TestWall {
      */
     @Test
     void testGetHitBox() {
-        HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(this.position);
+        final HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(this.position);
         assertEquals(expectedHitBox, this.wall.getHitBox(), "HitBox should be squareHitBox");
     }
 
