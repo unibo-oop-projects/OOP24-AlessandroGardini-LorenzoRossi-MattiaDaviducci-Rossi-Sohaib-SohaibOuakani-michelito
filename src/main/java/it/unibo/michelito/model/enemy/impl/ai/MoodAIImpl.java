@@ -67,7 +67,7 @@ public final class MoodAIImpl implements MoodAI {
         if (createdTime >= SLEEPTIME) {
             setMood(MoodType.CHILLING);
         }
-        if (maze.getEnemies().size() < initialEnemy * DEATHFORVENGENS) {
+        if (maze.getEnemies().size() < initialEnemy ) {
             setMood(MoodType.SEARCHING);
         }
     }

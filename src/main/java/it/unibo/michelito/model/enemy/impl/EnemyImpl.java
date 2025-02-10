@@ -16,6 +16,8 @@ import java.math.BigDecimal;
  * Implementation of {@link Enemy}.
  */
 public final class EnemyImpl implements Enemy {
+    private final int TRY_NEW_DIRECTION_TIME = 300;
+    private int countUpdate = 0;
     private Position actualposition;
     private MoodAI moodAI;
     private HitBox hitBox;
@@ -36,8 +38,13 @@ public final class EnemyImpl implements Enemy {
         if (moodAI == null) {
             moodAI = new MoodAIImpl(maze);
         }
-
-        direction = moodAI.getDirection();
+        if(countUpdate < TRY_NEW_DIRECTION_TIME) {
+            countUpdate++;
+        }
+        else {
+            direction = moodAI.getDirection();
+            countUpdate = 0;
+        }
         verifyHitPlayer(maze);
         this.move(maze, deltaTime);
         moodAI.update(deltaTime);
@@ -78,6 +85,9 @@ public final class EnemyImpl implements Enemy {
             this.hitBox = newhitbox;
             verifyHitPlayer(maze);
         }
+        else{
+            searchForNewDirection();
+        }
     }
 
     private boolean findCollision(final Maze maze, final HitBox calshitbox) {
@@ -92,5 +102,13 @@ public final class EnemyImpl implements Enemy {
         if (this.hitBox.collision(maze.getPlayer().getHitBox())) {
             maze.killMichelito();
         }
+    }
+
+    private void searchForNewDirection() {
+        Direction newDirection;
+        do{
+            newDirection = moodAI.getDirection();
+        }while (newDirection == direction);
+        direction = newDirection;
     }
 }
