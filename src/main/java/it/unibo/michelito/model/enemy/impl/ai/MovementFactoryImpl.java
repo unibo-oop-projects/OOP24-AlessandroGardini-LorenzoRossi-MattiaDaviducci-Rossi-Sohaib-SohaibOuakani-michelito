@@ -12,8 +12,6 @@ import java.util.List;
  * Implementation of {@link MovementFactory}.
  */
 public final class MovementFactoryImpl implements MovementFactory {
-
-
     @Override
     public Movement chilling() {
         return  new MovementImpl() {

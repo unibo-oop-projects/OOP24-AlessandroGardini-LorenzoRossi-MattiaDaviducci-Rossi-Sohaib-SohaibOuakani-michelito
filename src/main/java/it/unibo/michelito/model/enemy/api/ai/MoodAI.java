@@ -1,12 +1,12 @@
 package it.unibo.michelito.model.enemy.api.ai;
 
 /**
- *An AI that change the mood of the enemy depending on various parameter.
+ *An AI that change the Movement of the enemy depending on various parameter.
  */
 public interface MoodAI {
 
     /**
-     * @return the current mood.
+     * @return the current Movement.
      */
     Movement getMovement();
 

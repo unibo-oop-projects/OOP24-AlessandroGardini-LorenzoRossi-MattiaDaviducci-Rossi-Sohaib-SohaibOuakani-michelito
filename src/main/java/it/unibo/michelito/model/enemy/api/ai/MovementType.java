@@ -1,21 +1,21 @@
 package it.unibo.michelito.model.enemy.api.ai;
 
 /**
- * The tipe of mood that enemy can have.
+ * The type of movement that enemy can have.
  */
 public enum MovementType {
     /**
-     * Sleeping mood.
+     * Sleeping movement.
      */
     SLEEPING,
 
     /**
-     *Chilling mood.
+     *Chilling movement.
      */
     CHILLING,
 
     /**
-     *Searching mood.
+     *Searching movement.
      */
     SEARCHING
 }

@@ -21,8 +21,7 @@ import java.util.Set;
 public abstract class MovementImpl implements Movement {
     private Position position;
     private Direction direction = Direction.NONE;
-    private HitBox hitBox;
-    private Set<Direction> directions = Set.of(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT);
+    private final Set<Direction> directions = Set.of(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT);
 
     @Override
     public void setPosition(final Position position){
@@ -32,16 +31,14 @@ public abstract class MovementImpl implements Movement {
 
     @Override
     public void move(final Maze maze, final long time) {
-        if(direction == Direction.NONE || shift(maze,time,this.direction).equals(this.position) ) {
+        if(direction == Direction.NONE || shift(maze,time,this.direction).equals(this.position)) {
             Random r = new Random();
-            List<Direction> possibleway = new ArrayList<>();
-            possibleway.add(Direction.NONE);
-            possibleway.addAll(directions.stream().filter(x -> !shift(maze,time,x).equals(this.position)).toList());
-            this.direction = possibleway.get(r.nextInt(possibleway.size()));
+            List<Direction> possibleWay = new ArrayList<>();
+            possibleWay.add(Direction.NONE);
+            possibleWay.addAll(directions.stream().filter(x -> !shift(maze,time,x).equals(this.position)).toList());
+            this.direction = possibleWay.get(r.nextInt(possibleWay.size()));
         }
-
         this.position = shift(maze, time, this.direction);
-        this.hitBox = updateHitBox(position);
     }
 
     @Override
@@ -82,7 +79,6 @@ public abstract class MovementImpl implements Movement {
         }
         return position;
     }
-
 
     abstract double velocity();
 
