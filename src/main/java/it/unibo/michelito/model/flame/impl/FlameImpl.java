@@ -44,7 +44,7 @@ public class FlameImpl implements Flame {
 
     @Override
     public ObjectType getType() {
-        return null;
+        return ObjectType.FLAME;
     }
 
     @Override
@@ -55,9 +55,7 @@ public class FlameImpl implements Flame {
         }
         if (!alreadyCheckedCollisions) {
             alreadyCheckedCollisions = true;
-
             final List<HitBox> flameHitBoxes = updateHitBox(maze);
-
             checkAndKillMichelito(maze, flameHitBoxes);
             checkAndKillEnemies(maze, flameHitBoxes);
         }
