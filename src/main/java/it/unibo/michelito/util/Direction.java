@@ -24,12 +24,24 @@ public enum Direction {
      */
     RIGHT(new Position(1, 0)),
 
+    /**
+     * UP-Left {@link Direction}.
+     */
     UP_LEFT(new Position(-Math.sqrt(0.5), -Math.sqrt(0.5))),
 
+    /**
+     * Up-Right {@link Direction}.
+     */
     UP_RIGHT(new Position(Math.sqrt(0.5), -Math.sqrt(0.5))),
 
+    /**
+     * Down-Left {@link Direction}.
+     */
     DOWN_LEFT(new Position(-Math.sqrt(0.5), Math.sqrt(0.5))),
 
+    /**
+     * Down-Right {@link Direction}.
+     */
     DOWN_RIGHT(new Position(Math.sqrt(0.5), Math.sqrt(0.5))),
 
     /**
