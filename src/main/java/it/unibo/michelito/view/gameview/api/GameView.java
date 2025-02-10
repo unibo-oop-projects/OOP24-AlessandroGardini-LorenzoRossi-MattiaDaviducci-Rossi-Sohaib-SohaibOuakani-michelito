@@ -7,5 +7,7 @@ import java.util.Set;
 public interface GameView {
     void show(boolean show);
 
-    void display(Set<GameObject> gameObjects);
+    void display(Set<GameObject> gameObjects, int lives);
+
+    Set<Integer> getPressedKeys();
 }
