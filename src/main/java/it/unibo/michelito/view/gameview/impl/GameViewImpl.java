@@ -6,13 +6,14 @@ import it.unibo.michelito.util.GameObject;
 import it.unibo.michelito.view.gameview.api.GameView;
 import it.unibo.michelito.view.gameview.api.InputHandler;
 
+import javax.swing.*;
 import java.util.HashSet;
 import java.util.Set;
 
 public class GameViewImpl implements GameView {
     private boolean showing = false;
-    private InputHandler inputHandler = new InputHandlerImpl();
     private final Switcher switcher;
+    private final GameFrame frame = new GameFrame();
 
     public GameViewImpl(final Switcher switcher) {
         this.switcher = switcher;
@@ -25,11 +26,13 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void display(Set<GameObject> gameObjects, final int lives) {
-        //TODO: make the view display the new state of the game
+        SwingUtilities.invokeLater(() -> {
+            frame.setGameObjects(gameObjects);
+        });
     }
 
     @Override
     public Set<Integer> getPressedKeys() {
-        return this.inputHandler.keyPressed();
+        return frame.getKeysPressed();
     }
 }

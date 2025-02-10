@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class GameControllerImpl implements GameController, Switcher {
     private static final int FPS = 60;
-    private static final long TIME_PER_TICK = (long) 100_000.0 / FPS;
+    private static final long TIME_PER_TICK = (long) 1_000.0 / FPS;
     private final GameParentController gameParentController;
     private boolean game;
     private final GameManager gameManager= new GameManagerImpl();
@@ -79,6 +79,7 @@ public class GameControllerImpl implements GameController, Switcher {
                 }
             }
         }
+
         private void waitForNextFrame(long currentTime) {
             long dt = System.currentTimeMillis() - currentTime;
             if (dt < TIME_PER_TICK) {
