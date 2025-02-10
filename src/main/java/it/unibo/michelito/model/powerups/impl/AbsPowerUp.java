@@ -11,7 +11,10 @@ import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 abstract class AbsPowerUp implements PowerUp {
     private final Position position;
     private final HitBox hitBox;
-
+    /**
+     * Constructor for {@link PowerUp}.
+     * @param position position {@link Position} of the {@link PowerUp}
+     */
     AbsPowerUp(final Position position) {
         this.position = position;
         this.hitBox = createHitBox();
@@ -22,21 +25,33 @@ abstract class AbsPowerUp implements PowerUp {
         return factory.squareHitBox(this.position);
     }
 
+    /**
+     * {@inheritDoc}
+     */
    @Override
    public HitBox getHitBox() {
         return this.hitBox;
    }
 
+    /**
+     * {@inheritDoc}
+     */
    @Override
     public Position position() {
         return this.position;
    }
 
+    /**
+     * {@inheritDoc}
+     */
    @Override
     public ObjectType getType() {
         return ObjectType.POWERUP;
    }
 
+    /**
+     * {@inheritDoc}
+     */
    @Override
     public abstract void applyEffect(ModifiablePlayer player);
 }
