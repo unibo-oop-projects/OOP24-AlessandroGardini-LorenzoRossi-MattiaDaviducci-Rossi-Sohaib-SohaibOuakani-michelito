@@ -24,7 +24,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * An implementation of {@link Maze} and {@link Level} interfaces representing a single maze in the game.
+ * Implementation of {@link Maze} and {@link Level} interfaces representing a single maze in the game.
  * <p>
  * This class manages the {@link MazeObject}.
  * It provides methods to interact with and manipulate these objects within the maze thought the {@link Maze} interface.
@@ -42,8 +42,8 @@ public final class MazeImpl implements Maze, Level {
      * @param levelNumber current level number.
      */
     public MazeImpl(final int levelNumber) {
-        ObjectsAdapter objectsAdapter = new ObjectsAdapterImpl();
-        mazeObjectsSet = new HashSet<>(objectsAdapter.requestMazeObjects(levelNumber));
+        final ObjectsAdapter objectsAdapter = new ObjectsAdapterImpl();
+        this.mazeObjectsSet = new HashSet<>(objectsAdapter.requestMazeObjects(levelNumber));
     }
 
     @Override
@@ -52,7 +52,7 @@ public final class MazeImpl implements Maze, Level {
     }
 
     @Override
-    public void setCommand(PlayerCommand playerCommand) {
+    public void setCommand(final PlayerCommand playerCommand) {
         playerCommand.execute(this.getPlayer());
     }
 
@@ -172,10 +172,22 @@ public final class MazeImpl implements Maze, Level {
 
     @Override
     public String toString() {
-        return "MazeImpl{" +
-                "mazeObjectsSet=" + mazeObjectsSet +
-                ", won=" + won +
-                ", lost=" + lost +
-                '}';
+        return "MazeImpl{"
+                + "mazeObjectsSet="
+                + mazeObjectsSet
+                + ", won="
+                + won
+                + ", lost="
+                + lost
+                + '}';
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final MazeImpl maze = (MazeImpl) o;
+        return won == maze.won && lost == maze.lost && Objects.equals(mazeObjectsSet, maze.mazeObjectsSet);
     }
 }

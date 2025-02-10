@@ -36,7 +36,7 @@ public enum ObjectType {
     DOOR,
 
     /**
-     * A BlankSpace
+     * A BlankSpace.
      */
     BLANK_SPACE,
 

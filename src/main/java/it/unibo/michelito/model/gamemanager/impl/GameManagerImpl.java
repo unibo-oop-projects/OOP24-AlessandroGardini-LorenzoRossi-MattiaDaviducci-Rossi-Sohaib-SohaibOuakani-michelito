@@ -9,11 +9,12 @@ import it.unibo.michelito.util.GameObject;
 import java.util.Set;
 
 /**
- * Implementation of the {@link GameManager} interface, responsible for managing
+ * Implementation of {@link GameManager} interface, responsible for managing
  * levels, lives and current game state.
  */
 public final class GameManagerImpl implements GameManager {
-    private static final int MAX_MAZE_INDEX = 1;
+    private static final int STARTER_MAZE = 1;
+    private static final int MAX_MAZE_INDEX = 3;
     private static final int STARTING_LIFE_COUNT = 5;
 
     private int currentLevelIndex;
@@ -29,17 +30,17 @@ public final class GameManagerImpl implements GameManager {
     public GameManagerImpl() {
         this.currentLevelIndex = 0;
         this.currentLives = STARTING_LIFE_COUNT;
-        this.currentLevel = new MazeImpl(0);
+        this.currentLevel = new MazeImpl(STARTER_MAZE);
     }
 
     @Override
     public boolean isGameOver() {
-        return gameOver;
+        return this.gameOver;
     }
 
     @Override
     public boolean isGameWon() {
-        return gameWon;
+        return this.gameWon;
     }
 
     @Override
@@ -59,17 +60,17 @@ public final class GameManagerImpl implements GameManager {
 
     @Override
     public void update(final long deltaTime) {
-        currentLevel.update(deltaTime);
-        if (currentLevel.isLost()) {
+        this.currentLevel.update(deltaTime);
+        if (this.currentLevel.isLost()) {
             this.loseLife();
         }
-        if (currentLevel.isWon()) {
+        if (this.currentLevel.isWon()) {
             this.wonMaze();
         }
     }
 
     /**
-     * Method to call when michelito lose a life.
+     * Handles the event of a Michelito's death.
      */
     private void loseLife() {
         if (this.currentLives == 0) {
@@ -81,7 +82,7 @@ public final class GameManagerImpl implements GameManager {
     }
 
     /**
-     * Method to be called once michelito has won a level.
+     * Handles the event when Michelito complete a level.
      */
     private void wonMaze() {
         if (this.currentLevelIndex >= MAX_MAZE_INDEX) {

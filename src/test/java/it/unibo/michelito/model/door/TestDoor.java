@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Test for the {@link DoorImpl} class.
  */
 final class TestDoor {
+    private static final int TIME = 0; //The TIME is irrelevant when updating a door
     private Door door;
     private Position position;
 
@@ -31,8 +32,8 @@ final class TestDoor {
      */
     @BeforeEach
     void setUp() {
-        position = new Position(0, 4);
-        door = new DoorImpl(position);
+        this.position = new Position(0, 4);
+        this.door = new DoorImpl(position);
     }
 
     /**
@@ -40,8 +41,8 @@ final class TestDoor {
      */
     @Test
     void testGetHitBox() {
-        HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(position);
-        assertEquals(expectedHitBox, door.getHitBox(), "HitBox should be squareHitBox");
+        final HitBox expectedHitBox = new HitBoxFactoryImpl().squareHitBox(this.position);
+        assertEquals(expectedHitBox, this.door.getHitBox(), "HitBox should be squareHitBox");
     }
 
     /**
@@ -49,7 +50,7 @@ final class TestDoor {
      */
     @Test
     void testGetType() {
-        assertEquals(ObjectType.DOOR, door.getType(), "Type should be DOOR");
+        assertEquals(ObjectType.DOOR, this.door.getType(), "Type should be DOOR");
     }
 
     /**
@@ -59,14 +60,13 @@ final class TestDoor {
     void testOpening() {
         final var enemy = new EnemyImpl(new Position(10, 10));
         final Maze maze = new MazeImpl(LevelGenerator.testLevel());
-        final int time = 0; //The time is irrelevant when updating a door
-        assertFalse(door.isOpen());
+        assertFalse(this.door.isOpen());
         maze.addMazeObject(enemy);
-        door.update(time, maze);
-        assertFalse(door.isOpen());
+        this.door.update(TIME, maze);
+        assertFalse(this.door.isOpen());
         maze.removeMazeObject(enemy);
-        door.update(time, maze);
-        assertTrue(door.isOpen());
+        this.door.update(TIME, maze);
+        assertTrue(this.door.isOpen());
     }
 
     /**
@@ -75,10 +75,10 @@ final class TestDoor {
      */
     @Test
     void testMazeWin() {
-        final MazeImpl maze = new MazeImpl(LevelGenerator.testLevel()); //Test Maze
-        Door doorUnderPlayer = new DoorImpl(maze.getPlayer().position());
+        final MazeImpl maze = new MazeImpl(LevelGenerator.testLevel());
+        final Door doorUnderPlayer = new DoorImpl(maze.getPlayer().position());
         assertFalse(maze.isWon());
-        doorUnderPlayer.update(5, maze);
+        doorUnderPlayer.update(TIME, maze);
         assertTrue(doorUnderPlayer.isOpen());
         assertTrue(maze.isWon());
     }
