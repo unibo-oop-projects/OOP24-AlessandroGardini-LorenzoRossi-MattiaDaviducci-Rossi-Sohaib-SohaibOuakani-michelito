@@ -1,12 +1,10 @@
 package it.unibo.michelito.view.gameview.impl;
 
 import it.unibo.michelito.controller.gamecontroller.api.Switcher;
-import it.unibo.michelito.controller.gamecontroller.impl.GameControllerImpl;
 import it.unibo.michelito.util.GameObject;
 import it.unibo.michelito.view.gameview.api.GameView;
 import it.unibo.michelito.view.gameview.api.InputHandler;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class GameViewImpl implements GameView {
