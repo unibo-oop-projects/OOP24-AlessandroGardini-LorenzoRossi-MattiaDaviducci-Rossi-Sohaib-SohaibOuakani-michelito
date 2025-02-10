@@ -16,6 +16,9 @@ public enum FlamePropagation {
     LEFT(Direction.LEFT),
     RIGHT(Direction.RIGHT);
 
+    private static final long BLOCK_SIZE = 6;
+    private static final long CENTER_OFFSET = BLOCK_SIZE / 2;
+
     private final Direction direction;
 
     FlamePropagation(final Direction direction) {
@@ -27,7 +30,18 @@ public enum FlamePropagation {
         final HitBoxFactoryImpl hitBoxFactory = new HitBoxFactoryImpl();
         final Position delta = direction.toPosition();
         for (int i = 1; i <= range; i++) {
-            final Position newPos = new Position(origin.x() + i * delta.x(), origin.y() + i * delta.y());
+            long offsetX = 0;
+            long offsetY = 0;
+            switch (direction) {
+                case UP -> offsetY = -CENTER_OFFSET;
+                case DOWN -> offsetY = CENTER_OFFSET;
+                case LEFT -> offsetX = -CENTER_OFFSET;
+                case RIGHT -> offsetX = CENTER_OFFSET;
+            }
+            final Position newPos = new Position(
+                    origin.x() + i * delta.x() + offsetX,
+                    origin.y() + i * delta.y() + offsetY
+            );
             if (isWall(maze, newPos)) {
                 break;
             }
