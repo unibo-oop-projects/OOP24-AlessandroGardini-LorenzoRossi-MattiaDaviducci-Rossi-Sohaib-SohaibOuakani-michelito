@@ -11,6 +11,7 @@ import java.util.Set;
  * A proxy implementation of {@link ObjectsAdapter} that caches the results of maze object requests.
  * This class enhances performance by storing previously retrieved sets of {@link MazeObject},
  * avoiding redundant calls to the underlying {@link ObjectsAdapterImpl}.
+ * While this class is public, it is recommended to use the {@link ObjectsAdapterFactory} for creating instances.
  */
 public class ObjectsAdapterWithCache implements ObjectsAdapter {
     final private ObjectsAdapter base = new ObjectsAdapterImpl();

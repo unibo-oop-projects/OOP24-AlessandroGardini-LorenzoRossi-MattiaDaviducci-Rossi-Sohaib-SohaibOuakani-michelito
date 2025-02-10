@@ -4,6 +4,7 @@ import it.unibo.michelito.controller.objectsadapter.api.ObjectsAdapter;
 
 /**
  * Factory class for creating instances of {@link ObjectsAdapter}.
+ * Its use is recommended for obtaining {@link ObjectsAdapter} instances.
  */
 public class ObjectsAdapterFactory {
     /**
