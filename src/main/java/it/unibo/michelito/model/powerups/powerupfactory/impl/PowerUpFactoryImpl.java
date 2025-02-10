@@ -16,25 +16,27 @@ import java.util.Random;
  * Implementation of {@link PowerUpFactory}.
  */
 public class PowerUpFactoryImpl implements PowerUpFactory {
-    private static final double DROP_CHANCE = 0.1;
-    private final Random random = new Random();
-
     /**
-     *{@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
-    public Optional<PowerUp> generateRandomPowerUp(final Position position) {
-        final double chance = this.random.nextDouble();
-        List<PowerUp> list = List.of(
-            new BombTypePowerUp(position),
-            new BombLimitPowerUp(position),
-            new SpeedPowerUp(position)
-        );
+    public PowerUp createBombLimitPowerUp(final Position position) {
+        return new BombLimitPowerUp(position);
+    }
 
-        if (chance <= DROP_CHANCE) {
-            return Optional.of(list.get(random.nextInt(list.size())));
-        } else {
-            return Optional.empty();
-        }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PowerUp createBombTypePowerUp(final Position position) {
+        return new BombTypePowerUp(position);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PowerUp createSpeedPowerUp(final Position position) {
+        return new SpeedPowerUp(position);
     }
 }
