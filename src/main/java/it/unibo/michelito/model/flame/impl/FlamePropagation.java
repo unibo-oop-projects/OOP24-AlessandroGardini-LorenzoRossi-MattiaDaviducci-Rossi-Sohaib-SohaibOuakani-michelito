@@ -29,7 +29,7 @@ public enum FlamePropagation {
         final List<HitBox> hitBoxes = new ArrayList<>();
         final HitBoxFactoryImpl hitBoxFactory = new HitBoxFactoryImpl();
         final Position delta = direction.toPosition();
-        for (int i = 1; i <= range; i++) {
+        for (int i = 0; i <= range; i++) {
             long offsetX = 0;
             long offsetY = 0;
             switch (direction) {
