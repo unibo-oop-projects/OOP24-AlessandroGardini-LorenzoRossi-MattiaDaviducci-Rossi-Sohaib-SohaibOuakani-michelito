@@ -9,7 +9,6 @@ import java.util.Objects;
 import java.util.Set;
 
 public class GamePanel extends JPanel {
-    Dimension baseDimension;
     private Set<GameObject> gameObjects;
     private InputHandler inputHandler = new InputHandlerImpl();
 
@@ -29,15 +28,12 @@ public class GamePanel extends JPanel {
 
     @Override
     public void paint(Graphics g) {
-        super.paintComponent(g);  // Always call the superclass's method
-
+        super.paintComponent(g);
         if (Objects.nonNull(gameObjects)) {
-            // Render each game object using the GameObjectRenderer
             for (GameObject gameObject : gameObjects) {
                 GameObjectRenderer.render(g, gameObject, this);
             }
         }
-
     }
 
     public Set<Integer> getKeysPressed() {
