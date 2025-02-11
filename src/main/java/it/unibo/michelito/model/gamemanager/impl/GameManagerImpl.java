@@ -7,6 +7,7 @@ import it.unibo.michelito.model.maze.impl.MazeImpl;
 import it.unibo.michelito.util.GameObject;
 
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Implementation of {@link GameManager} interface, responsible for managing
@@ -24,13 +25,16 @@ public final class GameManagerImpl implements GameManager {
     private boolean gameOver;
     private boolean gameWon;
 
+    private Function<Integer,Set<GameObject>> levelGenerator;
+
     /**
      * Constructs a GameManagerImpl instance.
      */
-    public GameManagerImpl() {
+    public GameManagerImpl(Function<Integer, Set<GameObject>> levelGenerator) {
         this.currentLevelIndex = 0;
         this.currentLives = STARTING_LIFE_COUNT;
         this.currentLevel = new MazeImpl(STARTER_MAZE);
+        this.levelGenerator = levelGenerator;
     }
 
     @Override
@@ -91,5 +95,9 @@ public final class GameManagerImpl implements GameManager {
             this.currentLevelIndex++;
             this.currentLevel = new MazeImpl(this.currentLevelIndex);
         }
+    }
+
+    private Level levelGenerator(final int levelIndex) {
+        return new MazeImpl(levelIndex, levelGenerator);
     }
 }

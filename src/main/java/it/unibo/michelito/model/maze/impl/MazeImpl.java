@@ -21,6 +21,7 @@ import it.unibo.michelito.util.GameObject;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -41,7 +42,7 @@ public final class MazeImpl implements Maze, Level {
      *
      * @param levelNumber current level number.
      */
-    public MazeImpl(final int levelNumber) {
+    public MazeImpl(final int levelNumber, Function<Integer, Set<GameObject>> levelGenerator) {
         final ObjectsAdapter objectsAdapter = new ObjectsAdapterImpl();
         this.mazeObjectsSet = new HashSet<>(objectsAdapter.requestMazeObjects(levelNumber));
     }
