@@ -20,25 +20,6 @@ final class TestPowerUpFactory {
         this.factory = new PowerUpFactoryImpl();
     }
 
-    /*@Test
-    void testRandomPowerUp() {
-        int tryNumber = NUMBER_OF_TRIES;
-        final Optional<PowerUp> powerUp = this.factory.generateRandomPowerUp(new Position(0, 0));
-        assertInstanceOf(Optional.class, powerUp);
-
-        while (tryNumber > 0) {
-            final Optional<PowerUp> randomPowerUp = this.factory.generateRandomPowerUp(new Position(0, 0));
-            if (randomPowerUp.isPresent()) {
-                assertInstanceOf(PowerUp.class, randomPowerUp.get());
-                break;
-            }
-            tryNumber--;
-        }
-        if (tryNumber == 0) {
-            fail();
-        }
-
-    }*/
     @Test
     void testPowerUpCreation() {
         assertInstanceOf(PowerUp.class, factory.createPowerUp(spawn, PowerUpType.SPEED_POWERUP));
