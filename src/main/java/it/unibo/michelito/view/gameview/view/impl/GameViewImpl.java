@@ -2,7 +2,6 @@ package it.unibo.michelito.view.gameview.view.impl;
 
 import it.unibo.michelito.controller.gamecontroller.api.Switcher;
 import it.unibo.michelito.util.GameObject;
-import it.unibo.michelito.view.gameview.frame.api.GameFrame;
 import it.unibo.michelito.view.gameview.view.api.GameView;
 import it.unibo.michelito.view.gameview.frame.impl.GameFrameImpl;
 
@@ -28,7 +27,7 @@ public class GameViewImpl implements GameView {
     public void display(final Set<GameObject> gameObjects, final int lives, final int levelNumber) {
         SwingUtilities.invokeLater(() -> {
             frame.setGameObjects(gameObjects);
-            frame.setLives(lives);
+            frame.setStatistics(lives, levelNumber);
         });
     }
 

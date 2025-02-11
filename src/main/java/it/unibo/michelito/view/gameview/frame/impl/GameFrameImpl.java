@@ -57,8 +57,8 @@ public class GameFrameImpl extends JFrame implements GameFrame {
     }
 
     @Override
-    public void setLives(final int lives) {
-        gamePanel.setLives(lives);
+    public void setStatistics(final int lives, final int levelNumber) {
+        gamePanel.setStatistics(lives, levelNumber);
     }
 
     @Override

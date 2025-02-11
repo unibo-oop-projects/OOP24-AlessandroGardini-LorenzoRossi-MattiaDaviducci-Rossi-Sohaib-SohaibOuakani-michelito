@@ -5,7 +5,7 @@ import it.unibo.michelito.util.GameObject;
 import java.util.Set;
 
 public interface GamePanel {
-     void setLives(int currentLives);
+    void setStatistics(int lives, int levelNumber);
 
      void setGameObjects(Set<GameObject> gameObjects);
 
