@@ -20,6 +20,7 @@ public class ObjectsAdapterFactory {
      * Creates and returns an instance of {@link ObjectsAdapter}.
      * The implementation choice may vary.
      *
+     * @param levelGenerator {@link Function} that provided a number return a Set of {@link GameObject}.
      * @return a new {@link ObjectsAdapter} instance.
      */
     public static ObjectsAdapter createObjectsAdapter(Function<Integer, Set<GameObject>> levelGenerator) {

@@ -19,9 +19,15 @@ public class ObjectsAdapterWithCache implements ObjectsAdapter {
     final private ObjectsAdapter base ;
     final private Map<Integer, Set<MazeObject>> cache = new HashMap<>();
 
-    ObjectsAdapterWithCache(Function<Integer, Set<GameObject>> levelGenerator){
+    /**
+     * Construct a ObjectsAdapterWithCache.
+     *
+     * @param levelGenerator {@link Function} that provided a number return a Set of {@link GameObject}.
+     */
+    public ObjectsAdapterWithCache(Function<Integer, Set<GameObject>> levelGenerator){
         this.base = new ObjectsAdapterImpl(levelGenerator);
     }
+
     /**
      * {@inheritDoc}
      */

@@ -31,11 +31,17 @@ public class ObjectsAdapterImpl implements ObjectsAdapter {
             ObjectType.DOOR, obj -> new DoorImpl(obj.position()),
             ObjectType.BLANK_SPACE, obj -> new BlankSpaceImpl(obj.position())
     );
-    private Function<Integer, Set<GameObject>> levelGenerator;
+    private final Function<Integer, Set<GameObject>> levelGenerator;
 
+    /**
+     * Construct a ObjectsAdapterImpl.
+     *
+     * @param levelGenerator {@link Function} that provided a number return a Set of {@link GameObject}.
+     */
     public ObjectsAdapterImpl(Function<Integer, Set<GameObject>> levelGenerator) {
         this.levelGenerator = levelGenerator;
     }
+
     /**
      * {@inheritDoc}
      */

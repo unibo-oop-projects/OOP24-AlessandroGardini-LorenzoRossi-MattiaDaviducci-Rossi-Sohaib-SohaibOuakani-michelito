@@ -28,7 +28,9 @@ public final class GameManagerImpl implements GameManager {
     private final Function<Integer,Set<GameObject>> levelGenerator;
 
     /**
-     * Constructs a GameManagerImpl instance.
+     * Construct a GameManager with a Function that produce the relative Set of {@link GameObject}.
+     *
+     * @param levelGenerator {@link Function} that provided a number return a Set of {@link GameObject}.
      */
     public GameManagerImpl(Function<Integer, Set<GameObject>> levelGenerator) {
         this.currentLives = STARTING_LIFE_COUNT;
@@ -101,6 +103,12 @@ public final class GameManagerImpl implements GameManager {
         }
     }
 
+    /**
+     * Simple create method for {@link MazeImpl}.
+     *
+     * @param levelIndex is the {@code currentLevelIndex}.
+     * @return a {@link Level}.
+     */
     private Level createMaze(final int levelIndex) {
         return new MazeImpl(levelIndex, levelGenerator);
     }
