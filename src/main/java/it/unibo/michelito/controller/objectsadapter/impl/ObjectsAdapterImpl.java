@@ -1,6 +1,5 @@
 package it.unibo.michelito.controller.objectsadapter.impl;
 
-import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.controller.objectsadapter.api.ObjectsAdapter;
 import it.unibo.michelito.model.blanckspace.impl.BlankSpaceImpl;
 import it.unibo.michelito.model.box.impl.BoxImpl;
