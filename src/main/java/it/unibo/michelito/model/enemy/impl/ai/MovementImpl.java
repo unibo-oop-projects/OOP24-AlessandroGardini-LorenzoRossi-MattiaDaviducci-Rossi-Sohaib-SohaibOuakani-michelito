@@ -21,6 +21,7 @@ import java.util.Set;
 public abstract class MovementImpl implements Movement {
     private Position position;
     private Direction direction = Direction.NONE;
+    private static final int POSSIBILITY_TO_CHANGE = 30;
     private final Set<Direction> directions = Set.of(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT);
 
     /**
@@ -38,8 +39,8 @@ public abstract class MovementImpl implements Movement {
      */
     @Override
     public void move(final Maze maze, final long time) {
-        if (direction == Direction.NONE || shift(maze, time, this.direction).equals(this.position)) {
-            final Random r = new Random();
+        final Random r = new Random();
+        if (direction == Direction.NONE || shift(maze, time, this.direction).equals(this.position) || r.nextInt(POSSIBILITY_TO_CHANGE) == 0) {
             final List<Direction> possibleWay = new ArrayList<>();
             possibleWay.add(Direction.NONE);
             possibleWay.addAll(directions.stream().filter(x -> !shift(maze, time, x).equals(this.position)).toList());
