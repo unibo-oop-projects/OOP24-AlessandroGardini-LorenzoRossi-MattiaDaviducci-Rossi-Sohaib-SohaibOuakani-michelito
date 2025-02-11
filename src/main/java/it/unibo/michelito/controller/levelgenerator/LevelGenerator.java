@@ -20,18 +20,26 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
     private static final int MAZE_BLOCK_HEIGHT = 15;
     private static final int BLOCK_EDGE = 6;
     private static final int TEST_MAZE_CODE = -1;
+
     private final GameExceptionHandler gameExceptionHandler;
+
     /**
-     * Private constructor preventing initialization.
+     * @param exceptionHandler a handler that take possible exception so he can manage it.
      */
     public LevelGenerator(GameExceptionHandler exceptionHandler) {
         this.gameExceptionHandler = exceptionHandler;
     }
 
     /**
-     * @param levelNumber the number of level if -1 is pass it will generate a base level with a player used for test.
+     *
+     * @param integer is the number of level to generate, if -1 is pass it will generate a base level with a player used for test.
      * @return a set of {@link GameObject} that represent every object in the current level maze.
      */
+    @Override
+    public Set<GameObject> apply(Integer integer) {
+        return generate(integer);
+    }
+
      private Set<GameObject> generate(final int levelNumber) {
          final Set<GameObject> maze = new HashSet<>(baseMaze());
          final String file = "src/main/resources/level/level" + levelNumber + ".txt";
@@ -74,6 +82,11 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
         return maze;
     }
 
+    /**
+     * used for reed from file converting the string in the txt in object type and position.
+     * @param file name of the file.
+     * @return a set with all the game object form the file.
+     */
     private Set<GameObject> mazeFromFile(final String file) {
         final Set<GameObject> maze = new HashSet<>();
         String objectType;
@@ -93,7 +106,7 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
                     case "enemy" -> new GameObject(ObjectType.ENEMY, new Position(xValue, yValue));
                     case "door" -> new GameObject(ObjectType.DOOR, new Position(xValue, yValue));
                     case "player" -> new GameObject(ObjectType.PLAYER, new Position(xValue, yValue));
-                    default -> throw new IllegalArgumentException("Invalid object type: " + objectType);
+                    default -> throw new IOException("wrong object type");
                 };
                 if (cellPositions().contains(readObject.position())) {
                     maze.add(readObject);
@@ -113,10 +126,5 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
             }
         }
         return positions;
-    }
-
-    @Override
-    public Set<GameObject> apply(Integer integer) {
-        return generate(integer);
     }
 }
