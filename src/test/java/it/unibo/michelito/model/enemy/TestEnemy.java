@@ -27,14 +27,13 @@ class TestEnemy {
     private static final long TESTDELTA1 = 10;
     private static final long TESTDELTA2 = 5;
 
-
     private Enemy enemy;
     private Maze maze;
 
     @BeforeEach
     void setUp() {
         final int levelNumber = -1;
-        maze = new MazeImpl(levelNumber, new LevelGenerator(e -> { });
+        maze = new MazeImpl(levelNumber, new LevelGenerator(e -> { }));
         final Position initalPosition = new Position(6, 6);
         this.enemy = new EnemyImpl(initalPosition);
     }
