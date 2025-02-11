@@ -79,14 +79,6 @@ public class BombManagerComponentImpl implements BombManagerComponent {
      *{@inheritDoc}
      */
     @Override
-    public boolean hasToPlace() {
-        return this.place;
-    }
-
-    /**
-     *{@inheritDoc}
-     */
-    @Override
     public void setBombType(final BombType type) {
         this.bombType = type;
     }
@@ -97,5 +89,13 @@ public class BombManagerComponentImpl implements BombManagerComponent {
     @Override
     public BombType getBombType() {
         return this.bombType;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void abortPlace() {
+        this.place = false;
     }
 }

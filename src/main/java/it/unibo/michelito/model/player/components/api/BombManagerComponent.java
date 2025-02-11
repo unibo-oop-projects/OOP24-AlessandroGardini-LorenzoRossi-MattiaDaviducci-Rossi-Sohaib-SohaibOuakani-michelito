@@ -25,21 +25,15 @@ public interface BombManagerComponent {
     /**
      * Method that adds a {@link Bomb} to {@link Maze} in to a {@link Position}.
      * @param maze the {@link Maze} where to place the {@link Bomb}.
-     * @param position the {@link Position} of the placed @link it.unibo.michelito.model.bomb.api.Bomb}
+     * @param position the {@link Position} of the placed {@link it.unibo.michelito.model.bomb.api.Bomb}
      * @param deltaTime thw time of the update to see if the bomb is in cooldown
      */
     void place(Maze maze, Position position, long deltaTime);
 
     /**
-     * Sets the ability to place a {@link Bomb}.
+     * Notify the {@link BombManagerComponent} to place {@link Bomb}.
      */
     void notifyToPlace();
-
-    /**
-     * Gets if a {@link Bomb} has to be placed.
-     * @return boolean if a bomb has to be placed
-     */
-    boolean hasToPlace();
 
     /**
      * Sets the placeable {@link BombType}.
@@ -52,4 +46,9 @@ public interface BombManagerComponent {
      * @return the {@link BombType}.
      */
     BombType getBombType();
+
+    /**
+     * Makes the
+     */
+    void abortPlace();
 }
