@@ -1,5 +1,6 @@
 package it.unibo.michelito.model.enemy;
 
+import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.model.enemy.api.Enemy;
 import it.unibo.michelito.model.enemy.api.ai.MoodAI;
 import it.unibo.michelito.model.enemy.api.ai.MovementType;
@@ -33,7 +34,7 @@ class TestEnemy {
     @BeforeEach
     void setUp() {
         final int levelNumber = -1;
-        maze = new MazeImpl(levelNumber);
+        maze = new MazeImpl(levelNumber, new LevelGenerator(e -> { });
         final Position initalPosition = new Position(6, 6);
         this.enemy = new EnemyImpl(initalPosition);
     }

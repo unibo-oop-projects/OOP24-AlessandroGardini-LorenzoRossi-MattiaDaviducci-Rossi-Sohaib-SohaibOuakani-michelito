@@ -1,6 +1,7 @@
 package it.unibo.michelito.model.maze.impl;
 
 import it.unibo.michelito.controller.objectsadapter.api.ObjectsAdapter;
+import it.unibo.michelito.controller.objectsadapter.impl.ObjectsAdapterFactory;
 import it.unibo.michelito.controller.objectsadapter.impl.ObjectsAdapterImpl;
 import it.unibo.michelito.controller.playercommand.api.PlayerCommand;
 import it.unibo.michelito.model.blanckspace.api.BlankSpace;
@@ -21,6 +22,7 @@ import it.unibo.michelito.util.GameObject;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -41,9 +43,10 @@ public final class MazeImpl implements Maze, Level {
      *
      * @param levelNumber current level number.
      */
-    public MazeImpl(final int levelNumber) {
-        final ObjectsAdapter objectsAdapter = new ObjectsAdapterImpl();
-        this.mazeObjectsSet = new HashSet<>(objectsAdapter.requestMazeObjects(levelNumber));
+    public MazeImpl(final int levelNumber, Function<Integer, Set<GameObject>> levelGenerator) {
+        this.mazeObjectsSet = new HashSet<>(
+                ObjectsAdapterFactory.createObjectsAdapter(levelGenerator).requestMazeObjects(levelNumber)
+        );
     }
 
     @Override
