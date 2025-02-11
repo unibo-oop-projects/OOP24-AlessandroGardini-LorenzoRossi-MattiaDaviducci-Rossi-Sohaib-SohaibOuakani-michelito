@@ -1,7 +1,6 @@
 package it.unibo.michelito.model.enemy.api.ai;
 
 import it.unibo.michelito.model.maze.api.Maze;
-import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 
 /**
@@ -9,10 +8,12 @@ import it.unibo.michelito.util.Position;
  */
 public interface Movement {
     /**
-     * apply the move for {@link it.unibo.michelito.model.enemy.api.Enemy},
+     * Apply the move for {@link it.unibo.michelito.model.enemy.api.Enemy},
      * based on collision in the maze and time between one movement and another.
+     * @param maze the maze where the enemy is.
+     * @param time a delta time between a move and another.
      */
-    void move(final Maze maze, final long time);
+    void move(Maze maze, long time);
 
     /**
      * @return the movement type.
@@ -27,5 +28,5 @@ public interface Movement {
     /**
      * @param position set the position where the movement is currently on.
      */
-    void setPosition(final Position position);
+    void setPosition(Position position);
 }

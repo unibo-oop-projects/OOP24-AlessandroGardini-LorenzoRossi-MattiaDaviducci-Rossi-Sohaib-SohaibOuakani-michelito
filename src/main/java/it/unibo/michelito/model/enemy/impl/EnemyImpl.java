@@ -35,8 +35,7 @@ public final class EnemyImpl implements Enemy {
             moodAI = new MoodAIImpl(maze);
             movement = moodAI.getMovement();
         }
-        if(!movement.getMovementType().equals(moodAI.getMovement().getMovementType())){
-            System.out.println("change movement");
+        if (!movement.getMovementType().equals(moodAI.getMovement().getMovementType())) {
             movement = moodAI.getMovement();
         }
         movement.setPosition(actualposition);

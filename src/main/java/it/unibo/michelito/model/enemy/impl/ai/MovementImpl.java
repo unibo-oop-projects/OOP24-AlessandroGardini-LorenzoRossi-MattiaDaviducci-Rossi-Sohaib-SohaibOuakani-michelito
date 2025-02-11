@@ -23,29 +23,42 @@ public abstract class MovementImpl implements Movement {
     private Direction direction = Direction.NONE;
     private final Set<Direction> directions = Set.of(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT);
 
+    /**
+     * @param position set the position where the movement is currently on.
+     */
     @Override
-    public void setPosition(final Position position){
+    public void setPosition(final Position position) {
         this.position = position;
         updateHitBox(position);
     }
 
+    /**
+     * @param maze the maze where the enemy is.
+     * @param time a delta time between a move and another.
+     */
     @Override
     public void move(final Maze maze, final long time) {
-        if(direction == Direction.NONE || shift(maze,time,this.direction).equals(this.position)) {
-            Random r = new Random();
-            List<Direction> possibleWay = new ArrayList<>();
+        if (direction == Direction.NONE || shift(maze, time, this.direction).equals(this.position)) {
+            final Random r = new Random();
+            final List<Direction> possibleWay = new ArrayList<>();
             possibleWay.add(Direction.NONE);
-            possibleWay.addAll(directions.stream().filter(x -> !shift(maze,time,x).equals(this.position)).toList());
+            possibleWay.addAll(directions.stream().filter(x -> !shift(maze, time, x).equals(this.position)).toList());
             this.direction = possibleWay.get(r.nextInt(possibleWay.size()));
         }
         this.position = shift(maze, time, this.direction);
     }
 
+    /**
+     * @return the movement type.
+     */
     @Override
     public MovementType getMovementType() {
         return movementType();
     }
 
+    /**
+     * @return the position that the movement is currently on.
+     */
     @Override
     public Position getPosition() {
         return this.position;

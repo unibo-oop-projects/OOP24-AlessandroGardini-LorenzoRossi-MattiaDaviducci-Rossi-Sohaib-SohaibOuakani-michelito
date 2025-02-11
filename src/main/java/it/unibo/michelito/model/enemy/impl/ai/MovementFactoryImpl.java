@@ -3,21 +3,21 @@ package it.unibo.michelito.model.enemy.impl.ai;
 import it.unibo.michelito.model.enemy.api.ai.MovementFactory;
 import it.unibo.michelito.model.enemy.api.ai.Movement;
 import it.unibo.michelito.model.enemy.api.ai.MovementType;
-import it.unibo.michelito.util.Direction;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Implementation of {@link MovementFactory}.
  */
 public final class MovementFactoryImpl implements MovementFactory {
+    private static final double CHILLING_VELOCITY = 0.02;
+    private static final double SLEEPING_VELOCITY = 0.00;
+    private static final double SEARCHING_VELOCITY = 0.05;
+
     @Override
     public Movement chilling() {
         return  new MovementImpl() {
             @Override
              double velocity() {
-                return 0.02;
+                return CHILLING_VELOCITY;
             }
 
             @Override
@@ -32,7 +32,7 @@ public final class MovementFactoryImpl implements MovementFactory {
         return new MovementImpl() {
             @Override
             double velocity() {
-                return 0;
+                return SLEEPING_VELOCITY;
             }
 
             @Override
@@ -47,7 +47,7 @@ public final class MovementFactoryImpl implements MovementFactory {
         return new MovementImpl() {
             @Override
             double velocity() {
-                return 0.05;
+                return SEARCHING_VELOCITY;
             }
 
             @Override

@@ -7,7 +7,6 @@ import it.unibo.michelito.model.enemy.impl.EnemyImpl;
 import it.unibo.michelito.model.enemy.impl.ai.MoodAIImpl;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.maze.impl.MazeImpl;
-import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
 import it.unibo.michelito.model.modelutil.hitbox.api.HitBoxFactory;
@@ -24,8 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 class TestEnemy {
     private static final long SLEEP_TIME = 100_000;
     private static final Position BASE_POSITION = new Position(6, 6);
-    private static final Position ENEMY_TO_TRY1 = new Position(20, 20);
-    private static final Position ENEMY_TO_TRY2 = new Position(20, 10);
     private static final long TESTDELTA1 = 10;
     private static final long TESTDELTA2 = 5;
 
