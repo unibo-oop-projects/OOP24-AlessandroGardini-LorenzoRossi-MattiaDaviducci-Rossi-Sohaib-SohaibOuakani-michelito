@@ -16,15 +16,15 @@ import java.util.function.Function;
  * While this class is public, it is recommended to use the {@link ObjectsAdapterFactory} for creating instances.
  */
 public class ObjectsAdapterWithCache implements ObjectsAdapter {
-    final private ObjectsAdapter base ;
-    final private Map<Integer, Set<MazeObject>> cache = new HashMap<>();
+    private final ObjectsAdapter base ;
+    private final Map<Integer, Set<MazeObject>> cache = new HashMap<>();
 
     /**
      * Construct a ObjectsAdapterWithCache.
      *
      * @param levelGenerator {@link Function} that provided a number return a Set of {@link GameObject}.
      */
-    public ObjectsAdapterWithCache(Function<Integer, Set<GameObject>> levelGenerator){
+    public ObjectsAdapterWithCache(final Function<Integer, Set<GameObject>> levelGenerator) {
         this.base = new ObjectsAdapterImpl(levelGenerator);
     }
 

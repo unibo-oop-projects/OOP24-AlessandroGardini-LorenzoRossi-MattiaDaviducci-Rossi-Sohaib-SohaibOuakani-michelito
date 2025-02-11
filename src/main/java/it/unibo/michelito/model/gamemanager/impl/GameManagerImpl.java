@@ -25,14 +25,14 @@ public final class GameManagerImpl implements GameManager {
     private boolean gameOver;
     private boolean gameWon;
 
-    private final Function<Integer,Set<GameObject>> levelGenerator;
+    private final Function<Integer, Set<GameObject>> levelGenerator;
 
     /**
      * Construct a GameManager with a Function that produce the relative Set of {@link GameObject}.
      *
      * @param levelGenerator {@link Function} that provided a number return a Set of {@link GameObject}.
      */
-    public GameManagerImpl(Function<Integer, Set<GameObject>> levelGenerator) {
+    public GameManagerImpl(final Function<Integer, Set<GameObject>> levelGenerator) {
         this.currentLives = STARTING_LIFE_COUNT;
         this.levelGenerator = levelGenerator;
         this.currentLevel = createMaze(this.currentLevelIndex);

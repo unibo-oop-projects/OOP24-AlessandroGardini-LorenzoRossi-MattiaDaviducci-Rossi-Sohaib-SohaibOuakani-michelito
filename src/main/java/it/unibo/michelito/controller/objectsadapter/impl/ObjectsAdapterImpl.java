@@ -1,5 +1,4 @@
 package it.unibo.michelito.controller.objectsadapter.impl;
-
 import it.unibo.michelito.controller.objectsadapter.api.ObjectsAdapter;
 import it.unibo.michelito.model.blanckspace.impl.BlankSpaceImpl;
 import it.unibo.michelito.model.box.impl.BoxImpl;
@@ -37,7 +36,7 @@ public class ObjectsAdapterImpl implements ObjectsAdapter {
      *
      * @param levelGenerator {@link Function} that provided a number return a Set of {@link GameObject}.
      */
-    public ObjectsAdapterImpl(Function<Integer, Set<GameObject>> levelGenerator) {
+    public ObjectsAdapterImpl(final Function<Integer, Set<GameObject>> levelGenerator) {
         this.levelGenerator = levelGenerator;
     }
 

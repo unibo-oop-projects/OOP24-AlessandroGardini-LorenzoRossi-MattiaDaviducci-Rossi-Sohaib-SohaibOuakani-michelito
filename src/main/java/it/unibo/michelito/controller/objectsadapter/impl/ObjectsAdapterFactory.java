@@ -10,7 +10,7 @@ import java.util.function.Function;
  * Factory class for creating instances of {@link ObjectsAdapter}.
  * Its use is recommended for obtaining {@link ObjectsAdapter} instances.
  */
-public class ObjectsAdapterFactory {
+public final class ObjectsAdapterFactory {
     /**
      * Private constructor preventing instantiation.
      */
