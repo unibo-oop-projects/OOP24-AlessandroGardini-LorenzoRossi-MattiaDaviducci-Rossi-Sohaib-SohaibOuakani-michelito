@@ -39,7 +39,7 @@ class TestEnemy {
     }
 
     @Test
-    public void testMovement() {
+    void testMovement() {
         final HitBoxFactory testHitBoxFact = new HitBoxFactoryImpl();
         final HitBox testHitBox = testHitBoxFact.entityeHitBox(BASE_POSITION);
         assertEquals(testHitBox, this.enemy.getHitBox());
@@ -52,7 +52,7 @@ class TestEnemy {
     }
 
     @Test
-    public void testAI() {
+   void testAI() {
         final MoodAI moodAI = new MoodAIImpl(maze);
         assertEquals(MovementType.SLEEPING, moodAI.getMovement().getMovementType());
         moodAI.update(SLEEP_TIME);
