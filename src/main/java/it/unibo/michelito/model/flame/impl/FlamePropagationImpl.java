@@ -24,8 +24,8 @@ public class FlamePropagationImpl implements FlamePropagation {
     }
 
     @Override
-    public List<Flame> propagate(Position origin, int range, boolean passThrough, Maze maze) {
-        List<Flame> allFlames = new ArrayList<>();
+    public Set<Flame> propagate(Position origin, int range, boolean passThrough, Maze maze) {
+        Set<Flame> allFlames = new HashSet<>();
         allFlames.add(flameFactory.createFlame(origin));
         maze.addMazeObject(flameFactory.createFlame(origin));
         for (Direction direction : Direction.values()) {
