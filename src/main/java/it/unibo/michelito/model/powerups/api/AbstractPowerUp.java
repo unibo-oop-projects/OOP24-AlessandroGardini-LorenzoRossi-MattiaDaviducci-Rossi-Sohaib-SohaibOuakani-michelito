@@ -15,7 +15,7 @@ public abstract class AbstractPowerUp implements PowerUp {
      */
     public AbstractPowerUp(final Position position) {
         this.position = position;
-        this.hitBox = createHitBox();
+        this.hitBox = this.createHitBox();
     }
 
     private HitBox createHitBox() {
