@@ -4,5 +4,11 @@ import it.unibo.michelito.util.Position;
 
 public interface BombFactory {
 
-    Bomb createBomb(Position position, BombType bombType);
+    Bomb createStandardBomb(Position position);
+
+    Bomb createNukeBomb(Position position);
+
+    Bomb createPassThroughBomb(Position position);
+
+    Bomb createLongBomb(Position position);
 }
