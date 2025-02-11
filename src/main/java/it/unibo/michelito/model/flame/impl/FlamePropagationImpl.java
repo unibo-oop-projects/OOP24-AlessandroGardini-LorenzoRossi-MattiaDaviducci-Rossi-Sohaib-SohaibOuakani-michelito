@@ -4,17 +4,20 @@ import it.unibo.michelito.model.flame.api.Flame;
 import it.unibo.michelito.model.flame.api.FlameFactory;
 import it.unibo.michelito.model.flame.api.FlamePropagation;
 import it.unibo.michelito.model.maze.api.Maze;
-import it.unibo.michelito.model.modelutil.MazeObject;
+import it.unibo.michelito.model.powerups.api.PowerUp;
+import it.unibo.michelito.model.powerups.api.PowerUpFactory;
+import it.unibo.michelito.model.powerups.api.PowerUpType;
+import it.unibo.michelito.model.powerups.impl.PowerUpFactoryImpl;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class FlamePropagationImpl implements FlamePropagation {
     private static final long BLOCK_SIZE = 6;
     private final FlameFactory flameFactory;
+    private static final double DROP_CHANCE = 0.1;
 
     public FlamePropagationImpl(FlameFactory flameFactory) {
         this.flameFactory = flameFactory;
@@ -55,6 +58,7 @@ public class FlamePropagationImpl implements FlamePropagation {
             }
             if (isBox(maze, newPos)) {
                 maze.removeMazeObject(maze.getBoxes().stream().filter(box -> box.position().equals(newPos)).findFirst().get());
+                dropRandomPowerUp(newPos, maze).ifPresent(maze::addMazeObject);
                 if (!passThrough) {
                     break;
                 }
@@ -74,17 +78,19 @@ public class FlamePropagationImpl implements FlamePropagation {
         return maze.getBoxes().stream().anyMatch(box -> box.position().equals(pos));
     }
 
-    /*private void removeBox(Maze maze, Position pos) {
-        maze.getBoxes().stream()
-                .filter(box -> box.position().equals(pos))
-                .findFirst()
-                .ifPresent(box -> {
-                    maze.removeMazeObject(box);
-                    if (maze.getDoor().position().equals(pos)) {
-                        final PowerUpFactory factory = new PowerUpFactoryImpl();
-                        Optional<PowerUp> powerUp = factory.generateRandomPowerUp(pos);
-                        powerUp.ifPresent(maze::addMazeObject);
-                    }
-                });
-    }*/
+    private Optional<PowerUp> dropRandomPowerUp(Position pos, Maze maze) {
+        final Random random = new Random();
+        final double chance = random.nextDouble();
+        PowerUpFactory factory = new PowerUpFactoryImpl();
+        List<PowerUp> list = new ArrayList<>();
+        List<PowerUpType> powerUpTypes = Arrays.stream(PowerUpType.values()).toList();
+        for (PowerUpType powerUpType : powerUpTypes) {
+            list.add(factory.createPowerUp(pos, powerUpType));
+        }
+        if (chance <= DROP_CHANCE) {
+            return Optional.of(list.get(random.nextInt(list.size())));
+        } else {
+            return Optional.empty();
+        }
+    }
 }

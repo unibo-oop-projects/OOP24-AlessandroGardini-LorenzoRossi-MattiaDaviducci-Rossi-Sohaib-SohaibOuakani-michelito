@@ -6,7 +6,6 @@ import it.unibo.michelito.model.flame.api.FlameFactory;
 import it.unibo.michelito.model.flame.api.FlamePropagation;
 import it.unibo.michelito.model.flame.impl.FlameFactoryImpl;
 import it.unibo.michelito.model.flame.impl.FlamePropagationImpl;
-import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.maze.impl.MazeImpl;
 import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
 import it.unibo.michelito.model.player.impl.PlayerImpl;
@@ -23,7 +22,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestFlame {
-    private Maze maze;
+    private MazeImpl maze;
     private FlameFactory flameFactory;
     private FlamePropagation flamePropagation;
 
@@ -34,7 +33,7 @@ final class TestFlame {
 
     @BeforeEach
     void setUp() {
-        this.maze = new MazeImpl(LevelGenerator.testLevel());
+        this.maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
         this.flameFactory = new FlameFactoryImpl();
         this.flamePropagation = new FlamePropagationImpl(flameFactory);
     }
@@ -67,7 +66,6 @@ final class TestFlame {
     void testFlameKillsMichelito() {
         final PlayerImpl player = new PlayerImpl(new Position(X_SPAWN, Y_SPAWN));
         maze.addMazeObject(player);
-
         List<Flame> flames = flamePropagation.propagate(
                 new Position(X_SPAWN, Y_SPAWN),
                 BOMB_RANGE,
@@ -75,16 +73,15 @@ final class TestFlame {
                 maze
         );
         flames.forEach(maze::addMazeObject);
+        flames.forEach(flame -> flame.update(100, maze));
 
-        // Verifica se il giocatore è stato ucciso
-        // assertTrue(maze.isLost()); // Scommenta se `maze.isLost()` è disponibile
+        assertTrue(maze.isLost());
     }
 
     @Test
     void testFlameKillsEnemy() {
         final EnemyImpl enemy = new EnemyImpl(new Position(X_SPAWN, Y_SPAWN));
         maze.addMazeObject(enemy);
-
         List<Flame> flames = flamePropagation.propagate(
                 new Position(X_SPAWN, Y_SPAWN),
                 BOMB_RANGE,
@@ -100,7 +97,6 @@ final class TestFlame {
     void testFlameDestroysBox() {
         final BoxImpl box = new BoxImpl(new Position(X_SPAWN + 6, Y_SPAWN));
         maze.addMazeObject(box);
-
         List<Flame> flames = flamePropagation.propagate(
                 new Position(X_SPAWN, Y_SPAWN),
                 BOMB_RANGE,
