@@ -43,6 +43,13 @@ public interface GameManager {
     int getRemainingLives();
 
     /**
+     * Retrieves current level index.
+     *
+     * @return current level index.
+     */
+    int getCurrentIndexLevel();
+
+    /**
      * Sets the command to be executed on the current {@link Player}.
      * This method should be called before invoking {@link #update(long)} to ensure
      * that the player's action is processed in the next game update cycle.

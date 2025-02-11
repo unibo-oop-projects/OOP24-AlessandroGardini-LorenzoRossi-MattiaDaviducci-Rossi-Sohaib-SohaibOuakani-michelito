@@ -14,8 +14,8 @@ import it.unibo.michelito.model.gamemanager.api.GameManager;
 import it.unibo.michelito.model.gamemanager.impl.GameManagerImpl;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.GameObject;
-import it.unibo.michelito.view.gameview.api.GameView;
-import it.unibo.michelito.view.gameview.impl.GameViewImpl;
+import it.unibo.michelito.view.gameview.view.api.GameView;
+import it.unibo.michelito.view.gameview.view.impl.GameViewImpl;
 
 import java.util.Optional;
 import java.util.Set;
@@ -23,11 +23,11 @@ import java.util.stream.Collectors;
 
 public class GameControllerImpl implements GameController, Switcher, GameExceptionHandler {
     private static final int FPS = 60;
-    private static final long TIME_PER_TICK = (long) 100_000.0 / FPS;
+    private static final long TIME_PER_TICK = (long) 1_000.0 / FPS;
     private final GameParentController gameParentController;
     private boolean game;
     private final GameManager gameManager= new GameManagerImpl(new LevelGenerator(this));
-    private final GameView gameView = new GameViewImpl(this);
+    private GameView gameView;
     private final Loop looper = new Loop();
 
     public GameControllerImpl(GameParentController gameParentController) {
@@ -36,6 +36,8 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
 
     @Override
     public void startGame() {
+        this.gameView = new GameViewImpl(this);
+        Loop looper = new Loop();
         this.game = true;
         looper.start();
     }
@@ -71,7 +73,7 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
 
                 gameManager.update(deltaTime);
 
-                gameView.display(gameManager.getObjects(), gameManager.getRemainingLives());
+                gameView.display(gameManager.getObjects(), gameManager.getRemainingLives(), gameManager.getCurrentIndexLevel());
 
                 this.waitForNextFrame(currentTime);
 
@@ -87,12 +89,16 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
                 }
             }
         }
+
         private void waitForNextFrame(long currentTime) {
             long dt = System.currentTimeMillis() - currentTime;
             if (dt < TIME_PER_TICK) {
                 try {
                     Thread.sleep(TIME_PER_TICK - dt);
-                } catch (Exception ex){throw new RuntimeException("Error in GameControllerImpl", ex);}
+                } catch (Exception ex){
+                    Thread.currentThread().interrupt();
+                    throw new RuntimeException("Error in GameControllerImpl", ex);
+                }
             }
         }
 

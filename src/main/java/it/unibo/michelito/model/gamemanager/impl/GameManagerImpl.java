@@ -18,7 +18,7 @@ public final class GameManagerImpl implements GameManager {
     private static final int MAX_MAZE_INDEX = 3;
     private static final int STARTING_LIFE_COUNT = 5;
 
-    private int currentLevelIndex;
+    private int currentLevelIndex = STARTER_MAZE;
     private int currentLives;
     private Level currentLevel;
 
@@ -31,7 +31,7 @@ public final class GameManagerImpl implements GameManager {
      * Constructs a GameManagerImpl instance.
      */
     public GameManagerImpl(Function<Integer, Set<GameObject>> levelGenerator) {
-        this.currentLevelIndex = 0;
+        this.currentLevelIndex = STARTING_LIFE_COUNT;
         this.currentLives = STARTING_LIFE_COUNT;
         this.levelGenerator = levelGenerator;
         this.currentLevel = createMaze(this.currentLevelIndex);
@@ -55,6 +55,11 @@ public final class GameManagerImpl implements GameManager {
     @Override
     public int getRemainingLives() {
         return this.currentLives;
+    }
+
+    @Override
+    public int getCurrentIndexLevel() {
+        return this.currentLevelIndex;
     }
 
     @Override
