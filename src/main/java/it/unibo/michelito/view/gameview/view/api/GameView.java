@@ -1,4 +1,4 @@
-package it.unibo.michelito.view.gameview.api;
+package it.unibo.michelito.view.gameview.view.api;
 
 import it.unibo.michelito.util.GameObject;
 

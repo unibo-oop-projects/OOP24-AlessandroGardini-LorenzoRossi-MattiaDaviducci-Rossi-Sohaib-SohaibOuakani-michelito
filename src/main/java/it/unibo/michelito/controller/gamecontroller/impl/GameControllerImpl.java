@@ -11,8 +11,8 @@ import it.unibo.michelito.controller.playercommand.impl.PlaceCommand;
 import it.unibo.michelito.model.gamemanager.api.GameManager;
 import it.unibo.michelito.model.gamemanager.impl.GameManagerImpl;
 import it.unibo.michelito.util.Direction;
-import it.unibo.michelito.view.gameview.api.GameView;
-import it.unibo.michelito.view.gameview.impl.GameViewImpl;
+import it.unibo.michelito.view.gameview.view.api.GameView;
+import it.unibo.michelito.view.gameview.view.impl.GameViewImpl;
 
 import java.util.Optional;
 import java.util.Set;

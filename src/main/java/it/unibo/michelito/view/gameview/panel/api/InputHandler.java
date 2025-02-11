@@ -1,4 +1,4 @@
-package it.unibo.michelito.view.gameview.api;
+package it.unibo.michelito.view.gameview.panel.api;
 
 import java.awt.event.KeyListener;
 import java.util.Set;

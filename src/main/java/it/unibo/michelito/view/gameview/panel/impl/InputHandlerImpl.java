@@ -1,12 +1,12 @@
-package it.unibo.michelito.view.gameview.impl;
+package it.unibo.michelito.view.gameview.panel.impl;
 
-import it.unibo.michelito.view.gameview.api.InputHandler;
+import it.unibo.michelito.view.gameview.panel.api.InputHandler;
 
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
-class InputHandlerImpl implements InputHandler {
+public class InputHandlerImpl implements InputHandler {
     private final Set<Integer> keysPressed = new HashSet<>();
 
     @Override

@@ -1,4 +1,4 @@
-package it.unibo.michelito.view.gameview.impl;
+package it.unibo.michelito.view.gameview.panel.impl;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -8,7 +8,7 @@ import it.unibo.michelito.util.GameObject;
 
 import javax.swing.*;
 
-class GameObjectRenderer {
+public class GameObjectRenderer {
     private static final double BASE_SCALE_FACTOR = 6.68;
     private static final double TRANSLATION_FACTOR = 3;
     private static final int BASE_SQUARE_DIMENSION = 40;

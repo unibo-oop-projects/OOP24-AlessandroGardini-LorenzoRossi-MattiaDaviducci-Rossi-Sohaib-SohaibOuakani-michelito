@@ -1,29 +1,23 @@
-package it.unibo.michelito.view.gameview.impl;
+package it.unibo.michelito.view.gameview.panel.impl;
 
 import it.unibo.michelito.util.GameObject;
-import it.unibo.michelito.view.gameview.api.InputHandler;
+import it.unibo.michelito.view.gameview.panel.api.GamePanel;
+import it.unibo.michelito.view.gameview.panel.api.InputHandler;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 import java.util.Set;
 
-class GamePanel extends JPanel {
+public class GamePanelImpl extends JPanel implements GamePanel {
     private Set<GameObject> gameObjects;
-    private InputHandler inputHandler = new InputHandlerImpl();
+    final private InputHandler inputHandler = new InputHandlerImpl();
 
-    public GamePanel() {
+    public GamePanelImpl() {
         setPreferredSize(new Dimension(800, 600)); // Size of the game window
         this.addKeyListener(inputHandler);
         this.setFocusable(true);
         this.requestFocusInWindow();
-    }
-
-    public void setGameObjects(Set<GameObject> gameObjects) {
-        this.gameObjects = gameObjects;
-        if (!gameObjects.isEmpty()) {
-            this.repaint();
-        }
     }
 
     @Override
@@ -36,6 +30,15 @@ class GamePanel extends JPanel {
         }
     }
 
+    @Override
+    public void setGameObjects(Set<GameObject> gameObjects) {
+        this.gameObjects = gameObjects;
+        if (!gameObjects.isEmpty()) {
+            this.repaint();
+        }
+    }
+
+    @Override
     public Set<Integer> getKeysPressed() {
         return inputHandler.keysPressed();
     }
