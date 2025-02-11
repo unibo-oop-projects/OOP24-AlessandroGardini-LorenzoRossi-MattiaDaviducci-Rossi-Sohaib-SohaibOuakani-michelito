@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 /**
  * Implementation of the {@link ObjectsAdapter} interface.
  * This class adapts objects from the LevelGenerator into a set of {@link MazeObject}s.
+ * While this class is public, it is recommended to use the {@link ObjectsAdapterFactory} for creating instances.
  */
 public class ObjectsAdapterImpl implements ObjectsAdapter {
     private static final Map<ObjectType, Function<GameObject, MazeObject>> OBJECT_CREATORS = Map.of(
@@ -30,13 +31,17 @@ public class ObjectsAdapterImpl implements ObjectsAdapter {
             ObjectType.DOOR, obj -> new DoorImpl(obj.position()),
             ObjectType.BLANK_SPACE, obj -> new BlankSpaceImpl(obj.position())
     );
+    private Function<Integer, Set<GameObject>> levelGenerator;
 
+    public ObjectsAdapterImpl(Function<Integer, Set<GameObject>> levelGenerator) {
+        this.levelGenerator = levelGenerator;
+    }
     /**
      * {@inheritDoc}
      */
     @Override
     public Set<MazeObject> requestMazeObjects(final int level) {
-        return LevelGenerator.generate(level).stream()
+        return levelGenerator.apply(level).stream()
                 .map(this::objectTransformer)
                 .collect(Collectors.toSet());
     }

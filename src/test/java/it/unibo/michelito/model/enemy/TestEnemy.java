@@ -1,5 +1,6 @@
 package it.unibo.michelito.model.enemy;
 
+import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.model.enemy.api.Enemy;
 import it.unibo.michelito.model.enemy.api.ai.MoodAI;
 import it.unibo.michelito.model.enemy.api.ai.MoodType;
@@ -15,15 +16,14 @@ import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test for {@link EnemyImpl}.
  */
 class TestEnemy {
     private static final long SLEEP_TIME = 100_000;
-    private static final Position BASE_POSITION = new Position(6, 6);
+    private static final Position BASE_POSITION = new Position(1000, 1000);
     private static final Position ENEMY_TO_TRY1 = new Position(20, 20);
     private static final Position ENEMY_TO_TRY2 = new Position(20, 10);
     private static final long TESTDELTA1 = 10;
@@ -36,10 +36,10 @@ class TestEnemy {
     @BeforeEach
     void setUp() {
         final int levelNumber = -1;
-        maze = new MazeImpl(levelNumber);
+        maze = new MazeImpl(levelNumber, new LevelGenerator( e -> { }));
         maze.addMazeObject(new EnemyImpl(ENEMY_TO_TRY1));
         maze.addMazeObject(new EnemyImpl(ENEMY_TO_TRY2));
-        final Position initalPosition = new Position(6, 6);
+        final Position initalPosition = new Position(1000, 1000);
         this.enemy = new EnemyImpl(initalPosition);
     }
 
@@ -49,8 +49,8 @@ class TestEnemy {
         final HitBox testHitBox = testHitBoxFact.entityeHitBox(BASE_POSITION);
         assertEquals(testHitBox, this.enemy.getHitBox());
         enemy.update(SLEEP_TIME, maze);
-        maze.removeMazeObject(new EnemyImpl(ENEMY_TO_TRY1));
-        maze.removeMazeObject(new EnemyImpl(ENEMY_TO_TRY1));
+        assertTrue(maze.removeMazeObject(new EnemyImpl(ENEMY_TO_TRY1)));
+        assertTrue(maze.removeMazeObject(new EnemyImpl(ENEMY_TO_TRY2)));
         enemy.update(TESTDELTA1, maze);
         assertNotEquals(BASE_POSITION, enemy.position());
         final Position newPosition = enemy.position();

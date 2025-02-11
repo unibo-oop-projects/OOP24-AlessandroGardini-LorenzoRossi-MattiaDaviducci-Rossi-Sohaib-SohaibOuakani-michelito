@@ -1,5 +1,6 @@
 package it.unibo.michelito.controller.levelgenerator;
 
+import it.unibo.michelito.controller.gamecontroller.api.GameExceptionHandler;
 import it.unibo.michelito.util.GameObject;
 import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.Position;
@@ -9,27 +10,29 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * A class that create the maze reading form file.
  */
-public class LevelGenerator {
+public class LevelGenerator implements Function<Integer, Set<GameObject>> {
     private static final int MAZE_BLOCK_WIDTH = 20;
     private static final int MAZE_BLOCK_HEIGHT = 15;
     private static final int BLOCK_EDGE = 6;
     private static final int TEST_MAZE_CODE = -1;
-
+    private final GameExceptionHandler gameExceptionHandler;
     /**
      * Private constructor preventing initialization.
      */
-    private LevelGenerator() {
+    public LevelGenerator(GameExceptionHandler exceptionHandler) {
+        this.gameExceptionHandler = exceptionHandler;
     }
 
     /**
      * @param levelNumber the number of level if -1 is pass it will generate a base level with a player used for test.
      * @return a set of {@link GameObject} that represent every object in the current level maze.
      */
-     public static Set<GameObject> generate(final int levelNumber) {
+     private Set<GameObject> generate(final int levelNumber) {
          final Set<GameObject> maze = new HashSet<>(baseMaze());
          final String file = "src/main/resources/level/level" + levelNumber + ".txt";
          maze.addAll(baseMaze());
@@ -71,7 +74,7 @@ public class LevelGenerator {
         return maze;
     }
 
-    private static Set<GameObject> mazeFromFile(final String file) {
+    private Set<GameObject> mazeFromFile(final String file) {
         final Set<GameObject> maze = new HashSet<>();
         String objectType;
         double xValue;
@@ -97,7 +100,7 @@ public class LevelGenerator {
                 }
             }
         } catch (IOException e) {
-            System.err.println("Errore nella lettura del file: " + e.getMessage());
+            this.gameExceptionHandler.handleException(e);
         }
         return maze;
     }
@@ -110,5 +113,10 @@ public class LevelGenerator {
             }
         }
         return positions;
+    }
+
+    @Override
+    public Set<GameObject> apply(Integer integer) {
+        return generate(integer);
     }
 }

@@ -27,7 +27,7 @@ final class TestPowerUp {
 
     @BeforeEach
     void setUp() {
-        this.maze = new MazeImpl(LevelGenerator.testLevel());
+        this.maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
     }
 
     @Test
