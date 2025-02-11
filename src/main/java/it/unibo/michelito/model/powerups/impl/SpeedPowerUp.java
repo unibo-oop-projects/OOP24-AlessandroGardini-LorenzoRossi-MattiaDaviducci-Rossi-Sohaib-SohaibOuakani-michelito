@@ -35,6 +35,9 @@ class SpeedPowerUp extends AbstractPowerUp {
         player.setSpeed(newSpeed);
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public ObjectType getType() {
         return  ObjectType.SPEED_POWERUP;

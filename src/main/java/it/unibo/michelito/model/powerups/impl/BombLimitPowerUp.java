@@ -33,6 +33,9 @@ class BombLimitPowerUp extends AbstractPowerUp {
         player.setBombLimit(newLimit);
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public ObjectType getType() {
         return ObjectType.BOMB_LIMIT_POWERUP;

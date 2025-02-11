@@ -9,6 +9,9 @@ import it.unibo.michelito.util.Position;
  * Implementation of {@link PowerUpFactory}.
  */
 public class PowerUpFactoryImpl implements PowerUpFactory {
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public PowerUp createPowerUp(final Position position, final PowerUpType type) {
         return switch (type) {

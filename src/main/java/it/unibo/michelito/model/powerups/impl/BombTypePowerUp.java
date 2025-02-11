@@ -38,6 +38,9 @@ class BombTypePowerUp extends AbstractPowerUp {
         player.setBombType(newBombType);
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public ObjectType getType() {
         return ObjectType.BOMB_TYPE_POWERUP;
