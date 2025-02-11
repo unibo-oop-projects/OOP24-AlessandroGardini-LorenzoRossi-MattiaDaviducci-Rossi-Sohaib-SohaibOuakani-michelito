@@ -25,13 +25,12 @@ public final class GameManagerImpl implements GameManager {
     private boolean gameOver;
     private boolean gameWon;
 
-    private Function<Integer,Set<GameObject>> levelGenerator;
+    private final Function<Integer,Set<GameObject>> levelGenerator;
 
     /**
      * Constructs a GameManagerImpl instance.
      */
     public GameManagerImpl(Function<Integer, Set<GameObject>> levelGenerator) {
-        this.currentLevelIndex = STARTING_LIFE_COUNT;
         this.currentLives = STARTING_LIFE_COUNT;
         this.levelGenerator = levelGenerator;
         this.currentLevel = createMaze(this.currentLevelIndex);
