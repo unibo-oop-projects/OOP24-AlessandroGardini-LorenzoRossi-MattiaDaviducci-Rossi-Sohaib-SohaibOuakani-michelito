@@ -1,12 +1,14 @@
 package it.unibo.michelito.model.powerups.impl;
 
 import it.unibo.michelito.model.player.api.ModifiablePlayer;
+import it.unibo.michelito.model.powerups.api.AbstractPowerUp;
+import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.Position;
 
 /**
  * Represents a power-up that increases the player's bomb limit.
  */
-public class BombLimitPowerUp extends AbsPowerUp {
+class BombLimitPowerUp extends AbstractPowerUp {
     private static final int BOMB_LIMIT_UPGRADE = 1;
 
     /**
@@ -29,5 +31,10 @@ public class BombLimitPowerUp extends AbsPowerUp {
     public final void applyEffect(final ModifiablePlayer player) {
         final int newLimit = player.getBombLimit() + BOMB_LIMIT_UPGRADE;
         player.setBombLimit(newLimit);
+    }
+
+    @Override
+    public ObjectType getType() {
+        return ObjectType.BOMB_LIMIT_POWERUP;
     }
 }

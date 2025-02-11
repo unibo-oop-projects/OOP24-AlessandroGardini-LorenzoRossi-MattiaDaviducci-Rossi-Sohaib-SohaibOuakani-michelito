@@ -26,9 +26,19 @@ public enum ObjectType {
     ENEMY,
 
     /**
-     * A powerUp.
+     * A speed speed powerUp.
      */
-    POWERUP,
+    SPEED_POWERUP,
+
+    /**
+     * A bomb type powerUp.
+     */
+    BOMB_TYPE_POWERUP,
+
+    /**
+     * A bomb limit poweUp.
+     */
+    BOMB_LIMIT_POWERUP,
 
     /**
      * A Door.
