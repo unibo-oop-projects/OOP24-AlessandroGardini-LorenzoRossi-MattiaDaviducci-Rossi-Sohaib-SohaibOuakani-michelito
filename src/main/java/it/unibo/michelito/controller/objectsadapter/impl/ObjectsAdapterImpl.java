@@ -1,6 +1,4 @@
 package it.unibo.michelito.controller.objectsadapter.impl;
-
-import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.controller.objectsadapter.api.ObjectsAdapter;
 import it.unibo.michelito.model.blanckspace.impl.BlankSpaceImpl;
 import it.unibo.michelito.model.box.impl.BoxImpl;
@@ -31,11 +29,17 @@ public class ObjectsAdapterImpl implements ObjectsAdapter {
             ObjectType.DOOR, obj -> new DoorImpl(obj.position()),
             ObjectType.BLANK_SPACE, obj -> new BlankSpaceImpl(obj.position())
     );
-    private Function<Integer, Set<GameObject>> levelGenerator;
+    private final Function<Integer, Set<GameObject>> levelGenerator;
 
-    public ObjectsAdapterImpl(Function<Integer, Set<GameObject>> levelGenerator) {
+    /**
+     * Construct a ObjectsAdapterImpl.
+     *
+     * @param levelGenerator {@link Function} that provided a number return a Set of {@link GameObject}.
+     */
+    public ObjectsAdapterImpl(final Function<Integer, Set<GameObject>> levelGenerator) {
         this.levelGenerator = levelGenerator;
     }
+
     /**
      * {@inheritDoc}
      */
