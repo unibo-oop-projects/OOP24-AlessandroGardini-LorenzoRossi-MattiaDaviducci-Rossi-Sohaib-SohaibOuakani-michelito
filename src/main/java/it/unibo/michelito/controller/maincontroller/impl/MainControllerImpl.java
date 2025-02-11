@@ -7,6 +7,9 @@ import it.unibo.michelito.controller.maincontroller.api.GameParentController;
 import it.unibo.michelito.controller.maincontroller.api.HomeParentController;
 import it.unibo.michelito.controller.maincontroller.api.MainController;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Implementation of the {@link MainController} interface.
  * <p>
@@ -17,12 +20,14 @@ import it.unibo.michelito.controller.maincontroller.api.MainController;
  * </p>
  */
 public final class MainControllerImpl implements MainController, HomeParentController, GameParentController {
+    private static final Logger LOGGER = Logger.getLogger(MainControllerImpl.class.getName());
+
     private HomeController homeController; // = new HomeControllerImpl(this); can be final
     private final GameController gameController = new GameControllerImpl(this);
 
     @Override
     public void start() {
-        //homeController.showMenu();
+        //homeController.showMenu(); //TODO: uncomment when a home-controller is at disposal
         gameController.startGame();
     }
 
@@ -40,6 +45,13 @@ public final class MainControllerImpl implements MainController, HomeParentContr
 
     @Override
     public void quit() {
+        gameController.stopGame();
+        homeController.hideMenu();
         System.exit(0);
+    }
+
+    @Override
+    public void handleException(Exception exception) {
+        LOGGER.log(Level.SEVERE, "An unexpected error occurred", exception);
     }
 }

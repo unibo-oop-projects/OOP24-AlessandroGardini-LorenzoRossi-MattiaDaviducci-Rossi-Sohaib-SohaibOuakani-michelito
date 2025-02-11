@@ -25,20 +25,25 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
     private static final long TIME_PER_TICK = (long) 1_000.0 / FPS;
     private final GameParentController gameParentController;
     private boolean game;
-    private final GameManager gameManager = new GameManagerImpl(new LevelGenerator(this));
+    private final GameManager gameManager;
     private GameView gameView;
     private final Loop looper = new Loop();
 
     public GameControllerImpl(GameParentController gameParentController) {
         this.gameParentController = gameParentController;
+        gameManager = new GameManagerImpl(new LevelGenerator(this));
     }
 
     @Override
     public void startGame() {
-        this.gameView = new GameViewImpl(this);
-        Loop looper = new Loop();
-        this.game = true;
-        looper.start();
+        try {
+            this.gameView = new GameViewImpl(this);
+            Loop looper = new Loop();
+            this.game = true;
+            looper.start();
+        } catch (Exception e) {
+            gameParentController.handleException(e);
+        }
     }
 
     @Override
@@ -52,13 +57,18 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
     }
 
     @Override
+    public void handleException(Exception exception) {
+        gameParentController.handleException(exception);
+    }
+
+    @Override
     public void switchToHome() {
         gameParentController.switchToHome();
     }
 
     @Override
-    public void handleException(Exception e) {
-
+    public void gameControllerHandleException(Exception exception) {
+       handleException(exception);
     }
 
     private class Loop extends Thread {
@@ -96,7 +106,7 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
                     Thread.sleep(TIME_PER_TICK - dt);
                 } catch (Exception ex){
                     Thread.currentThread().interrupt();
-                    throw new RuntimeException("Error in GameControllerImpl", ex);
+                    gameParentController.handleException(ex);
                 }
             }
         }

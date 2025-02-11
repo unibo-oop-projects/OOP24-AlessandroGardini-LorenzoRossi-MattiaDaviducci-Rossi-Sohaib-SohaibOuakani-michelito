@@ -113,7 +113,7 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
                 }
             }
         } catch (IOException e) {
-            this.gameExceptionHandler.handleException(e);
+            this.gameExceptionHandler.gameControllerHandleException(e);
         }
         return maze;
     }

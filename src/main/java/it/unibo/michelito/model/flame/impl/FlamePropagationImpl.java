@@ -43,8 +43,8 @@ public class FlamePropagationImpl implements FlamePropagation {
         for (int i = 1; i <= range; i++) {
             Position newPos = new Position(
                     BigDecimal.valueOf(origin.x())
-                            .add(BigDecimal.valueOf(i).
-                                    multiply(BigDecimal.valueOf(delta.x())
+                            .add(BigDecimal.valueOf(i)
+                                    .multiply(BigDecimal.valueOf(delta.x())
                                             .multiply(BigDecimal.valueOf(BLOCK_SIZE))))
                             .doubleValue(),
                     BigDecimal.valueOf(origin.y())
