@@ -15,7 +15,7 @@ public interface MovementFactory {
     Movement sleeping();
 
     /**
-     * @return a Movement where the enemy is more active.
+     * @return a Movement where the enemy is more activec.
      */
     Movement searching();
 }
