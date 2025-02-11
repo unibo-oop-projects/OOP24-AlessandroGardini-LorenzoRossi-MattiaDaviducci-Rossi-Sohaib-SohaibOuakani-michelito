@@ -28,6 +28,7 @@ final class TestFlame {
 
     private static final double X_SPAWN = 6;
     private static final double Y_SPAWN = 6;
+    private static final double BLOCK_SIZE = 6;
     private static final long FLAME_LIFETIME = 1000;
     private static final int BOMB_RANGE = 1;
 
@@ -40,7 +41,7 @@ final class TestFlame {
 
     @Test
     void testFlameCreation() {
-        final Flame flame = flameFactory.createFlame(new Position(X_SPAWN, Y_SPAWN), maze);
+        final Flame flame = flameFactory.createFlame(new Position(X_SPAWN, Y_SPAWN));
         maze.addMazeObject(flame);
         HitBox hitBox = flame.getHitBox();
 
@@ -52,7 +53,7 @@ final class TestFlame {
 
     @Test
     void testFlameExtinguishesAfterTime() {
-        final Flame flame = flameFactory.createFlame(new Position(X_SPAWN, Y_SPAWN), maze);
+        final Flame flame = flameFactory.createFlame(new Position(X_SPAWN, Y_SPAWN));
         maze.addMazeObject(flame);
         for (long time = 0; time <= FLAME_LIFETIME; time += 100) {
             flame.update(100, maze);
@@ -95,7 +96,7 @@ final class TestFlame {
 
     @Test
     void testFlameDestroysBox() {
-        final BoxImpl box = new BoxImpl(new Position(X_SPAWN + 6, Y_SPAWN));
+        final BoxImpl box = new BoxImpl(new Position(X_SPAWN + BLOCK_SIZE, Y_SPAWN));
         maze.addMazeObject(box);
         List<Flame> flames = flamePropagation.propagate(
                 new Position(X_SPAWN, Y_SPAWN),

@@ -17,7 +17,7 @@ import java.util.*;
 public class FlamePropagationImpl implements FlamePropagation {
     private static final long BLOCK_SIZE = 6;
     private final FlameFactory flameFactory;
-    private static final double DROP_CHANCE = 0.1;
+    private static final double DROP_CHANCE = 1;
 
     public FlamePropagationImpl(FlameFactory flameFactory) {
         this.flameFactory = flameFactory;
@@ -26,8 +26,8 @@ public class FlamePropagationImpl implements FlamePropagation {
     @Override
     public List<Flame> propagate(Position origin, int range, boolean passThrough, Maze maze) {
         List<Flame> allFlames = new ArrayList<>();
-        allFlames.add(flameFactory.createFlame(origin, maze));
-        maze.addMazeObject(flameFactory.createFlame(origin, maze));
+        allFlames.add(flameFactory.createFlame(origin));
+        maze.addMazeObject(flameFactory.createFlame(origin));
         for (Direction direction : Direction.values()) {
             Position delta = direction.toPosition();
             if (!(delta.x() != 0 && delta.y() != 0)) {
@@ -58,12 +58,12 @@ public class FlamePropagationImpl implements FlamePropagation {
             }
             if (isBox(maze, newPos)) {
                 maze.removeMazeObject(maze.getBoxes().stream().filter(box -> box.position().equals(newPos)).findFirst().get());
-                dropRandomPowerUp(newPos, maze).ifPresent(maze::addMazeObject);
+                dropRandomPowerUp(newPos).ifPresent(maze::addMazeObject);
                 if (!passThrough) {
                     break;
                 }
             }
-            Flame flame = flameFactory.createFlame(newPos, maze);
+            Flame flame = flameFactory.createFlame(newPos);
             flames.add(flame);
             maze.addMazeObject(flame);
         }
@@ -78,7 +78,7 @@ public class FlamePropagationImpl implements FlamePropagation {
         return maze.getBoxes().stream().anyMatch(box -> box.position().equals(pos));
     }
 
-    private Optional<PowerUp> dropRandomPowerUp(Position pos, Maze maze) {
+    private Optional<PowerUp> dropRandomPowerUp(Position pos) {
         final Random random = new Random();
         final double chance = random.nextDouble();
         PowerUpFactory factory = new PowerUpFactoryImpl();

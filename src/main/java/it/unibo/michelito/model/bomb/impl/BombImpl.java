@@ -18,19 +18,17 @@ import java.util.List;
 public class BombImpl implements Bomb {
     private final Position position;
     private final BombType bombType;
-    private boolean exploded;
     long fuseTime = 3000;
 
     public BombImpl(final Position position, final BombType bombType) {
         this.position = position;
         this.bombType = bombType;
-        this.exploded = false;
     }
 
     @Override
     public void update(final long deltaTime, final Maze maze) {
         this.fuseTime -= deltaTime;
-        if (!exploded && this.fuseTime <= 0) {
+        if (this.fuseTime <= 0) {
             explode(maze);
         }
     }
@@ -51,33 +49,23 @@ public class BombImpl implements Bomb {
     }
 
     @Override
-    public boolean isExploded() {
-        return this.exploded;
-    }
-
-    @Override
     public BombType getBombType() {
         return bombType;
     }
 
     private void explode(final Maze maze) {
-        this.exploded = true;
-        if (isExploded()) {
-            maze.removeMazeObject(this);
-        }
+        maze.removeMazeObject(this);
         generateFlame(maze);
     }
 
     private void generateFlame(final Maze maze) {
         FlamePropagation flamePropagation = new FlamePropagationImpl(new FlameFactoryImpl());
-
         List<Flame> flames = flamePropagation.propagate(
                 this.position,
                 BombStaticUtil.getFlameRange(bombType),
                 BombStaticUtil.isFlamePassThrough(bombType),
                 maze
         );
-
         flames.forEach(maze::addMazeObject);
     }
 }
