@@ -51,7 +51,7 @@ public class PlayerImpl implements Player, ModifiablePlayer {
             this.move(deltaTime, maze);
             this.hitBoxComponent.update(this.position());
             this.checkPowerUp(maze);
-            this.placeBomb(maze);
+            this.placeBomb(maze, deltaTime);
     }
 
     /*private boolean allowedToPlaceBomb(final Maze maze) {
@@ -142,11 +142,11 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         return this.bombManagerComponent.getBombLimit();
     }
 
-    private void placeBomb(final Maze maze) {
+    private void placeBomb(final Maze maze, final long deltaTime) {
         final Optional<BlankSpace> bombPlacement = this.hitBoxComponent.closestBlankSpace(maze);
 
         if (bombPlacement.isPresent()) {
-            this.bombManagerComponent.place(maze, bombPlacement.get().position());
+            this.bombManagerComponent.place(maze, bombPlacement.get().position(), deltaTime);
         } else {
             throw new IllegalStateException();
         }

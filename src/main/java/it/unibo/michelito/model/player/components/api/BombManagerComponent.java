@@ -26,8 +26,9 @@ public interface BombManagerComponent {
      * Method that adds a {@link Bomb} to {@link Maze} in to a {@link Position}.
      * @param maze the {@link Maze} where to place the {@link Bomb}.
      * @param position the {@link Position} of the placed @link it.unibo.michelito.model.bomb.api.Bomb}
+     * @param deltaTime thw time of the update to see if the bomb is in cooldown
      */
-    void place(Maze maze, Position position);
+    void place(Maze maze, Position position, long deltaTime);
 
     /**
      * Sets the ability to place a {@link Bomb}.

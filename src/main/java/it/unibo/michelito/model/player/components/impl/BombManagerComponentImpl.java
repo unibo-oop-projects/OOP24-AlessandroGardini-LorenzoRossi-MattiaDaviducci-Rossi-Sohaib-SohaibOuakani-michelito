@@ -15,6 +15,8 @@ import it.unibo.michelito.model.bomb.api.Bomb;
  */
 public class BombManagerComponentImpl implements BombManagerComponent {
     private static final int STANDARD_BOMB_LIMIT = 1;
+    private static final long STANDARD_COOLDOWN = 500;
+    private long lastUpdate = 0;
     private int currentBombLimit;
     private boolean place;
     private BombType bombType;
@@ -50,15 +52,19 @@ public class BombManagerComponentImpl implements BombManagerComponent {
      *{@inheritDoc}
      */
     @Override
-    public void place(final Maze maze, final Position position) {
-        if (this.place) {
-            if (maze.getBombs().size() < this.currentBombLimit) {
-                final BombFactory factory = new BombFactoryImpl();
-                final MazeObject bomb = factory.createBomb(position, this.bombType);
-                maze.addMazeObject(bomb);
+    public void place(final Maze maze, final Position position, final long deltaTime) {
+        if (this.lastUpdate <= 0) {
+            if (this.place) {
+                if (maze.getBombs().size() < this.currentBombLimit) {
+                    final BombFactory factory = new BombFactoryImpl();
+                    final MazeObject bomb = factory.createBomb(position, this.bombType);
+                    maze.addMazeObject(bomb);
+                    this.lastUpdate = STANDARD_COOLDOWN;
+                }
             }
-            this.place = false;
         }
+        this.place = false;
+        this.lastUpdate = this.lastUpdate - deltaTime;
     }
 
     /**
