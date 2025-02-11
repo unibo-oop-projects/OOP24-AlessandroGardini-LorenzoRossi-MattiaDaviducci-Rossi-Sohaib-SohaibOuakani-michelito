@@ -37,8 +37,8 @@ public class FlamePropagationImpl implements FlamePropagation {
         return allFlames;
     }
 
-    private List<Flame> createFlames(Position origin, Direction direction, int range, boolean passThrough, Maze maze) {
-        List<Flame> flames = new ArrayList<>();
+    private Set<Flame> createFlames(Position origin, Direction direction, int range, boolean passThrough, Maze maze) {
+        Set<Flame> flames = new HashSet<>();
         Position delta = direction.toPosition();
         for (int i = 1; i <= range; i++) {
             Position newPos = new Position(
