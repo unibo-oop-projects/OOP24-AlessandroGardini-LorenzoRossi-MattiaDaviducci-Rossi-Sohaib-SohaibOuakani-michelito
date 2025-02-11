@@ -1,21 +1,19 @@
 package it.unibo.michelito.model.enemy.impl.ai;
 
 import it.unibo.michelito.model.enemy.api.ai.MoodAI;
-import it.unibo.michelito.model.enemy.api.ai.MoodAIFactory;
-import it.unibo.michelito.model.enemy.api.ai.MoodType;
-import it.unibo.michelito.model.enemy.api.ai.MovementAI;
+import it.unibo.michelito.model.enemy.api.ai.MovementFactory;
+import it.unibo.michelito.model.enemy.api.ai.MovementType;
+import it.unibo.michelito.model.enemy.api.ai.Movement;
 import it.unibo.michelito.model.maze.api.Maze;
-import it.unibo.michelito.util.Direction;
 
 /**
  *Implementation of {@link MoodAI}.
  */
 public final class MoodAIImpl implements MoodAI {
-    private static final long SLEEPTIME = 10_000;
-    private static final double DEATHFORVENGENS = 0.70;
-    private MoodType actualMood;
-    private MovementAI actualMovement;
-    private final MoodAIFactory moodAIFactory = new MoodAIFactoryImpl();
+    private static final long SLEEP_TIME = 5_000;
+    private static final double DEATH_FOR_AVENGES = 0.70;
+    private Movement actualMovement;
+    private final MovementFactory movementFactory = new MovementFactoryImpl();
     private long createdTime;
     private final Maze maze;
     private final int initialEnemy;
@@ -28,23 +26,19 @@ public final class MoodAIImpl implements MoodAI {
         this.createdTime = 0;
         this.maze = maze;
         initialEnemy = maze.getEnemies().size();
-        setMood(MoodType.SLEEPING);
+        setMood(MovementType.SLEEPING);
     }
 
-    @Override
-    public void setMood(final MoodType mood) {
+    private void setMood(final MovementType mood) {
         switch (mood) {
             case SLEEPING:
-                actualMovement = moodAIFactory.sleeping();
-                actualMood = MoodType.SLEEPING;
+                actualMovement = movementFactory.sleeping();
                 break;
             case CHILLING:
-                actualMovement = moodAIFactory.chilling();
-                actualMood = MoodType.CHILLING;
+                actualMovement = movementFactory.chilling();
                 break;
             case SEARCHING:
-                actualMovement = moodAIFactory.searching();
-                actualMood = MoodType.SEARCHING;
+                actualMovement = movementFactory.searching();
                 break;
             default:
                 break;
@@ -52,23 +46,18 @@ public final class MoodAIImpl implements MoodAI {
     }
 
     @Override
-    public MoodType getMood() {
-        return actualMood;
-    }
-
-    @Override
-    public Direction getDirection() {
-        return actualMovement.getDirection();
+    public Movement getMovement() {
+        return actualMovement;
     }
 
     @Override
     public void update(final long deltaTime) {
         this.createdTime = createdTime + deltaTime;
-        if (createdTime >= SLEEPTIME) {
-            setMood(MoodType.CHILLING);
+        if (createdTime >= SLEEP_TIME) {
+            setMood(MovementType.CHILLING);
         }
-        if (maze.getEnemies().size() < initialEnemy * DEATHFORVENGENS) {
-            setMood(MoodType.SEARCHING);
+        if (maze.getEnemies().size() < initialEnemy * DEATH_FOR_AVENGES) {
+            setMood(MovementType.SEARCHING);
         }
     }
 }

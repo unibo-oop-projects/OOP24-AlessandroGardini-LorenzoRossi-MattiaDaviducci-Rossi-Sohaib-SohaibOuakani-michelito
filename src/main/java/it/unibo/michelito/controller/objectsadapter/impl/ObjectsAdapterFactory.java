@@ -10,7 +10,7 @@ import java.util.function.Function;
  * Factory class for creating instances of {@link ObjectsAdapter}.
  * Its use is recommended for obtaining {@link ObjectsAdapter} instances.
  */
-public class ObjectsAdapterFactory {
+public final class ObjectsAdapterFactory {
     /**
      * Private constructor preventing instantiation.
      */
@@ -20,6 +20,7 @@ public class ObjectsAdapterFactory {
      * Creates and returns an instance of {@link ObjectsAdapter}.
      * The implementation choice may vary.
      *
+     * @param levelGenerator {@link Function} that provided a number return a Set of {@link GameObject}.
      * @return a new {@link ObjectsAdapter} instance.
      */
     public static ObjectsAdapter createObjectsAdapter(Function<Integer, Set<GameObject>> levelGenerator) {
