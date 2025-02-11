@@ -32,7 +32,7 @@ final class TestMaze {
      */
     @BeforeEach
     void setUp() {
-        this.maze = new MazeImpl(LevelGenerator.testLevel());
+        this.maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
     }
 
     /**

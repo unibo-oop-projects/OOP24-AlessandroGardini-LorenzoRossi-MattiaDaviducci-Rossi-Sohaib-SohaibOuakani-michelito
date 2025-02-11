@@ -43,9 +43,9 @@ public final class MazeImpl implements Maze, Level {
      *
      * @param levelNumber current level number.
      */
-    public MazeImpl(final int levelNumber) {
+    public MazeImpl(final int levelNumber, Function<Integer, Set<GameObject>> levelGenerator) {
         this.mazeObjectsSet = new HashSet<>(
-                ObjectsAdapterFactory.createObjectsAdapter().requestMazeObjects(levelNumber)
+                ObjectsAdapterFactory.createObjectsAdapter(levelGenerator).requestMazeObjects(levelNumber)
         );
     }
 

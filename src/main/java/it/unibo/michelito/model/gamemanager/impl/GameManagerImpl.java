@@ -33,8 +33,8 @@ public final class GameManagerImpl implements GameManager {
     public GameManagerImpl(Function<Integer, Set<GameObject>> levelGenerator) {
         this.currentLevelIndex = 0;
         this.currentLives = STARTING_LIFE_COUNT;
-        this.currentLevel = new MazeImpl(STARTER_MAZE);
         this.levelGenerator = levelGenerator;
+        this.currentLevel = createMaze(this.currentLevelIndex);
     }
 
     @Override
@@ -81,7 +81,7 @@ public final class GameManagerImpl implements GameManager {
             this.gameOver = true;
         } else {
             this.currentLives--;
-            this.currentLevel = new MazeImpl(this.currentLevelIndex);
+            this.currentLevel = createMaze(currentLevelIndex);
         }
     }
 
@@ -93,11 +93,11 @@ public final class GameManagerImpl implements GameManager {
             this.gameWon = true;
         } else {
             this.currentLevelIndex++;
-            this.currentLevel = new MazeImpl(this.currentLevelIndex);
+            this.currentLevel = createMaze(this.currentLevelIndex);
         }
     }
 
-    private Level levelGenerator(final int levelIndex) {
+    private Level createMaze(final int levelIndex) {
         return new MazeImpl(levelIndex, levelGenerator);
     }
 }

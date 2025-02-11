@@ -59,7 +59,7 @@ final class TestDoor {
     @Test
     void testOpening() {
         final var enemy = new EnemyImpl(new Position(10, 10));
-        final Maze maze = new MazeImpl(LevelGenerator.testLevel());
+        final Maze maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
         assertFalse(this.door.isOpen());
         maze.addMazeObject(enemy);
         this.door.update(TIME, maze);
@@ -75,7 +75,7 @@ final class TestDoor {
      */
     @Test
     void testMazeWin() {
-        final MazeImpl maze = new MazeImpl(LevelGenerator.testLevel());
+        final MazeImpl maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
         final Door doorUnderPlayer = new DoorImpl(maze.getPlayer().position());
         assertFalse(maze.isWon());
         doorUnderPlayer.update(TIME, maze);

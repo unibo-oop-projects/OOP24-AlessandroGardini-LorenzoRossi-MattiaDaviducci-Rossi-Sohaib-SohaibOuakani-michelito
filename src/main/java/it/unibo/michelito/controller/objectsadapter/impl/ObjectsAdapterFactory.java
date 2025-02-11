@@ -1,6 +1,10 @@
 package it.unibo.michelito.controller.objectsadapter.impl;
 
 import it.unibo.michelito.controller.objectsadapter.api.ObjectsAdapter;
+import it.unibo.michelito.util.GameObject;
+
+import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Factory class for creating instances of {@link ObjectsAdapter}.
@@ -18,7 +22,7 @@ public class ObjectsAdapterFactory {
      *
      * @return a new {@link ObjectsAdapter} instance.
      */
-    public static ObjectsAdapter createObjectsAdapter() {
-        return new ObjectsAdapterWithCache();
+    public static ObjectsAdapter createObjectsAdapter(Function<Integer, Set<GameObject>> levelGenerator) {
+        return new ObjectsAdapterWithCache(levelGenerator);
     }
 }
