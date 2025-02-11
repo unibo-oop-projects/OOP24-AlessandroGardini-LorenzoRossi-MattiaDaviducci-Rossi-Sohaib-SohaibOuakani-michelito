@@ -88,8 +88,7 @@ public class FlameImpl implements Flame {
 
     private void checkAndKillMichelito(final Maze maze, final List<HitBox> flameHitBoxes) {
         final Player player = maze.getPlayer();
-        final Position playerPos = player.position();
-        if (flameHitBoxes.stream().anyMatch(hitBox -> hitBox.getCenter().equals(playerPos))) {
+        if (flameHitBoxes.stream().anyMatch(hitBox -> hitBox.collision(player.getHitBox()))) {
             maze.killMichelito();
         }
     }
@@ -97,8 +96,7 @@ public class FlameImpl implements Flame {
     private void checkAndKillEnemies(final Maze maze, final List<HitBox> flameHitBoxes) {
         final List<Enemy> enemiesToRemove = new ArrayList<>();
         for (final Enemy enemy : maze.getEnemies()) {
-            final Position enemyPos = enemy.position();
-            if (flameHitBoxes.stream().anyMatch(hitBox -> hitBox.getCenter().equals(enemyPos))) {
+            if (flameHitBoxes.stream().anyMatch(hitBox -> hitBox.collision(enemy.getHitBox()))) {
                 enemiesToRemove.add(enemy);
             }
         }

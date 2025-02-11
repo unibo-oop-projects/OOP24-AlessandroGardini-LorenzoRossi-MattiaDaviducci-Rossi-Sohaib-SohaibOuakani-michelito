@@ -11,8 +11,8 @@ import it.unibo.michelito.controller.playercommand.impl.PlaceCommand;
 import it.unibo.michelito.model.gamemanager.api.GameManager;
 import it.unibo.michelito.model.gamemanager.impl.GameManagerImpl;
 import it.unibo.michelito.util.Direction;
-import it.unibo.michelito.view.gameview.api.GameView;
-import it.unibo.michelito.view.gameview.impl.GameViewImpl;
+import it.unibo.michelito.view.gameview.view.api.GameView;
+import it.unibo.michelito.view.gameview.view.impl.GameViewImpl;
 
 import java.util.Optional;
 import java.util.Set;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class GameControllerImpl implements GameController, Switcher {
     private static final int FPS = 60;
-    private static final long TIME_PER_TICK = (long) 100_000.0 / FPS;
+    private static final long TIME_PER_TICK = (long) 1_000.0 / FPS;
     private final GameParentController gameParentController;
     private boolean game;
     private final GameManager gameManager = new GameManagerImpl();
@@ -80,6 +80,7 @@ public class GameControllerImpl implements GameController, Switcher {
                 }
             }
         }
+
         private void waitForNextFrame(long currentTime) {
             long dt = System.currentTimeMillis() - currentTime;
             if (dt < TIME_PER_TICK) {

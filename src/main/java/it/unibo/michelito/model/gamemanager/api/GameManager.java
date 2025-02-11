@@ -43,9 +43,9 @@ public interface GameManager {
     int getRemainingLives();
 
     /**
-     * Retrieves current index level.
+     * Retrieves current level index.
      *
-     * @return current index level.
+     * @return current level index.
      */
     int getCurrentIndexLevel();
 
