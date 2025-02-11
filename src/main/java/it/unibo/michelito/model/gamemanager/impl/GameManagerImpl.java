@@ -54,6 +54,11 @@ public final class GameManagerImpl implements GameManager {
     }
 
     @Override
+    public int getCurrentIndexLevel() {
+        return this.currentLevelIndex;
+    }
+
+    @Override
     public void setCommand(final PlayerCommand playerCommand) {
         this.currentLevel.setCommand(playerCommand);
     }
