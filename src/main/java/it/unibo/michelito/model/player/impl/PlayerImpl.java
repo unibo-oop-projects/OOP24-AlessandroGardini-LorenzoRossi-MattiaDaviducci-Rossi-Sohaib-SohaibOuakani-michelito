@@ -51,17 +51,12 @@ public class PlayerImpl implements Player, ModifiablePlayer {
             this.move(deltaTime, maze);
             this.hitBoxComponent.update(this.position());
             this.checkPowerUp(maze);
-        if (this.bombManagerComponent.hasToPlace()) {
-            if (this.allowedToPlaceBomb(maze)) {
-                this.placeBomb(maze);
-            }
-            this.bombManagerComponent.notifyToPlace(false);
-        }
+            this.placeBomb(maze);
     }
 
-    private boolean allowedToPlaceBomb(final Maze maze) {
+    /*private boolean allowedToPlaceBomb(final Maze maze) {
         return maze.getBombs().size() < this.bombManagerComponent.getBombLimit();
-    }
+    }*/
 
     private void move(final long time, final Maze maze) {
         final Position oldPosition = this.position();
@@ -69,9 +64,13 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         this.hitBoxComponent.update(this.position());
 
         if (this.isCollidingWithWallsOrBoxes(maze)) {
-            this.movementComponent.setPosition(oldPosition);
-            this.hitBoxComponent.update(this.position());
+            this.setPosition(oldPosition);
         }
+    }
+
+    private void setPosition(final Position position) {
+        this.movementComponent.setPosition(position);
+        this.hitBoxComponent.update(this.position());
     }
 
     private boolean isCollidingWithWallsOrBoxes(final Maze maze) {
@@ -144,10 +143,10 @@ public class PlayerImpl implements Player, ModifiablePlayer {
     }
 
     private void placeBomb(final Maze maze) {
-        final Optional<BlankSpace> blankSpace = this.hitBoxComponent.closestBlankSpace(maze);
+        final Optional<BlankSpace> bombPlacement = this.hitBoxComponent.closestBlankSpace(maze);
 
-        if (blankSpace.isPresent()) {
-            this.bombManagerComponent.place(maze, blankSpace.get().position());
+        if (bombPlacement.isPresent()) {
+            this.bombManagerComponent.place(maze, bombPlacement.get().position());
         } else {
             throw new IllegalStateException();
         }
@@ -170,7 +169,7 @@ public class PlayerImpl implements Player, ModifiablePlayer {
      */
     @Override
     public void notifyToPlace() {
-        this.bombManagerComponent.notifyToPlace(true);
+        this.bombManagerComponent.notifyToPlace();
     }
 
     /**

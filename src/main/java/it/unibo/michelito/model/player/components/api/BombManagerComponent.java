@@ -31,9 +31,8 @@ public interface BombManagerComponent {
 
     /**
      * Sets the ability to place a {@link Bomb}.
-     * @param place a boolean that represents the ability to place
      */
-    void notifyToPlace(boolean place);
+    void notifyToPlace();
 
     /**
      * Gets if a {@link Bomb} has to be placed.
