@@ -58,7 +58,7 @@ public class GameFrameImpl extends JFrame implements GameFrame {
 
     @Override
     public void setLives(final int lives) {
-        livesTextField.setText(String.valueOf(lives));
+        gamePanel.setLives(lives);
     }
 
     @Override

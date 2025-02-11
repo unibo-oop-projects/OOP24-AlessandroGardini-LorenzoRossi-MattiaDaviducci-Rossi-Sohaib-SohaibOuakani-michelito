@@ -5,7 +5,6 @@ import it.unibo.michelito.util.GameObject;
 import java.util.Set;
 
 public interface GameFrame {
-
     void setGameObjects(Set<GameObject> gameObjects);
 
     void setLives(final int lives);

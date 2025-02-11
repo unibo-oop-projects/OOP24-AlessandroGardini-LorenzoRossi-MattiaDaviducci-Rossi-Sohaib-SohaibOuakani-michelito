@@ -11,6 +11,7 @@ import java.util.Set;
 
 public class GamePanelImpl extends JPanel implements GamePanel {
     private Set<GameObject> gameObjects;
+    private int currentLives;
     final private InputHandler inputHandler = new InputHandlerImpl();
 
     public GamePanelImpl() {
@@ -25,15 +26,24 @@ public class GamePanelImpl extends JPanel implements GamePanel {
         super.paintComponent(g);
         if (Objects.nonNull(gameObjects)) {
             for (GameObject gameObject : gameObjects) {
-                GameObjectRenderer.render(g, gameObject, this);
+               GameObjectRenderer.render(g, gameObject, this);
             }
         }
+        GameLivesRenderer.render(g, this, this.currentLives);
     }
 
     @Override
     public void setGameObjects(Set<GameObject> gameObjects) {
         this.gameObjects = gameObjects;
         if (!gameObjects.isEmpty()) {
+            this.repaint();
+        }
+    }
+
+    @Override
+    public void setLives(int currentLives) {
+        if (this.currentLives != currentLives) {
+            this.currentLives = currentLives;
             this.repaint();
         }
     }
