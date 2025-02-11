@@ -5,12 +5,12 @@ import java.util.Optional;
 
 import it.unibo.michelito.model.blanckspace.api.BlankSpace;
 import it.unibo.michelito.model.bomb.api.BombType;
-import it.unibo.michelito.model.components.api.BombManagerComponent;
-import it.unibo.michelito.model.components.api.HitBoxComponent;
-import it.unibo.michelito.model.components.api.MovementComponent;
-import it.unibo.michelito.model.components.impl.BombManagerComponentImpl;
-import it.unibo.michelito.model.components.impl.HitBoxComponentImpl;
-import it.unibo.michelito.model.components.impl.MovementComponentImpl;
+import it.unibo.michelito.model.player.components.api.BombManagerComponent;
+import it.unibo.michelito.model.player.components.api.HitBoxComponent;
+import it.unibo.michelito.model.player.components.api.MovementComponent;
+import it.unibo.michelito.model.player.components.impl.BombManagerComponentImpl;
+import it.unibo.michelito.model.player.components.impl.HitBoxComponentImpl;
+import it.unibo.michelito.model.player.components.impl.MovementComponentImpl;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.player.api.ModifiablePlayer;
 import it.unibo.michelito.model.player.api.Player;
@@ -21,7 +21,8 @@ import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
 import it.unibo.michelito.model.powerups.api.PowerUp;
 
 /**
- * Implementation of {@link Player}.
+ * Implementation of {@link Player} and {@link ModifiablePlayer} that represents a player entity in the game.
+ * It manages movement, collisions, and bomb placement.
  */
 public class PlayerImpl implements Player, ModifiablePlayer {
     private final HitBoxComponent hitBoxComponent;
@@ -29,24 +30,26 @@ public class PlayerImpl implements Player, ModifiablePlayer {
     private final BombManagerComponent bombManagerComponent;
 
     /**
-     * Constructor for {@link PlayerImpl}.
+     * Constructs a {@code PlayerImpl} instance at the specified {@link Position}.
+     *
      * @param position the spawning {@link Position} of the {@link Player}.
      */
     public PlayerImpl(final Position position) {
         this.movementComponent = new MovementComponentImpl(position);
         this.bombManagerComponent = new BombManagerComponentImpl();
         this.hitBoxComponent = new HitBoxComponentImpl(position);
-        this.updateHitbox();
     }
 
-    private void updateHitbox() {
-        this.hitBoxComponent.update(position());
-    }
-
+    /**
+     * Updates the player's state, including movement and interactions with the {@link Maze}.
+     *
+     * @param deltaTime the time elapsed since the last update
+     * @param maze the current game {@link Maze}
+     */
     @Override
     public final void update(final long deltaTime, final Maze maze) {
             this.move(deltaTime, maze);
-            this.updateHitbox();
+            this.hitBoxComponent.update(this.position());
             this.checkPowerUp(maze);
         if (this.bombManagerComponent.hasToPlace()) {
             if (this.allowedToPlaceBomb(maze)) {
@@ -63,15 +66,15 @@ public class PlayerImpl implements Player, ModifiablePlayer {
     private void move(final long time, final Maze maze) {
         final Position oldPosition = this.position();
         this.movementComponent.move(time);
-        this.updateHitbox();
+        this.hitBoxComponent.update(this.position());
 
-        if (this.checkCollision(maze)) {
-            this.setPosition(oldPosition);
-            this.updateHitbox();
+        if (this.isCollidingWithWallsOrBoxes(maze)) {
+            this.movementComponent.setPosition(oldPosition);
+            this.hitBoxComponent.update(this.position());
         }
     }
 
-    private boolean checkCollision(final Maze maze) {
+    private boolean isCollidingWithWallsOrBoxes(final Maze maze) {
         return this.hitBoxComponent.checkCollisionWallsBoxes(maze);
     }
 
@@ -84,18 +87,27 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public final Position position() {
+    public Position position() {
         return this.movementComponent.getPosition();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public final HitBox getHitBox() {
+    public HitBox getHitBox() {
         return this.hitBoxComponent.getHitBox();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public final ObjectType getType() {
+    public ObjectType getType() {
         return ObjectType.PLAYER;
     }
 
@@ -115,23 +127,24 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         this.movementComponent.setSpeed(newSpeed);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getSpeed() {
         return this.movementComponent.getSpeed();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getBombLimit() {
         return this.bombManagerComponent.getBombLimit();
     }
 
-
-    private void setPosition(final Position newPosition) {
-        this.movementComponent.setPosition(newPosition);
-    }
-
     private void placeBomb(final Maze maze) {
-        final Optional<BlankSpace> blankSpace = findBlankToPlaceBomb(maze);
+        final Optional<BlankSpace> blankSpace = this.hitBoxComponent.closestBlankSpace(maze);
 
         if (blankSpace.isPresent()) {
             this.bombManagerComponent.place(maze, blankSpace.get().position());
@@ -140,12 +153,11 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         }
     }
 
-    private Optional<BlankSpace> findBlankToPlaceBomb(Maze maze) {
-        return this.hitBoxComponent.closestBlankSpace(maze);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public final void setDirection(final Direction direction) {
+    public void setDirection(final Direction direction) {
         if (Objects.isNull(direction)) {
             throw new IllegalArgumentException();
         } else {
@@ -153,8 +165,11 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public final void notifyToPlace() {
+    public void notifyToPlace() {
         this.bombManagerComponent.notifyToPlace(true);
     }
 
@@ -166,6 +181,9 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         this.bombManagerComponent.setBombType(type);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BombType getBombType() {
         return this.bombManagerComponent.getBombType();

@@ -14,6 +14,7 @@ public class BombImpl implements Bomb {
     private final Position position;
     private final BombType bombType;
     private boolean exploded;
+    long fuseTime = 3000;
 
     public BombImpl(final Position position, final BombType bombType) {
         this.position = position;
@@ -23,9 +24,8 @@ public class BombImpl implements Bomb {
 
     @Override
     public void update(final long deltaTime, final Maze maze) {
-        final long fuseTime = 3000;
-        final long remainingTime = fuseTime - deltaTime;
-        if (!exploded && remainingTime <= 0) {
+        this.fuseTime -= deltaTime;
+        if (!exploded && this.fuseTime <= 0) {
             explode(maze);
         }
     }
