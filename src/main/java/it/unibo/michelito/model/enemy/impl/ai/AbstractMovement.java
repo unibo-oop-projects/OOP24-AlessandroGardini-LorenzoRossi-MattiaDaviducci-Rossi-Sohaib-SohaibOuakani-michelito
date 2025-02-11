@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * Implementation of {@link Movement}.
  */
-public abstract class MovementImpl implements Movement {
+public abstract class AbstractMovement implements Movement {
     private Position position;
     private Direction direction = Direction.NONE;
     private static final int POSSIBILITY_TO_CHANGE = 30;

@@ -14,7 +14,7 @@ public final class MovementFactoryImpl implements MovementFactory {
 
     @Override
     public Movement chilling() {
-        return  new MovementImpl() {
+        return  new AbstractMovement() {
             @Override
              double velocity() {
                 return CHILLING_VELOCITY;
@@ -29,7 +29,7 @@ public final class MovementFactoryImpl implements MovementFactory {
 
     @Override
     public Movement sleeping() {
-        return new MovementImpl() {
+        return new AbstractMovement() {
             @Override
             double velocity() {
                 return SLEEPING_VELOCITY;
@@ -44,7 +44,7 @@ public final class MovementFactoryImpl implements MovementFactory {
 
     @Override
     public Movement searching() {
-        return new MovementImpl() {
+        return new AbstractMovement() {
             @Override
             double velocity() {
                 return SEARCHING_VELOCITY;
