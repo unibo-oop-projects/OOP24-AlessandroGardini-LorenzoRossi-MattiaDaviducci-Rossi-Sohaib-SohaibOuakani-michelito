@@ -51,8 +51,16 @@ public class GameObjectRenderer {
                 g2d.setColor(Color.RED);
                 g2d.fill(rectangle);
                 break;
-            case POWERUP:
+            case SPEED_POWERUP:
                 g2d.setColor(Color.YELLOW);
+                g2d.fill(bombCircle);
+                break;
+            case BOMB_LIMIT_POWERUP:
+                g2d.setColor(Color.blue);
+                g2d.fill(bombCircle);
+                break;
+            case BOMB_TYPE_POWERUP:
+                g2d.setColor(Color.pink);
                 g2d.fill(bombCircle);
                 break;
             case DOOR:
