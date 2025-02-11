@@ -85,7 +85,10 @@ public class GameControllerImpl implements GameController, Switcher {
             if (dt < TIME_PER_TICK) {
                 try {
                     Thread.sleep(TIME_PER_TICK - dt);
-                } catch (Exception ex){throw new RuntimeException("Error in GameControllerImpl", ex);}
+                } catch (Exception ex){
+                    Thread.currentThread().interrupt();
+                    throw new RuntimeException("Error in GameControllerImpl", ex);
+                }
             }
         }
 
