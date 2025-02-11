@@ -13,7 +13,6 @@ import it.unibo.michelito.controller.playercommand.impl.PlaceCommand;
 import it.unibo.michelito.model.gamemanager.api.GameManager;
 import it.unibo.michelito.model.gamemanager.impl.GameManagerImpl;
 import it.unibo.michelito.util.Direction;
-import it.unibo.michelito.util.GameObject;
 import it.unibo.michelito.view.gameview.view.api.GameView;
 import it.unibo.michelito.view.gameview.view.impl.GameViewImpl;
 
@@ -26,7 +25,7 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
     private static final long TIME_PER_TICK = (long) 1_000.0 / FPS;
     private final GameParentController gameParentController;
     private boolean game;
-    private final GameManager gameManager= new GameManagerImpl(new LevelGenerator(this));
+    private final GameManager gameManager = new GameManagerImpl(new LevelGenerator(this));
     private GameView gameView;
     private final Loop looper = new Loop();
 
