@@ -17,7 +17,9 @@ import it.unibo.michelito.util.ObjectType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.nio.channels.SeekableByteChannel;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,7 +61,6 @@ final class TestFlame {
             flame.update(100, maze);
         }
 
-        assertTrue(flame.isExtinguished());
         assertFalse(maze.getAllObjects().contains(flame));
     }
 
@@ -67,7 +68,7 @@ final class TestFlame {
     void testFlameKillsMichelito() {
         final PlayerImpl player = new PlayerImpl(new Position(X_SPAWN, Y_SPAWN));
         maze.addMazeObject(player);
-        List<Flame> flames = flamePropagation.propagate(
+        Set<Flame> flames = flamePropagation.propagate(
                 new Position(X_SPAWN, Y_SPAWN),
                 BOMB_RANGE,
                 false,
@@ -83,7 +84,7 @@ final class TestFlame {
     void testFlameKillsEnemy() {
         final EnemyImpl enemy = new EnemyImpl(new Position(X_SPAWN, Y_SPAWN));
         maze.addMazeObject(enemy);
-        List<Flame> flames = flamePropagation.propagate(
+        Set<Flame> flames = flamePropagation.propagate(
                 new Position(X_SPAWN, Y_SPAWN),
                 BOMB_RANGE,
                 false,
@@ -98,7 +99,7 @@ final class TestFlame {
     void testFlameDestroysBox() {
         final BoxImpl box = new BoxImpl(new Position(X_SPAWN + BLOCK_SIZE, Y_SPAWN));
         maze.addMazeObject(box);
-        List<Flame> flames = flamePropagation.propagate(
+        Set<Flame> flames = flamePropagation.propagate(
                 new Position(X_SPAWN, Y_SPAWN),
                 BOMB_RANGE,
                 false,

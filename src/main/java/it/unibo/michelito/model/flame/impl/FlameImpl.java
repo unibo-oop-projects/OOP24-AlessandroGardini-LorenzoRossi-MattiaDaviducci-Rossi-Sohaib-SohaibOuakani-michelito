@@ -12,6 +12,9 @@ import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * A flame that is created when a bomb explodes.
+ */
 public class FlameImpl implements Flame {
     private final Position position;
     private long timeLeft;

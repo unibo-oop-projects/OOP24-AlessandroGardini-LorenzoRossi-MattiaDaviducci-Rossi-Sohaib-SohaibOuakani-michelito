@@ -11,18 +11,28 @@ import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.Position;
 
-import java.util.List;
 import java.util.Set;
 
+/**
+ * Abstract class for bombs.
+ */
 public abstract class AbstractBomb implements Bomb {
     private final Position position;
     private static final long FUSE_TIME = 3000;
     private long remainingTime = FUSE_TIME;
 
+    /**
+     * Constructor for the bomb.
+     *
+     * @param position The position of the bomb.
+     */
     protected AbstractBomb(Position position) {
         this.position = position;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(final long deltaTime, final Maze maze) {
         remainingTime -= deltaTime;
@@ -52,11 +62,21 @@ public abstract class AbstractBomb implements Bomb {
     @Override
     public abstract boolean isPassThrough();
 
+    /**
+     * Explodes the bomb.
+     *
+     * @param maze The maze where the bomb is.
+     */
     private void explode(final Maze maze) {
         maze.removeMazeObject(this);
         generateFlame(maze);
     }
 
+    /**
+     * Generates the flame after the bomb explodes.
+     *
+     * @param maze The maze where the bomb is.
+     */
     private void generateFlame(final Maze maze) {
         FlamePropagation flamePropagation = new FlamePropagationImpl(new FlameFactoryImpl());
         Set<Flame> flames = flamePropagation.propagate(

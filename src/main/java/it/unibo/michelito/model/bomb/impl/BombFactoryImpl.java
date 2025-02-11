@@ -4,6 +4,9 @@ import it.unibo.michelito.model.bomb.api.Bomb;
 import it.unibo.michelito.model.bomb.api.BombFactory;
 import it.unibo.michelito.util.Position;
 
+/**
+ * Implementation of a {@link BombFactory}.
+ */
 public class BombFactoryImpl implements BombFactory {
     private static final int STANDARD_BOMB_RANGE = 1;
     private static final int NUKE_BOMB_RANGE = 7;
