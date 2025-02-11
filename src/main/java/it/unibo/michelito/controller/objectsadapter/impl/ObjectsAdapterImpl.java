@@ -1,6 +1,4 @@
 package it.unibo.michelito.controller.objectsadapter.impl;
-
-import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.controller.objectsadapter.api.ObjectsAdapter;
 import it.unibo.michelito.model.blanckspace.impl.BlankSpaceImpl;
 import it.unibo.michelito.model.box.impl.BoxImpl;
@@ -20,6 +18,7 @@ import java.util.stream.Collectors;
 /**
  * Implementation of the {@link ObjectsAdapter} interface.
  * This class adapts objects from the LevelGenerator into a set of {@link MazeObject}s.
+ * While this class is public, it is recommended to use the {@link ObjectsAdapterFactory} for creating instances.
  */
 public class ObjectsAdapterImpl implements ObjectsAdapter {
     private static final Map<ObjectType, Function<GameObject, MazeObject>> OBJECT_CREATORS = Map.of(
@@ -30,13 +29,23 @@ public class ObjectsAdapterImpl implements ObjectsAdapter {
             ObjectType.DOOR, obj -> new DoorImpl(obj.position()),
             ObjectType.BLANK_SPACE, obj -> new BlankSpaceImpl(obj.position())
     );
+    private final Function<Integer, Set<GameObject>> levelGenerator;
+
+    /**
+     * Construct a ObjectsAdapterImpl.
+     *
+     * @param levelGenerator {@link Function} that provided a number return a Set of {@link GameObject}.
+     */
+    public ObjectsAdapterImpl(final Function<Integer, Set<GameObject>> levelGenerator) {
+        this.levelGenerator = levelGenerator;
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public Set<MazeObject> requestMazeObjects(final int level) {
-        return LevelGenerator.generate(level).stream()
+        return levelGenerator.apply(level).stream()
                 .map(this::objectTransformer)
                 .collect(Collectors.toSet());
     }

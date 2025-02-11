@@ -33,7 +33,8 @@ public class TestLevelGenerator {
     }
 
     Set<GameObject> testLevelGeneratorBaseLevel(final int level) {
-        final Set<GameObject> maze = LevelGenerator.generate(level);
+        LevelGenerator levelGenerator = new LevelGenerator(e -> { });
+        final Set<GameObject> maze = levelGenerator.apply(level);
         assertFalse(maze.isEmpty());
         assertEquals(1, maze.stream().map(GameObject::objectType).filter(x -> x.equals(ObjectType.PLAYER)).count());
         assertTrue(maze.stream().map(GameObject::objectType).anyMatch(x -> x.equals(ObjectType.WALL)));

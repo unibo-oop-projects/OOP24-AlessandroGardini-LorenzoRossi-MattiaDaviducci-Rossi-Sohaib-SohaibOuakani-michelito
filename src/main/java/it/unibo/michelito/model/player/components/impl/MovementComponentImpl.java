@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  * entity movement, speed, and {@link Direction}.
  */
 public class MovementComponentImpl implements MovementComponent {
-    private static final double STANDARD_SPEED = 1;
+    private static final double STANDARD_SPEED = 0.01;
     private Direction direction;
     private Position position;
     private double speed;

@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class TestPlayer {
 
     private Player player;
-    private final Maze maze = new MazeImpl(LevelGenerator.testLevel());
+    private final Maze maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
     private static final  double X_SPAWN = 6;
     private static final double Y_SPAWN = 6;
     private static final long TICK = 1;

@@ -1,25 +1,15 @@
 package it.unibo.michelito.model.enemy.api.ai;
 
-import it.unibo.michelito.util.Direction;
-
 /**
- *An AI that change the mood of the enemy depending on various parameter.
+ *An AI that change the Movement of the enemy depending on various parameter.
  */
 public interface MoodAI {
-    /**
-     * @param mood set the AI mood in the param state.
-     */
-    void setMood(MoodType mood);
 
     /**
-     * @return the current mood.
+     * @return the current Movement.
      */
-    MoodType getMood();
+    Movement getMovement();
 
-    /**
-     * @return the direction decided by the current mood.
-     */
-    Direction getDirection();
 
     /**
      *

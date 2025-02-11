@@ -1,5 +1,6 @@
 package it.unibo.michelito.model.gamemanager;
 
+import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.model.gamemanager.impl.GameManagerImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ class TestGameManager {
      */
     @BeforeEach
     void setUp() {
-        this.gameManager = new GameManagerImpl();
+        this.gameManager = new GameManagerImpl(new LevelGenerator(e -> { }));
     }
 
     /**

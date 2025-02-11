@@ -7,6 +7,7 @@ import it.unibo.michelito.model.maze.impl.MazeImpl;
 import it.unibo.michelito.util.GameObject;
 
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Implementation of {@link GameManager} interface, responsible for managing
@@ -17,20 +18,24 @@ public final class GameManagerImpl implements GameManager {
     private static final int MAX_MAZE_INDEX = 3;
     private static final int STARTING_LIFE_COUNT = 5;
 
-    private int currentLevelIndex;
+    private int currentLevelIndex = STARTER_MAZE;
     private int currentLives;
     private Level currentLevel;
 
     private boolean gameOver;
     private boolean gameWon;
 
+    private final Function<Integer, Set<GameObject>> levelGenerator;
+
     /**
-     * Constructs a GameManagerImpl instance.
+     * Construct a GameManager with a Function that produce the relative Set of {@link GameObject}.
+     *
+     * @param levelGenerator {@link Function} that provided a number return a Set of {@link GameObject}.
      */
-    public GameManagerImpl() {
-        this.currentLevelIndex = 0;
+    public GameManagerImpl(final Function<Integer, Set<GameObject>> levelGenerator) {
         this.currentLives = STARTING_LIFE_COUNT;
-        this.currentLevel = new MazeImpl(STARTER_MAZE);
+        this.levelGenerator = levelGenerator;
+        this.currentLevel = createMaze(this.currentLevelIndex);
     }
 
     @Override
@@ -51,6 +56,11 @@ public final class GameManagerImpl implements GameManager {
     @Override
     public int getRemainingLives() {
         return this.currentLives;
+    }
+
+    @Override
+    public int getCurrentIndexLevel() {
+        return this.currentLevelIndex;
     }
 
     @Override
@@ -77,7 +87,7 @@ public final class GameManagerImpl implements GameManager {
             this.gameOver = true;
         } else {
             this.currentLives--;
-            this.currentLevel = new MazeImpl(this.currentLevelIndex);
+            this.currentLevel = createMaze(currentLevelIndex);
         }
     }
 
@@ -89,7 +99,17 @@ public final class GameManagerImpl implements GameManager {
             this.gameWon = true;
         } else {
             this.currentLevelIndex++;
-            this.currentLevel = new MazeImpl(this.currentLevelIndex);
+            this.currentLevel = createMaze(this.currentLevelIndex);
         }
+    }
+
+    /**
+     * Simple create method for {@link MazeImpl}.
+     *
+     * @param levelIndex is the {@code currentLevelIndex}.
+     * @return a {@link Level}.
+     */
+    private Level createMaze(final int levelIndex) {
+        return new MazeImpl(levelIndex, levelGenerator);
     }
 }
