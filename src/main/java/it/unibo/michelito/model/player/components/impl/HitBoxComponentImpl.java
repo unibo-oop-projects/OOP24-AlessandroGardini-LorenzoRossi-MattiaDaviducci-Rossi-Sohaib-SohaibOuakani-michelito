@@ -96,7 +96,9 @@ public class HitBoxComponentImpl implements HitBoxComponent {
     public Optional<BlankSpace> closestBlankSpace(final Maze maze) {
         return maze.getBlankSpaces().stream()
                 .filter(b -> b.getHitBox().collision(this.hitBox))
-                .filter(collidingBlanks -> collidingBlanks.getHitBox().inner(this.hitBox.getCenter()))
+                .filter(blankSpace -> maze.getBombs().stream()
+                        .noneMatch(bomb -> bomb.position().equals(blankSpace.position())))
+                //.filter(collidingBlanks -> collidingBlanks.getHitBox().inner(this.hitBox.getCenter()))
                 .findAny();
     }
 }

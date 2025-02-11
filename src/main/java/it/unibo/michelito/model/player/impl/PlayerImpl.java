@@ -148,7 +148,7 @@ public class PlayerImpl implements Player, ModifiablePlayer {
         if (bombPlacement.isPresent()) {
             this.bombManagerComponent.place(maze, bombPlacement.get().position(), deltaTime);
         } else {
-            throw new IllegalStateException();
+            this.bombManagerComponent.abortPlace();
         }
     }
 
