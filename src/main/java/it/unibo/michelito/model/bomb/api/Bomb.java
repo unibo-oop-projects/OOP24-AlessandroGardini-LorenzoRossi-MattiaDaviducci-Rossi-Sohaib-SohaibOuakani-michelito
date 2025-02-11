@@ -5,5 +5,8 @@ import it.unibo.michelito.model.modelutil.Updatable;
 
 public interface Bomb extends Temporary, Updatable {
 
-    BombType getBombType();
+    int getRange();
+
+    boolean isPassThrough();
+
 }
