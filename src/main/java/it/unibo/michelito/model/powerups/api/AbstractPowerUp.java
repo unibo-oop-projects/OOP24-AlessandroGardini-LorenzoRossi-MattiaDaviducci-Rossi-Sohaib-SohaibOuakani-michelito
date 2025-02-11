@@ -1,23 +1,21 @@
-package it.unibo.michelito.model.powerups.impl;
+package it.unibo.michelito.model.powerups.api;
 
 import it.unibo.michelito.model.player.api.ModifiablePlayer;
-import it.unibo.michelito.model.powerups.api.PowerUp;
-import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
 import it.unibo.michelito.model.modelutil.hitbox.api.HitBoxFactory;
 import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 
-abstract class AbsPowerUp implements PowerUp {
+public abstract class AbstractPowerUp implements PowerUp {
     private final Position position;
     private final HitBox hitBox;
     /**
      * Constructor for {@link PowerUp}.
      * @param position position {@link Position} of the {@link PowerUp}
      */
-    AbsPowerUp(final Position position) {
+    public AbstractPowerUp(final Position position) {
         this.position = position;
-        this.hitBox = createHitBox();
+        this.hitBox = this.createHitBox();
     }
 
     private HitBox createHitBox() {
@@ -39,14 +37,6 @@ abstract class AbsPowerUp implements PowerUp {
    @Override
     public Position position() {
         return this.position;
-   }
-
-    /**
-     * {@inheritDoc}
-     */
-   @Override
-    public ObjectType getType() {
-        return ObjectType.POWERUP;
    }
 
     /**

@@ -6,9 +6,9 @@ import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.maze.impl.MazeImpl;
 import it.unibo.michelito.model.player.impl.PlayerImpl;
 import it.unibo.michelito.model.powerups.api.PowerUp;
-import it.unibo.michelito.model.powerups.impl.BombLimitPowerUp;
-import it.unibo.michelito.model.powerups.impl.BombTypePowerUp;
-import it.unibo.michelito.model.powerups.impl.SpeedPowerUp;
+import it.unibo.michelito.model.powerups.api.PowerUpFactory;
+import it.unibo.michelito.model.powerups.api.PowerUpType;
+import it.unibo.michelito.model.powerups.impl.PowerUpFactoryImpl;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +21,8 @@ final class TestPowerUp {
     private Maze maze;
     private static final double X_SPAWN = 6;
     private static final double Y_SPAWN = 6;
+    private final Position spawn = new Position(X_SPAWN, Y_SPAWN);
+    private final PowerUpFactory factory = new PowerUpFactoryImpl();
     private static final long TICK = 1;
 
     @BeforeEach
@@ -30,7 +32,7 @@ final class TestPowerUp {
 
     @Test
     void testSpeedPowerUp() {
-        final PowerUp powerUp = new SpeedPowerUp(new Position(X_SPAWN, Y_SPAWN));
+        final PowerUp powerUp = this.factory.createPowerUp(this.spawn, PowerUpType.SPEED_POWERUP);
         final PlayerImpl player = new PlayerImpl(this.maze.getPlayer().position()); /*(6, 6)*/
         final double expectedMovement = 1.1;
         powerUp.applyEffect(player);
@@ -43,7 +45,7 @@ final class TestPowerUp {
     @Test
     void testBombLimitPowerUp() {
         final int expectedBombs = 2;
-        final PowerUp powerUp = new BombLimitPowerUp(new Position(X_SPAWN, Y_SPAWN));
+        final PowerUp powerUp = this.factory.createPowerUp(this.spawn, PowerUpType.BOMB_LIMIT_POWERUP);
         final PlayerImpl player = new PlayerImpl(this.maze.getPlayer().position());
         powerUp.applyEffect(player);
 
@@ -57,7 +59,7 @@ final class TestPowerUp {
     @Test
     void testBombTypePowerUp() {
         final PlayerImpl player = new PlayerImpl(this.maze.getPlayer().position());
-        final PowerUp bombTypePowerUp = new BombTypePowerUp(new Position(X_SPAWN, Y_SPAWN));
+        final PowerUp bombTypePowerUp = this.factory.createPowerUp(this.spawn, PowerUpType.BOMB_TYPE_POWERUP);
 
         assertEquals(BombType.STANDARD, player.getBombType());
         bombTypePowerUp.applyEffect(player);

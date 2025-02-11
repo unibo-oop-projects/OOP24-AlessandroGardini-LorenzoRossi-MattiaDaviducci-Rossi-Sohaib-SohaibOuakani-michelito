@@ -77,7 +77,11 @@ public class HitBoxComponentImpl implements HitBoxComponent {
     @Override
     public Optional<PowerUp> checkCollisionPowerUp(final Maze maze) {
         return maze.getPowerUp().stream()
-                .filter(obj -> obj.getType().equals(ObjectType.POWERUP))
+                .filter(obj ->
+                        obj.getType().equals(ObjectType.BOMB_TYPE_POWERUP) ||
+                        obj.getType().equals(ObjectType.SPEED_POWERUP) ||
+                        obj.getType().equals(ObjectType.BOMB_LIMIT_POWERUP)
+                )
                 .filter(p -> this.getHitBox().collision(p.getHitBox()))
                 .findAny();
     }
