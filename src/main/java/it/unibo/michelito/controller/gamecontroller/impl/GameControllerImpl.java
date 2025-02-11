@@ -64,7 +64,7 @@ public class GameControllerImpl implements GameController, Switcher {
 
                 gameManager.update(deltaTime);
 
-                gameView.display(gameManager.getObjects(), gameManager.getRemainingLives());
+                gameView.display(gameManager.getObjects(), gameManager.getRemainingLives(), gameManager.getCurrentIndexLevel());
 
                 this.waitForNextFrame(currentTime);
 

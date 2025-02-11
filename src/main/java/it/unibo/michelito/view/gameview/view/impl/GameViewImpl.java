@@ -25,7 +25,7 @@ public class GameViewImpl implements GameView {
     }
 
     @Override
-    public void display(final Set<GameObject> gameObjects, final int lives) {
+    public void display(final Set<GameObject> gameObjects, final int lives, final int levelNumber) {
         SwingUtilities.invokeLater(() -> {
             frame.setGameObjects(gameObjects);
             frame.setLives(lives);
