@@ -1,8 +1,6 @@
 package it.unibo.michelito.view.gameview.panel.impl;
 
 import it.unibo.michelito.util.GameObject;
-import it.unibo.michelito.util.ObjectType;
-import it.unibo.michelito.view.gameview.panel.api.GamePanel;
 import it.unibo.michelito.view.gameview.panel.api.InputHandler;
 
 import javax.swing.*;
@@ -10,7 +8,7 @@ import java.awt.*;
 import java.util.Objects;
 import java.util.Set;
 
-public class GamePanelImpl extends JPanel implements GamePanel {
+public class GamePanel extends JPanel {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     private Set<GameObject> gameObjects;
@@ -18,7 +16,7 @@ public class GamePanelImpl extends JPanel implements GamePanel {
     private int currentLevelNumber;
     final private InputHandler inputHandler = new InputHandlerImpl();
 
-    public GamePanelImpl() {
+    public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.addKeyListener(inputHandler);
         this.setFocusable(true);
@@ -36,8 +34,7 @@ public class GamePanelImpl extends JPanel implements GamePanel {
         GameStatisticRenderer.render(g, this, this.currentLives, this.currentLevelNumber);
     }
 
-    @Override
-    public void setStatistics(int lives, int levelNumber) {
+    public void display(Set<GameObject> gameObjects, int lives, int levelNumber) {
         if (this.currentLives != lives) {
             this.currentLives = lives;
             this.repaint();
@@ -46,17 +43,12 @@ public class GamePanelImpl extends JPanel implements GamePanel {
             this.currentLevelNumber = levelNumber;
             this.repaint();
         }
-    }
-
-    @Override
-    public void setGameObjects(Set<GameObject> gameObjects) {
         this.gameObjects = gameObjects;
         if (!gameObjects.isEmpty()) {
             this.repaint();
         }
     }
 
-    @Override
     public Set<Integer> getKeysPressed() {
         return inputHandler.keysPressed();
     }

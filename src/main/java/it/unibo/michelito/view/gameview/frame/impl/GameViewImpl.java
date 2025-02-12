@@ -1,8 +1,7 @@
 package it.unibo.michelito.view.gameview.frame.impl;
 
 import it.unibo.michelito.util.GameObject;
-import it.unibo.michelito.view.gameview.frame.api.GameFrame;
-import it.unibo.michelito.view.gameview.panel.impl.GamePanelImpl;
+import it.unibo.michelito.view.gameview.panel.impl.GamePanel;
 import it.unibo.michelito.view.gameview.frame.api.GameView;
 
 import javax.swing.*;
@@ -13,17 +12,20 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Set;
 
-public class GameViewImpl extends JFrame implements GameFrame, GameView {
+public class GameViewImpl extends JFrame implements GameView {
     private boolean showing = true;
-    private double aspectRatio;
-    private GamePanelImpl gamePanel = new GamePanelImpl();
-    private JTextField livesTextField = new JTextField();
+    private final double aspectRatio;
+    private final GamePanel gamePanel = new GamePanel();
 
     public GameViewImpl() {
         setTitle("Michelito");
 
         add(gamePanel, BorderLayout.CENTER);
 
+        //set frame spawn
+        setLocationRelativeTo(null);
+
+        //set custom resizing
         pack();
         Dimension size = getSize();
         aspectRatio = (double) size.width / size.height;
@@ -34,6 +36,9 @@ public class GameViewImpl extends JFrame implements GameFrame, GameView {
                 resizeDiagonally();
             }
         });
+
+        //set custom quit closing action
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -44,42 +49,12 @@ public class GameViewImpl extends JFrame implements GameFrame, GameView {
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.WARNING_MESSAGE
                 );
-
                 if (response == JOptionPane.YES_OPTION) {
                     GameViewImpl.this.dispose();
                     setShowingFalse();
                 }
             }
         });
-
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-
-        setLocationRelativeTo(null);
-    }
-
-    @Override
-    public void setGameObjects(Set<GameObject> gameObjects) {
-        gamePanel.setGameObjects(gameObjects);
-    }
-
-    @Override
-    public void setStatistics(final int lives, final int levelNumber) {
-        gamePanel.setStatistics(lives, levelNumber);
-    }
-
-    @Override
-    public Set<Integer> getKeysPressed() {
-        return gamePanel.getKeysPressed();
-    }
-
-    private void resizeDiagonally() {
-        Dimension size = getSize();
-        int newWidth = size.width;
-        int newHeight = (int) (newWidth / aspectRatio);
-        if (newHeight != size.height) {
-            setSize(newWidth, newHeight);
-        }
     }
 
     @Override
@@ -94,20 +69,26 @@ public class GameViewImpl extends JFrame implements GameFrame, GameView {
         return this.showing;
     }
 
-    private synchronized void setShowingFalse() {
-        this.showing = false;
-    }
-
     @Override
     public void display(Set<GameObject> gameObjects, int lives, int levelNumber) {
-        SwingUtilities.invokeLater(() -> {
-            this.setGameObjects(gameObjects);
-            this.setStatistics(lives, levelNumber);
-        });
+        SwingUtilities.invokeLater(() -> gamePanel.display(gameObjects, lives, levelNumber));
     }
 
     @Override
     public Set<Integer> getPressedKeys() {
-        return this.getKeysPressed();
+        return gamePanel.getKeysPressed();
+    }
+
+    private synchronized void setShowingFalse() {
+        this.showing = false;
+    }
+
+    private void resizeDiagonally() {
+        Dimension size = getSize();
+        int newWidth = size.width;
+        int newHeight = (int) (newWidth / aspectRatio);
+        if (newHeight != size.height) {
+            setSize(newWidth, newHeight);
+        }
     }
 }
