@@ -19,26 +19,43 @@ public class FlameImpl implements Flame {
     private final Position position;
     private long timeLeft;
 
+    /**
+     * Constructor for the flame.
+     *
+     * @param position The position of the flame.
+     */
     public FlameImpl(final Position position) {
         this.position = position;
         this.timeLeft = 1000;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Position position() {
         return position;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public HitBox getHitBox() {
         return new HitBoxFactoryImpl().squareHitBox(this.position);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ObjectType getType() {
         return ObjectType.FLAME;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(final long deltaTime, final Maze maze) {
         computeTimeToExtinguish(maze, deltaTime);
@@ -46,6 +63,13 @@ public class FlameImpl implements Flame {
         checkAndKillEnemies(maze, getHitBox());
     }
 
+    /**
+     * Compute the time left for the flame to extinguish.
+     * If the time is up, the flame is removed from the maze.
+     *
+     * @param maze The maze where the flame is located.
+     * @param deltaTime The time passed since the last update.
+     */
     private void computeTimeToExtinguish(final Maze maze, final long deltaTime) {
         this.timeLeft -= deltaTime;
         if (this.timeLeft <= 0) {
@@ -53,6 +77,13 @@ public class FlameImpl implements Flame {
         }
     }
 
+    /**
+     * Check if the flame {@link HitBox} collides with {@link Player} {@link HitBox}.
+     * If so, Michelito is killed.
+     *
+     * @param maze The maze where the flame is located.
+     * @param flameHitBox The {@link HitBox} of the flame.
+     */
     private void checkAndKillMichelito(final Maze maze, final HitBox flameHitBox) {
         final Player player = maze.getPlayer();
         if (flameHitBox.collision(player.getHitBox())) {
@@ -60,6 +91,13 @@ public class FlameImpl implements Flame {
         }
     }
 
+    /**
+     * Check if the flame {@link HitBox} collides with {@link Enemy} {@link HitBox}.
+     * If so, the enemy is killed.
+     *
+     * @param maze The maze where the flame is located.
+     * @param flameHitBox The {@link HitBox} of the flame.
+     */
     private void checkAndKillEnemies(final Maze maze, final HitBox flameHitBox) {
         final Set<Enemy> enemiesToRemove = new HashSet<>();
         for (final Enemy enemy : maze.getEnemies()) {

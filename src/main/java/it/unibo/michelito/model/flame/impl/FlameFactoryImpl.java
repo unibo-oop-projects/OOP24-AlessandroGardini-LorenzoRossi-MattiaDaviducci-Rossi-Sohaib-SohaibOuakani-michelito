@@ -9,6 +9,9 @@ import it.unibo.michelito.util.Position;
  */
 public class FlameFactoryImpl implements FlameFactory {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Flame createFlame(final Position position) {
         return new FlameImpl(position);

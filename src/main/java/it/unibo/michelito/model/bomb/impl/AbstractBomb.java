@@ -41,24 +41,39 @@ public abstract class AbstractBomb implements Bomb {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Position position() {
         return this.position;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public HitBox getHitBox() {
         return new HitBoxFactoryImpl().squareHitBox(this.position);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ObjectType getType() {
         return ObjectType.BOMB;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public abstract int getRange();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public abstract boolean isPassThrough();
 
