@@ -3,6 +3,7 @@ package it.unibo.michelito.controller.maincontroller.impl;
 import it.unibo.michelito.controller.gamecontroller.api.GameController;
 import it.unibo.michelito.controller.gamecontroller.impl.GameControllerImpl;
 import it.unibo.michelito.controller.homecontroller.api.HomeController;
+import it.unibo.michelito.controller.homecontroller.impl.HomeControllerImpl;
 import it.unibo.michelito.controller.maincontroller.api.GameParentController;
 import it.unibo.michelito.controller.maincontroller.api.HomeParentController;
 import it.unibo.michelito.controller.maincontroller.api.MainController;
@@ -22,13 +23,13 @@ import java.util.logging.Logger;
 public final class MainControllerImpl implements MainController, HomeParentController, GameParentController {
     private static final Logger LOGGER = Logger.getLogger(MainControllerImpl.class.getName());
 
-    private HomeController homeController; // = new HomeControllerImpl(this); can be final
+    private final HomeController homeController = new HomeControllerImpl(this);
     private final GameController gameController = new GameControllerImpl(this);
 
     @Override
     public void start() {
-        //homeController.showMenu(); //TODO: uncomment when a home-controller is at disposal
-        gameController.startGame();
+        homeController.showMenu(); //TODO: uncomment when a home-controller is at disposal
+        // gameController.startGame();
     }
 
     @Override
