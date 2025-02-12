@@ -56,8 +56,7 @@ public class BombManagerComponentImpl implements BombManagerComponent {
         if (this.lastUpdate <= 0) {
             if (this.place) {
                 if (maze.getBombs().size() < this.currentBombLimit) {
-                    final BombFactory factory = new BombFactoryImpl();
-                    final MazeObject bomb = factory.createBomb(position, this.bombType);
+                    final MazeObject bomb = BombFactory.createFromBombType(this.bombType, position);
                     maze.addMazeObject(bomb);
                     this.lastUpdate = STANDARD_COOLDOWN;
                 }
