@@ -12,7 +12,13 @@ import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Optional;
+import java.util.Random;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Implementation of {@link FlamePropagation}.
@@ -21,13 +27,14 @@ public class FlamePropagationImpl implements FlamePropagation {
     private static final long BLOCK_SIZE = 6;
     private final FlameFactory flameFactory;
     private static final double DROP_CHANCE = 0.2;
+    private final Random random = new Random();
 
     /**
      * Constructs a {@code FlamePropagationImpl} with the specified {@link FlameFactory}.
      *
      * @param flameFactory the {@link FlameFactory} used to create flames
      */
-    public FlamePropagationImpl(FlameFactory flameFactory) {
+    public FlamePropagationImpl(final FlameFactory flameFactory) {
         this.flameFactory = flameFactory;
     }
 
@@ -35,12 +42,12 @@ public class FlamePropagationImpl implements FlamePropagation {
      * {@inheritDoc}
      */
     @Override
-    public Set<Flame> propagate(Position origin, int range, boolean passThrough, Maze maze) {
-        Set<Flame> allFlames = new HashSet<>();
+    public Set<Flame> propagate(final Position origin, final int range, final boolean passThrough, final Maze maze) {
+        final Set<Flame> allFlames = new HashSet<>();
         allFlames.add(flameFactory.createFlame(origin));
         maze.addMazeObject(flameFactory.createFlame(origin));
-        for (Direction direction : Direction.values()) {
-            Position delta = direction.toPosition();
+        for (final Direction direction : Direction.values()) {
+            final Position delta = direction.toPosition();
             if (!(delta.x() != 0 && delta.y() != 0)) {
                 allFlames.addAll(createFlames(origin, direction, range, passThrough, maze));
             }
@@ -58,11 +65,15 @@ public class FlamePropagationImpl implements FlamePropagation {
      * @param maze        the {@link Maze} where the flames are created.
      * @return a set of {@link Flame}s created in the specified {@link Direction} from the specified {@link Position}.
      */
-    private Set<Flame> createFlames(Position origin, Direction direction, int range, boolean passThrough, Maze maze) {
-        Set<Flame> flames = new HashSet<>();
-        Position delta = direction.toPosition();
+    private Set<Flame> createFlames(final Position origin,
+                                    final Direction direction,
+                                    final int range,
+                                    final boolean passThrough,
+                                    final Maze maze) {
+        final Set<Flame> flames = new HashSet<>();
+        final Position delta = direction.toPosition();
         for (int i = 1; i <= range; i++) {
-            Position newPos = new Position(
+            final Position newPos = new Position(
                     BigDecimal.valueOf(origin.x())
                             .add(BigDecimal.valueOf(i)
                                     .multiply(BigDecimal.valueOf(delta.x())
@@ -84,7 +95,7 @@ public class FlamePropagationImpl implements FlamePropagation {
                     break;
                 }
             }
-            Flame flame = flameFactory.createFlame(newPos);
+            final Flame flame = flameFactory.createFlame(newPos);
             flames.add(flame);
             maze.addMazeObject(flame);
         }
@@ -98,7 +109,7 @@ public class FlamePropagationImpl implements FlamePropagation {
      * @param pos  the {@link Position} to check.
      * @return {@code true} if the specified {@link Position} is a wall, {@code false} otherwise.
      */
-    private boolean isWall(Maze maze, Position pos) {
+    private boolean isWall(final Maze maze, final Position pos) {
         return maze.getWalls().stream().anyMatch(wall -> wall.position().equals(pos));
     }
 
@@ -109,7 +120,7 @@ public class FlamePropagationImpl implements FlamePropagation {
      * @param pos  the {@link Position} to check.
      * @return {@code true} if the specified {@link Position} is a box, {@code false} otherwise.
      */
-    private boolean isBox(Maze maze, Position pos) {
+    private boolean isBox(final Maze maze, final Position pos) {
         return maze.getBoxes().stream().anyMatch(box -> box.position().equals(pos));
     }
 
@@ -119,13 +130,12 @@ public class FlamePropagationImpl implements FlamePropagation {
      * @param pos the {@link Position} where the {@link PowerUp} is dropped.
      * @return an {@link Optional} containing the dropped {@link PowerUp} if it was dropped, an empty {@link Optional} otherwise.
      */
-    private Optional<PowerUp> dropRandomPowerUp(Position pos) {
-        final Random random = new Random();
+    private Optional<PowerUp> dropRandomPowerUp(final Position pos) {
         final double chance = random.nextDouble();
-        PowerUpFactory factory = new PowerUpFactoryImpl();
-        List<PowerUp> list = new ArrayList<>();
-        List<PowerUpType> powerUpTypes = Arrays.stream(PowerUpType.values()).toList();
-        for (PowerUpType powerUpType : powerUpTypes) {
+        final PowerUpFactory factory = new PowerUpFactoryImpl();
+        final List<PowerUp> list = new ArrayList<>();
+        final List<PowerUpType> powerUpTypes = Arrays.stream(PowerUpType.values()).toList();
+        for (final PowerUpType powerUpType : powerUpTypes) {
             list.add(factory.createPowerUp(pos, powerUpType));
         }
         if (chance <= DROP_CHANCE) {

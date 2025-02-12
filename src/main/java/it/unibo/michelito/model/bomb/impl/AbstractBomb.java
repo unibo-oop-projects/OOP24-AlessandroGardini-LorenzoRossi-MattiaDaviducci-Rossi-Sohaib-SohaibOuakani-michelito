@@ -26,7 +26,7 @@ public abstract class AbstractBomb implements Bomb {
      *
      * @param position The position of the bomb.
      */
-    protected AbstractBomb(Position position) {
+    protected AbstractBomb(final Position position) {
         this.position = position;
     }
 
@@ -93,8 +93,8 @@ public abstract class AbstractBomb implements Bomb {
      * @param maze The maze where the bomb is.
      */
     private void generateFlame(final Maze maze) {
-        FlamePropagation flamePropagation = new FlamePropagationImpl(new FlameFactoryImpl());
-        Set<Flame> flames = flamePropagation.propagate(
+        final FlamePropagation flamePropagation = new FlamePropagationImpl(new FlameFactoryImpl());
+        final Set<Flame> flames = flamePropagation.propagate(
                 this.position,
                 getRange(),
                 isPassThrough(),

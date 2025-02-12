@@ -13,7 +13,7 @@ public interface BombFactory {
      * @param position The position of the bomb.
      * @return The {@link Bomb}.
      */
-    static Bomb createFromBombType(BombType bombType, Position position) {
+    static Bomb createFromBombType(final BombType bombType, final Position position) {
         BombFactory factory = new BombFactoryImpl();
         return switch (bombType) {
             case STANDARD -> factory.createStandardBomb(position);
