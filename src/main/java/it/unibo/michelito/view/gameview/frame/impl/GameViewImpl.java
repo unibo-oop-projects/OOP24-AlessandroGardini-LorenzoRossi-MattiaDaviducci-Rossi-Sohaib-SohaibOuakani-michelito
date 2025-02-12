@@ -46,8 +46,8 @@ public class GameViewImpl extends JFrame implements GameFrame, GameView {
                 );
 
                 if (response == JOptionPane.YES_OPTION) {
-                    setShowingFalse();
                     GameViewImpl.this.dispose();
+                    setShowingFalse();
                 }
             }
         });

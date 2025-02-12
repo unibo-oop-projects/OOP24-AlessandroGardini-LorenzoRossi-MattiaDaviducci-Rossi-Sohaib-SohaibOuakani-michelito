@@ -23,7 +23,9 @@ import java.util.stream.Collectors;
 public class GameControllerImpl implements GameController, Switcher, GameExceptionHandler {
     private static final int FPS = 60;
     private static final long TIME_PER_TICK = (long) 1_000.0 / FPS;
+
     private final GameParentController gameParentController;
+
     private boolean game;
     private GameManager gameManager;
     private GameView gameView;
@@ -48,6 +50,7 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
 
     @Override
     public void stopGame() {
+        gameView.setViewVisibility(false);
         this.game = false;
     }
 
@@ -84,13 +87,13 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
 
                 gameView.display(gameManager.getObjects(), gameManager.getRemainingLives(), gameManager.getCurrentIndexLevel());
 
-                if (gameManager.isGameOver()) { //TODO: cancel if not done
+                if (gameManager.isGameOver()) {
                     game = false;
-                    //view.gameOver();
+                    switchToHome();
                 }
                 if (gameManager.isGameWon()) {
                     game = false;
-                    //view.gameWon();
+                    switchToHome();
                 }
 
                 previousTime = currentTime;
