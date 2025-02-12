@@ -23,7 +23,7 @@ public final class ObjectsAdapterFactory {
      * @param levelGenerator {@link Function} that provided a number return a Set of {@link GameObject}.
      * @return a new {@link ObjectsAdapter} instance.
      */
-    public static ObjectsAdapter createObjectsAdapter(Function<Integer, Set<GameObject>> levelGenerator) {
+    public static ObjectsAdapter createObjectsAdapter(final Function<Integer, Set<GameObject>> levelGenerator) {
         return new ObjectsAdapterWithCache(levelGenerator);
     }
 }
