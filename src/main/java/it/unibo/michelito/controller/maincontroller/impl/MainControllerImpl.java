@@ -3,9 +3,13 @@ package it.unibo.michelito.controller.maincontroller.impl;
 import it.unibo.michelito.controller.gamecontroller.api.GameController;
 import it.unibo.michelito.controller.gamecontroller.impl.GameControllerImpl;
 import it.unibo.michelito.controller.homecontroller.api.HomeController;
+import it.unibo.michelito.controller.homecontroller.impl.HomeControllerImpl;
 import it.unibo.michelito.controller.maincontroller.api.GameParentController;
 import it.unibo.michelito.controller.maincontroller.api.HomeParentController;
 import it.unibo.michelito.controller.maincontroller.api.MainController;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Implementation of the {@link MainController} interface.
@@ -17,13 +21,14 @@ import it.unibo.michelito.controller.maincontroller.api.MainController;
  * </p>
  */
 public final class MainControllerImpl implements MainController, HomeParentController, GameParentController {
-    private HomeController homeController; // = new HomeControllerImpl(this); can be final
+    private static final Logger LOGGER = Logger.getLogger(MainControllerImpl.class.getName());
+
+    private final HomeController homeController = new HomeControllerImpl(this);
     private final GameController gameController = new GameControllerImpl(this);
 
     @Override
     public void start() {
-        //homeController.showMenu();
-        gameController.startGame();
+        homeController.showMenu();
     }
 
     @Override
@@ -40,6 +45,13 @@ public final class MainControllerImpl implements MainController, HomeParentContr
 
     @Override
     public void quit() {
+        gameController.stopGame();
+        homeController.hideMenu();
         System.exit(0);
+    }
+
+    @Override
+    public void handleException(Exception exception) {
+        LOGGER.log(Level.SEVERE, "An unexpected error occurred", exception);
     }
 }

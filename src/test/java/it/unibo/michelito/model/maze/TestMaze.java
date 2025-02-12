@@ -68,7 +68,7 @@ final class TestMaze {
     void testFilter() {
         assertFalse(this.maze.getAllObjects().isEmpty());
         assertFalse(this.maze.getWalls().isEmpty());
-        assertTrue(this.maze.getBoxes().isEmpty());
+        assertTrue(this.maze.getBombs().isEmpty());
         assertTrue(this.maze.getPowerUp().isEmpty());
     }
 

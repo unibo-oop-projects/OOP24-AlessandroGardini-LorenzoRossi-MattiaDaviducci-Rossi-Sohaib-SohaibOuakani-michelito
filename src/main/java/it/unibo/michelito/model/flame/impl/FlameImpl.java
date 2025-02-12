@@ -9,57 +9,81 @@ import it.unibo.michelito.util.Position;
 import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
 import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+/**
+ * A flame that is created when a bomb explodes.
+ */
 public class FlameImpl implements Flame {
     private final Position position;
     private long timeLeft;
-    private boolean extinguished;
 
-    public FlameImpl(final Position position, final Maze maze) {
+    /**
+     * Constructor for the flame.
+     *
+     * @param position The position of the flame.
+     */
+    public FlameImpl(final Position position) {
         this.position = position;
         this.timeLeft = 1000;
-        this.extinguished = false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Position position() {
         return position;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public HitBox getHitBox() {
         return new HitBoxFactoryImpl().squareHitBox(this.position);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ObjectType getType() {
         return ObjectType.FLAME;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(final long deltaTime, final Maze maze) {
-        timeLeft -= deltaTime;
-        if (!extinguished && timeLeft <= 0) {
-            extinguish(maze);
-        }
+        computeTimeToExtinguish(maze, deltaTime);
         checkAndKillMichelito(maze, getHitBox());
         checkAndKillEnemies(maze, getHitBox());
     }
 
-    @Override
-    public boolean isExtinguished() {
-        return extinguished;
-    }
-
-    private void extinguish(final Maze maze) {
-        extinguished = true;
-        if (isExtinguished()) {
+    /**
+     * Compute the time left for the flame to extinguish.
+     * If the time is up, the flame is removed from the maze.
+     *
+     * @param maze The maze where the flame is located.
+     * @param deltaTime The time passed since the last update.
+     */
+    private void computeTimeToExtinguish(final Maze maze, final long deltaTime) {
+        this.timeLeft -= deltaTime;
+        if (this.timeLeft <= 0) {
             maze.removeMazeObject(this);
         }
     }
 
+    /**
+     * Check if the flame {@link HitBox} collides with {@link Player} {@link HitBox}.
+     * If so, Michelito is killed.
+     *
+     * @param maze The maze where the flame is located.
+     * @param flameHitBox The {@link HitBox} of the flame.
+     */
     private void checkAndKillMichelito(final Maze maze, final HitBox flameHitBox) {
         final Player player = maze.getPlayer();
         if (flameHitBox.collision(player.getHitBox())) {
@@ -67,8 +91,15 @@ public class FlameImpl implements Flame {
         }
     }
 
+    /**
+     * Check if the flame {@link HitBox} collides with {@link Enemy} {@link HitBox}.
+     * If so, the enemy is killed.
+     *
+     * @param maze The maze where the flame is located.
+     * @param flameHitBox The {@link HitBox} of the flame.
+     */
     private void checkAndKillEnemies(final Maze maze, final HitBox flameHitBox) {
-        final List<Enemy> enemiesToRemove = new ArrayList<>();
+        final Set<Enemy> enemiesToRemove = new HashSet<>();
         for (final Enemy enemy : maze.getEnemies()) {
             if (flameHitBox.collision(enemy.getHitBox())) {
                 enemiesToRemove.add(enemy);

@@ -10,4 +10,12 @@ public interface Controller {
      * The actual shutdown process may be handled asynchronously.
      */
     void quit();
+
+    /**
+     * Requests management of a exception.
+     *
+     * @param exception the exception to manage.
+     */
+    void handleException(Exception exception);
 }
+
