@@ -16,16 +16,18 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 /**
  * test for {@link LevelGenerator}.
  */
-public class TestLevelGenerator {
+class TestLevelGenerator {
     private static final  int BLOCK_SIZE = 6;
     private static final int MAZE_WIDE = 19 * BLOCK_SIZE;
     private static final int MAZE_HEIGHT = 14 * BLOCK_SIZE;
 
-    @Test void testLevelGeneratorTestLevel() {
+    @Test
+    void testLevelGeneratorTestLevel() {
         testLevelGeneratorBaseLevel(LevelGenerator.testLevel());
     }
 
-    @Test void testLevelGeneratorLevel1() {
+    @Test
+    void testLevelGeneratorLevel1() {
         final Set<GameObject> baseMaze = new HashSet<>(testLevelGeneratorBaseLevel(LevelGenerator.testLevel()));
         final Set<GameObject> maze1 = new HashSet<>(testLevelGeneratorBaseLevel(1));
         assertNotEquals(baseMaze, maze1);
@@ -33,7 +35,7 @@ public class TestLevelGenerator {
     }
 
     Set<GameObject> testLevelGeneratorBaseLevel(final int level) {
-        LevelGenerator levelGenerator = new LevelGenerator(e -> { });
+        final LevelGenerator levelGenerator = new LevelGenerator(e -> { });
         final Set<GameObject> maze = levelGenerator.apply(level);
         assertFalse(maze.isEmpty());
         assertEquals(1, maze.stream().map(GameObject::objectType).filter(x -> x.equals(ObjectType.PLAYER)).count());
