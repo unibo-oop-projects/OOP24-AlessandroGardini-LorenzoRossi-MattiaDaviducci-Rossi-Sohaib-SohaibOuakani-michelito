@@ -13,8 +13,8 @@ import it.unibo.michelito.controller.playercommand.impl.PlaceCommand;
 import it.unibo.michelito.model.gamemanager.api.GameManager;
 import it.unibo.michelito.model.gamemanager.impl.GameManagerImpl;
 import it.unibo.michelito.util.Direction;
-import it.unibo.michelito.view.gameview.view.api.GameView;
-import it.unibo.michelito.view.gameview.view.impl.GameViewImpl;
+import it.unibo.michelito.view.gameview.frame.api.GameView;
+import it.unibo.michelito.view.gameview.frame.impl.GameViewImpl;
 
 import java.util.Optional;
 import java.util.Set;
@@ -27,7 +27,6 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
     private boolean game;
     private final GameManager gameManager;
     private GameView gameView;
-    private final Loop looper = new Loop();
 
     public GameControllerImpl(GameParentController gameParentController) {
         this.gameParentController = gameParentController;
@@ -37,9 +36,10 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
     @Override
     public void startGame() {
         try {
-            this.gameView = new GameViewImpl(this);
-            Loop looper = new Loop();
+            this.gameView = new GameViewImpl();
             this.game = true;
+            gameView.setViewVisibility(true);
+            Loop looper = new Loop();
             looper.start();
         } catch (Exception e) {
             gameParentController.handleException(e);
@@ -74,7 +74,7 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
     private class Loop extends Thread {
         public void run() {
             long previousTime = System.currentTimeMillis();
-            while (game) {
+            while (game && gameView.isViewShowing()) {
                 long currentTime = System.currentTimeMillis();
                 long deltaTime = currentTime - previousTime;
 
@@ -84,7 +84,7 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
 
                 gameView.display(gameManager.getObjects(), gameManager.getRemainingLives(), gameManager.getCurrentIndexLevel());
 
-                if (gameManager.isGameOver()) {
+                if (gameManager.isGameOver()) { //TODO: cancel if not done
                     game = false;
                     //view.gameOver();
                 }
@@ -92,10 +92,12 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
                     game = false;
                     //view.gameWon();
                 }
+
                 previousTime = currentTime;
 
                 this.waitForNextFrame(currentTime);
             }
+            switchToHome();
         }
 
         private void waitForNextFrame(long currentTime) {

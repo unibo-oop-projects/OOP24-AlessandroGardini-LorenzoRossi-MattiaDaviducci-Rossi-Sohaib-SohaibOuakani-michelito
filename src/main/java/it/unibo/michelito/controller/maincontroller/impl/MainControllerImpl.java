@@ -28,8 +28,7 @@ public final class MainControllerImpl implements MainController, HomeParentContr
 
     @Override
     public void start() {
-        homeController.showMenu(); //TODO: uncomment when a home-controller is at disposal
-        // gameController.startGame();
+        homeController.showMenu();
     }
 
     @Override

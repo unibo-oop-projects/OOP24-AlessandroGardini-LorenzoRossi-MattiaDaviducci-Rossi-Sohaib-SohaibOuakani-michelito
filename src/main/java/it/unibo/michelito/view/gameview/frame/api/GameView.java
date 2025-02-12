@@ -1,11 +1,13 @@
-package it.unibo.michelito.view.gameview.view.api;
+package it.unibo.michelito.view.gameview.frame.api;
 
 import it.unibo.michelito.util.GameObject;
 
 import java.util.Set;
 
 public interface GameView {
-    void show(boolean show);
+    boolean isViewShowing();
+
+    void setViewVisibility(boolean show);
 
     void display(Set<GameObject> gameObjects, int lives, int levelNumber);
 
