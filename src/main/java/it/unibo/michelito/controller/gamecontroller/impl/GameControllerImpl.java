@@ -25,12 +25,11 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
     private static final long TIME_PER_TICK = (long) 1_000.0 / FPS;
     private final GameParentController gameParentController;
     private boolean game;
-    private final GameManager gameManager;
+    private GameManager gameManager;
     private GameView gameView;
 
     public GameControllerImpl(GameParentController gameParentController) {
         this.gameParentController = gameParentController;
-        gameManager = new GameManagerImpl(new LevelGenerator(this));
     }
 
     @Override
@@ -39,6 +38,7 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
             this.gameView = new GameViewImpl();
             this.game = true;
             gameView.setViewVisibility(true);
+            gameManager = new GameManagerImpl(new LevelGenerator(this));
             Loop looper = new Loop();
             looper.start();
         } catch (Exception e) {
