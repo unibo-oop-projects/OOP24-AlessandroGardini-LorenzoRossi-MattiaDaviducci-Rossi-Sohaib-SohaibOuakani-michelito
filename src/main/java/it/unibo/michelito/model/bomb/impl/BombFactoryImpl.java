@@ -17,7 +17,7 @@ public class BombFactoryImpl implements BombFactory {
      * {@inheritDoc}
      */
     @Override
-    public Bomb createStandardBomb(Position position) {
+    public Bomb createStandardBomb(final Position position) {
         return new AbstractBomb(position) {
             @Override
             public int getRange() {
@@ -35,7 +35,7 @@ public class BombFactoryImpl implements BombFactory {
      * {@inheritDoc}
      */
     @Override
-    public Bomb createNukeBomb(Position position) {
+    public Bomb createNukeBomb(final Position position) {
         return new AbstractBomb(position) {
             @Override
             public int getRange() {
@@ -53,7 +53,7 @@ public class BombFactoryImpl implements BombFactory {
      * {@inheritDoc}
      */
     @Override
-    public Bomb createPassThroughBomb(Position position) {
+    public Bomb createPassThroughBomb(final Position position) {
         return new AbstractBomb(position) {
             @Override
             public int getRange() {
@@ -71,7 +71,7 @@ public class BombFactoryImpl implements BombFactory {
      * {@inheritDoc}
      */
     @Override
-    public Bomb createLongBomb(Position position) {
+    public Bomb createLongBomb(final Position position) {
         return new AbstractBomb(position) {
             @Override
             public int getRange() {
