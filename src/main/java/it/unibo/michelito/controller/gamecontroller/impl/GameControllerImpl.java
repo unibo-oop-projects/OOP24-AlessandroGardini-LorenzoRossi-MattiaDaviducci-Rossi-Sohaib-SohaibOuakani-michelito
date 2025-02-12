@@ -3,7 +3,7 @@ package it.unibo.michelito.controller.gamecontroller.impl;
 import it.unibo.michelito.controller.gamecontroller.api.GameController;
 import it.unibo.michelito.controller.gamecontroller.api.GameExceptionHandler;
 import it.unibo.michelito.controller.gamecontroller.api.Switcher;
-import it.unibo.michelito.controller.gamecontroller.directionbuilder.api.DirectionBuilder;
+import it.unibo.michelito.controller.gamecontroller.directionbuilder.api.MoveCommandBuilder;
 import it.unibo.michelito.controller.gamecontroller.directionbuilder.impl.DirectionBuilderImpl;
 import it.unibo.michelito.controller.gamecontroller.keybinds.Keybindes;
 import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
@@ -101,7 +101,7 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
         }
 
         private void processInput(GameManager gameManager, GameView gameView) {
-            DirectionBuilder directionBuilder = new DirectionBuilderImpl();
+            MoveCommandBuilder commandBuilder = new DirectionBuilderImpl();
             Set<Keybindes> pressedKeys = gameView.getPressedKeys().stream()
                     .map(Keybindes::getKeybindes)
                     .filter(Optional::isPresent)
@@ -110,14 +110,14 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
 
             for (Keybindes keybindes : pressedKeys) {
                 switch (keybindes) {
-                    case UP -> directionBuilder.addDirection(Direction.UP);
-                    case DOWN -> directionBuilder.addDirection(Direction.DOWN);
-                    case RIGHT -> directionBuilder.addDirection(Direction.RIGHT);
-                    case LEFT -> directionBuilder.addDirection(Direction.LEFT);
+                    case UP -> commandBuilder.addDirection(Direction.UP);
+                    case DOWN -> commandBuilder.addDirection(Direction.DOWN);
+                    case RIGHT -> commandBuilder.addDirection(Direction.RIGHT);
+                    case LEFT -> commandBuilder.addDirection(Direction.LEFT);
                     case PLACE_BOMB -> gameManager.setCommand(new PlaceCommand());
                 }
             }
-            gameManager.setCommand(new MoveCommand(directionBuilder.build()));
+            gameManager.setCommand(commandBuilder.build());
         }
     }
 }
