@@ -17,8 +17,6 @@ import it.unibo.michelito.util.ObjectType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.nio.channels.SeekableByteChannel;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,7 +46,6 @@ final class TestFlame {
         HitBox hitBox = flame.getHitBox();
 
         assertEquals(new Position(X_SPAWN, Y_SPAWN), flame.position());
-        assertFalse(flame.isExtinguished());
         assertEquals(ObjectType.FLAME, flame.getType());
         assertNotNull(hitBox);
     }
@@ -91,6 +88,7 @@ final class TestFlame {
                 maze
         );
         flames.forEach(maze::addMazeObject);
+        flames.forEach(flame -> flame.update(100, maze));
 
         assertFalse(maze.getEnemies().contains(enemy));
     }

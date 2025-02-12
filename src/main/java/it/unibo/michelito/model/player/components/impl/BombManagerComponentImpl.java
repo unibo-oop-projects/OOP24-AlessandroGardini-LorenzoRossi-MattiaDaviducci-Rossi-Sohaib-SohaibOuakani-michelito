@@ -52,9 +52,9 @@ public class BombManagerComponentImpl implements BombManagerComponent {
     @Override
     public void place(final Maze maze, final Position position) {
         final BombFactory factory = new BombFactoryImpl();
-        final MazeObject bomb = factory.createBomb(position, this.bombType);
+        //final MazeObject bomb = factory.createBomb(position, this.bombType);
         if (this.place) {
-            maze.addMazeObject(bomb);
+            //maze.addMazeObject(bomb);
         }
     }
 
