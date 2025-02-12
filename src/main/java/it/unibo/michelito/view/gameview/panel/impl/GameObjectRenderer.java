@@ -31,7 +31,6 @@ public class GameObjectRenderer {
         final Rectangle2D square = createRectangle(currentDimension, baseDimension, currentX, currentY, BASE_SQUARE_DIMENSION, BASE_SQUARE_DIMENSION);
         final Rectangle2D rectangle = createRectangle(currentDimension, baseDimension, currentX, currentY, BASE_RECTANGLE_WIDTH, BASE_RECTANGLE_HEIGHT);
         final Ellipse2D bombCircle = createEllipse(currentDimension, baseDimension, currentX, currentY, BASE_SQUARE_DIMENSION, BASE_SQUARE_DIMENSION);
-        final Ellipse2D powerUpCircle = createEllipse(currentDimension, baseDimension, currentX, currentY, BASE_SQUARE_DIMENSION, BASE_SQUARE_DIMENSION);
 
         // Draw based on the object type
         switch (gameObject.objectType()) {
