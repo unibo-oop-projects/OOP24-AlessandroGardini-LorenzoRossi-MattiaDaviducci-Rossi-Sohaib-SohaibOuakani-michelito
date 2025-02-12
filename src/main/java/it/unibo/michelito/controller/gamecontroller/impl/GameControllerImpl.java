@@ -74,10 +74,6 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
 
                 gameView.display(gameManager.getObjects(), gameManager.getRemainingLives(), gameManager.getCurrentIndexLevel());
 
-                this.waitForNextFrame(currentTime);
-
-                previousTime = currentTime;
-
                 if (gameManager.isGameOver()) {
                     game = false;
                     //view.gameOver();
@@ -86,6 +82,9 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
                     game = false;
                     //view.gameWon();
                 }
+                previousTime = currentTime;
+
+                this.waitForNextFrame(currentTime);
             }
         }
 

@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  * Implementation of a {@link it.unibo.michelito.model.powerups.api.PowerUp} that increases {@link ModifiablePlayer} speed.
  */
 class SpeedPowerUp extends AbstractPowerUp {
-    private static final double SPEED_UPGRADE = 0.1;
+    private static final double SPEED_UPGRADE = 0.01;
 
     /**
      * Constructs a {@code SpeedPowerUp} at the specified {@link Position}.
