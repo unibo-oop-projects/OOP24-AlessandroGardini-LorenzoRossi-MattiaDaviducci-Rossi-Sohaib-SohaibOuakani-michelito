@@ -17,7 +17,7 @@ import java.util.*;
 public class FlamePropagationImpl implements FlamePropagation {
     private static final long BLOCK_SIZE = 6;
     private final FlameFactory flameFactory;
-    private static final double DROP_CHANCE = 0.1;
+    private static final double DROP_CHANCE = 1;
 
     public FlamePropagationImpl(FlameFactory flameFactory) {
         this.flameFactory = flameFactory;

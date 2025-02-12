@@ -47,7 +47,10 @@ final class TestPowerUp {
         final int expectedBombs = 2;
         final PowerUp powerUp = this.factory.createPowerUp(this.spawn, PowerUpType.BOMB_LIMIT_POWERUP);
         final PlayerImpl player = new PlayerImpl(this.maze.getPlayer().position());
+
+        assertEquals(1, player.getBombLimit());
         powerUp.applyEffect(player);
+        assertEquals(2, player.getBombLimit());
 
         player.notifyToPlace();
         player.update(TICK, this.maze);
