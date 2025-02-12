@@ -15,15 +15,18 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-final class TestDirectionBuilder {
+final class TestMoveCommandBuilder {
+    public static final double PLAYER_SPEED = 0.01;
     private MoveCommandBuilder directionBuilder;
     private static final  double X_SPAWN = 6;
     private static final double Y_SPAWN = 6;
     private static final long TICK = 1;
     Player player = new PlayerImpl(new Position(X_SPAWN,Y_SPAWN));
-    Maze maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
+    private Maze maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
 
     @BeforeEach
     void setUp() {
@@ -40,13 +43,23 @@ final class TestDirectionBuilder {
         this.directionBuilder.addDirection(Direction.UP).addDirection(Direction.RIGHT);
         directionBuilder.build().execute(player);
         player.update(TICK, maze);
-        assertEquals(new Position(BigDecimal.valueOf(X_SPAWN ).add(BigDecimal.valueOf(Math.sqrt(0.5)).multiply(BigDecimal.valueOf(0.01))).doubleValue(),
-                BigDecimal.valueOf(Y_SPAWN ).subtract(BigDecimal.valueOf(Math.sqrt(0.5)).multiply(BigDecimal.valueOf(0.01))).doubleValue()), player.position());
+        assertEquals(new Position(BigDecimal.valueOf(X_SPAWN )
+                .add(BigDecimal.valueOf(Math.sqrt(0.5)).multiply(BigDecimal.valueOf(PLAYER_SPEED)))
+                .doubleValue(),
+                BigDecimal.valueOf(Y_SPAWN).
+                        subtract(BigDecimal.valueOf(Math.sqrt(0.5)).multiply(BigDecimal
+                                .valueOf(0.01))).doubleValue()), player.position());
 
         this.directionBuilder = new DirectionBuilderImpl();
-        assertThrows(IllegalArgumentException.class, () -> this.directionBuilder.addDirection(Direction.RIGHT).addDirection(Direction.RIGHT));
+        assertThrows(IllegalArgumentException.class, () -> this.directionBuilder
+                .addDirection(Direction.RIGHT)
+                .addDirection(Direction.RIGHT)
+        );
 
         this.directionBuilder = new DirectionBuilderImpl();
-        assertThrows(IllegalArgumentException.class, () -> this.directionBuilder.addDirection(Direction.LEFT).addDirection(Direction.LEFT));
+        assertThrows(IllegalArgumentException.class, () -> this.directionBuilder
+                .addDirection(Direction.LEFT)
+                .addDirection(Direction.LEFT)
+        );
     }
 }

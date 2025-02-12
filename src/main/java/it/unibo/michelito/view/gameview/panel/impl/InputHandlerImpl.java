@@ -15,16 +15,16 @@ public class InputHandlerImpl implements InputHandler {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(final KeyEvent e) {
     }
 
     @Override
-    public synchronized void keyPressed(KeyEvent e) {
+    public synchronized void keyPressed(final KeyEvent e) {
         this.keysPressed.add(e.getKeyCode());
     }
 
     @Override
-    public synchronized void keyReleased(KeyEvent e) {
+    public synchronized void keyReleased(final KeyEvent e) {
         this.keysPressed.remove(e.getKeyCode());
     }
 }

@@ -22,7 +22,7 @@ public enum KeyBinds {
     }
 
     public static Optional<KeyBinds> getKeyBinds(final int keyCode) {
-        for (final KeyBinds keyBinds : KeyBinds.values()) {
+        for (final KeyBinds keyBinds : values()) {
             if(keyBinds.getKeyCode() == keyCode) {
                 return Optional.of(keyBinds);
             }

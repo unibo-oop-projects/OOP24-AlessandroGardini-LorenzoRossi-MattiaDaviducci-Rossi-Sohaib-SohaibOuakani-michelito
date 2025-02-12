@@ -2,7 +2,6 @@ package it.unibo.michelito.model.player.components.impl;
 
 import it.unibo.michelito.model.bomb.api.BombFactory;
 import it.unibo.michelito.model.bomb.api.BombType;
-import it.unibo.michelito.model.bomb.impl.BombFactoryImpl;
 import it.unibo.michelito.model.player.components.api.BombManagerComponent;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.modelutil.MazeObject;
@@ -16,7 +15,7 @@ import it.unibo.michelito.model.bomb.api.Bomb;
 public class BombManagerComponentImpl implements BombManagerComponent {
     private static final int STANDARD_BOMB_LIMIT = 1;
     private static final long STANDARD_COOLDOWN = 500;
-    private long lastUpdate = 0;
+    private long lastUpdate;
     private int currentBombLimit;
     private boolean place;
     private BombType bombType;
@@ -53,14 +52,10 @@ public class BombManagerComponentImpl implements BombManagerComponent {
      */
     @Override
     public void place(final Maze maze, final Position position, final long deltaTime) {
-        if (this.lastUpdate <= 0) {
-            if (this.place) {
-                if (maze.getBombs().size() < this.currentBombLimit) {
-                    final MazeObject bomb = BombFactory.createFromBombType(this.bombType, position);
-                    maze.addMazeObject(bomb);
-                    this.lastUpdate = STANDARD_COOLDOWN;
-                }
-            }
+        if (this.lastUpdate <= 0 && this.place && maze.getBombs().size() < this.currentBombLimit) {
+            final MazeObject bomb = BombFactory.createFromBombType(this.bombType, position);
+            maze.addMazeObject(bomb);
+            this.lastUpdate = STANDARD_COOLDOWN;
         }
         this.place = false;
         this.lastUpdate = this.lastUpdate - deltaTime;
