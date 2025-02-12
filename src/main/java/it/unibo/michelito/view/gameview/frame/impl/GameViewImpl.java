@@ -46,7 +46,7 @@ public class GameViewImpl extends JFrame implements GameFrame, GameView {
                 );
 
                 if (response == JOptionPane.YES_OPTION) {
-                    setShowing(false);
+                    setShowingFalse();
                     GameViewImpl.this.dispose();
                 }
             }
@@ -94,8 +94,8 @@ public class GameViewImpl extends JFrame implements GameFrame, GameView {
         return this.showing;
     }
 
-    private synchronized void setShowing(boolean show) {
-        this.showing = show;
+    private synchronized void setShowingFalse() {
+        this.showing = false;
     }
 
     @Override
