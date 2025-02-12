@@ -45,8 +45,6 @@ public final class MainControllerImpl implements MainController, HomeParentContr
 
     @Override
     public void quit() {
-        gameController.stopGame();
-        homeController.hideMenu();
         System.exit(0);
     }
 

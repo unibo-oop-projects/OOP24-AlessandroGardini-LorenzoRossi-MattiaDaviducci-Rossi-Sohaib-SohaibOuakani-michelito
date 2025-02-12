@@ -26,7 +26,7 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
     /**
      * @param exceptionHandler a handler that take possible exception so he can manage it.
      */
-    public LevelGenerator(GameExceptionHandler exceptionHandler) {
+    public LevelGenerator(final GameExceptionHandler exceptionHandler) {
         this.gameExceptionHandler = exceptionHandler;
     }
 
@@ -36,7 +36,7 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
      * @return a set of {@link GameObject} that represent every object in the current level maze.
      */
     @Override
-    public Set<GameObject> apply(Integer integer) {
+    public Set<GameObject> apply(final Integer integer) {
         return generate(integer);
     }
 
@@ -45,7 +45,12 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
          final String file = "src/main/resources/level/level" + levelNumber + ".txt";
          maze.addAll(baseMaze());
          if (levelNumber != TEST_MAZE_CODE) {
-             maze.addAll(mazeFromFile(file));
+             final Set<GameObject> fileMaze = new HashSet<>(mazeFromFile(file));
+             for (final GameObject gameObject : fileMaze) {
+                 if (!overlap(maze, gameObject)) {
+                     maze.add(gameObject);
+                 }
+             }
          } else {
              maze.add(new GameObject(ObjectType.PLAYER, new Position(BLOCK_EDGE, BLOCK_EDGE)));
          }
@@ -109,7 +114,9 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
                     default -> throw new IOException("wrong object type");
                 };
                 if (cellPositions().contains(readObject.position())) {
-                    maze.add(readObject);
+                    if (!overlap(maze, readObject)) {
+                        maze.add(readObject);
+                    }
                 }
             }
         } catch (IOException e) {
@@ -126,5 +133,16 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
             }
         }
         return positions;
+    }
+
+    private boolean overlap(final Set<GameObject> maze, final GameObject object) {
+        if (object.objectType().equals(ObjectType.PLAYER)
+                || object.objectType().equals(ObjectType.ENEMY)
+                || object.objectType().equals(ObjectType.BOX)
+                || object.objectType().equals(ObjectType.DOOR)) {
+            return maze.stream().filter(x -> x.objectType().equals(ObjectType.WALL))
+                    .map(GameObject::position).anyMatch(x -> x.equals(object.position()));
+        }
+        return false;
     }
 }
