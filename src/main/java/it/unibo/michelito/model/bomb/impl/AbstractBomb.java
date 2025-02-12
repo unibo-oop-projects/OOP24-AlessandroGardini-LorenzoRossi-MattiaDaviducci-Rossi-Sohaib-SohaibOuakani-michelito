@@ -1,36 +1,42 @@
 package it.unibo.michelito.model.bomb.impl;
 
 import it.unibo.michelito.model.bomb.api.Bomb;
-import it.unibo.michelito.model.bomb.api.BombStaticUtil;
-import it.unibo.michelito.model.bomb.api.BombType;
 import it.unibo.michelito.model.flame.api.Flame;
-import it.unibo.michelito.model.flame.impl.FlameFactoryImpl;
 import it.unibo.michelito.model.flame.api.FlamePropagation;
+import it.unibo.michelito.model.flame.impl.FlameFactoryImpl;
 import it.unibo.michelito.model.flame.impl.FlamePropagationImpl;
 import it.unibo.michelito.model.maze.api.Maze;
-import it.unibo.michelito.util.Position;
-import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
 import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
+import it.unibo.michelito.util.ObjectType;
+import it.unibo.michelito.util.Position;
 
-import java.util.List;
+import java.util.Set;
 
-public class BombImpl implements Bomb {
+/**
+ * Abstract class for bombs.
+ */
+public abstract class AbstractBomb implements Bomb {
     private final Position position;
-    private final BombType bombType;
-    private boolean exploded;
-    long fuseTime = 3000;
+    private static final long FUSE_TIME = 3000;
+    private long remainingTime = FUSE_TIME;
 
-    public BombImpl(final Position position, final BombType bombType) {
+    /**
+     * Constructor for the bomb.
+     *
+     * @param position The position of the bomb.
+     */
+    protected AbstractBomb(Position position) {
         this.position = position;
-        this.bombType = bombType;
-        this.exploded = false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(final long deltaTime, final Maze maze) {
-        this.fuseTime -= deltaTime;
-        if (!exploded && this.fuseTime <= 0) {
+        remainingTime -= deltaTime;
+        if (remainingTime <= 0) {
             explode(maze);
         }
     }
@@ -51,33 +57,34 @@ public class BombImpl implements Bomb {
     }
 
     @Override
-    public boolean isExploded() {
-        return this.exploded;
-    }
+    public abstract int getRange();
 
     @Override
-    public BombType getBombType() {
-        return bombType;
-    }
+    public abstract boolean isPassThrough();
 
+    /**
+     * Explodes the bomb.
+     *
+     * @param maze The maze where the bomb is.
+     */
     private void explode(final Maze maze) {
-        this.exploded = true;
-        if (isExploded()) {
-            maze.removeMazeObject(this);
-        }
+        maze.removeMazeObject(this);
         generateFlame(maze);
     }
 
+    /**
+     * Generates the flame after the bomb explodes.
+     *
+     * @param maze The maze where the bomb is.
+     */
     private void generateFlame(final Maze maze) {
         FlamePropagation flamePropagation = new FlamePropagationImpl(new FlameFactoryImpl());
-
-        List<Flame> flames = flamePropagation.propagate(
+        Set<Flame> flames = flamePropagation.propagate(
                 this.position,
-                BombStaticUtil.getFlameRange(bombType),
-                BombStaticUtil.isFlamePassThrough(bombType),
+                getRange(),
+                isPassThrough(),
                 maze
         );
-
         flames.forEach(maze::addMazeObject);
     }
 }

@@ -9,18 +9,19 @@ import it.unibo.michelito.util.Position;
 import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
 import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+/**
+ * A flame that is created when a bomb explodes.
+ */
 public class FlameImpl implements Flame {
     private final Position position;
     private long timeLeft;
-    private boolean extinguished;
 
-    public FlameImpl(final Position position, final Maze maze) {
+    public FlameImpl(final Position position) {
         this.position = position;
         this.timeLeft = 1000;
-        this.extinguished = false;
     }
 
     @Override
@@ -40,22 +41,14 @@ public class FlameImpl implements Flame {
 
     @Override
     public void update(final long deltaTime, final Maze maze) {
-        timeLeft -= deltaTime;
-        if (!extinguished && timeLeft <= 0) {
-            extinguish(maze);
-        }
+        computeTimeToExtinguish(maze, deltaTime);
         checkAndKillMichelito(maze, getHitBox());
         checkAndKillEnemies(maze, getHitBox());
     }
 
-    @Override
-    public boolean isExtinguished() {
-        return extinguished;
-    }
-
-    private void extinguish(final Maze maze) {
-        extinguished = true;
-        if (isExtinguished()) {
+    private void computeTimeToExtinguish(final Maze maze, final long deltaTime) {
+        this.timeLeft -= deltaTime;
+        if (this.timeLeft <= 0) {
             maze.removeMazeObject(this);
         }
     }
@@ -68,7 +61,7 @@ public class FlameImpl implements Flame {
     }
 
     private void checkAndKillEnemies(final Maze maze, final HitBox flameHitBox) {
-        final List<Enemy> enemiesToRemove = new ArrayList<>();
+        final Set<Enemy> enemiesToRemove = new HashSet<>();
         for (final Enemy enemy : maze.getEnemies()) {
             if (flameHitBox.collision(enemy.getHitBox())) {
                 enemiesToRemove.add(enemy);
