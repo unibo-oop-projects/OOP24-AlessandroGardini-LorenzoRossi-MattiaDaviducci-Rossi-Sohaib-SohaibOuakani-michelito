@@ -21,5 +21,4 @@ public interface Bomb extends Temporary, Updatable {
      * @return whether the bomb explosion can pass through boxes.
      */
     boolean isPassThrough();
-
 }

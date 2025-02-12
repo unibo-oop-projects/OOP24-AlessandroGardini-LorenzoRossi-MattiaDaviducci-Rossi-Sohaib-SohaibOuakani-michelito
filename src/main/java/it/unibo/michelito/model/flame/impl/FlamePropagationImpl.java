@@ -20,7 +20,7 @@ import java.util.*;
 public class FlamePropagationImpl implements FlamePropagation {
     private static final long BLOCK_SIZE = 6;
     private final FlameFactory flameFactory;
-    private static final double DROP_CHANCE = 1;
+    private static final double DROP_CHANCE = 0.2;
 
     /**
      * Constructs a {@code FlamePropagationImpl} with the specified {@link FlameFactory}.
@@ -51,12 +51,12 @@ public class FlamePropagationImpl implements FlamePropagation {
     /**
      * Creates a set of {@link Flame}s in the specified {@link Direction} from the specified {@link Position}.
      *
-     * @param origin      the {@link Position} where the flames start
-     * @param direction   the {@link Direction} in which the flames propagate
-     * @param range       the range of the flames
-     * @param passThrough {@code true} if the flames pass through boxes, {@code false} otherwise
-     * @param maze        the {@link Maze} where the flames are created
-     * @return a set of {@link Flame}s created in the specified {@link Direction} from the specified {@link Position}
+     * @param origin      the {@link Position} where the flames start.
+     * @param direction   the {@link Direction} in which the flames propagate.
+     * @param range       the range of the flames.
+     * @param passThrough {@code true} if the flames pass through boxes, {@code false} otherwise.
+     * @param maze        the {@link Maze} where the flames are created.
+     * @return a set of {@link Flame}s created in the specified {@link Direction} from the specified {@link Position}.
      */
     private Set<Flame> createFlames(Position origin, Direction direction, int range, boolean passThrough, Maze maze) {
         Set<Flame> flames = new HashSet<>();
@@ -94,9 +94,9 @@ public class FlamePropagationImpl implements FlamePropagation {
     /**
      * Checks if the specified {@link Position} is a wall.
      *
-     * @param maze the {@link Maze} to check
-     * @param pos  the {@link Position} to check
-     * @return {@code true} if the specified {@link Position} is a wall, {@code false} otherwise
+     * @param maze the {@link Maze} to check.
+     * @param pos  the {@link Position} to check.
+     * @return {@code true} if the specified {@link Position} is a wall, {@code false} otherwise.
      */
     private boolean isWall(Maze maze, Position pos) {
         return maze.getWalls().stream().anyMatch(wall -> wall.position().equals(pos));
@@ -105,9 +105,9 @@ public class FlamePropagationImpl implements FlamePropagation {
     /**
      * Checks if the specified {@link Position} is a box.
      *
-     * @param maze the {@link Maze} to check
-     * @param pos  the {@link Position} to check
-     * @return {@code true} if the specified {@link Position} is a box, {@code false} otherwise
+     * @param maze the {@link Maze} to check.
+     * @param pos  the {@link Position} to check.
+     * @return {@code true} if the specified {@link Position} is a box, {@code false} otherwise.
      */
     private boolean isBox(Maze maze, Position pos) {
         return maze.getBoxes().stream().anyMatch(box -> box.position().equals(pos));
@@ -116,8 +116,8 @@ public class FlamePropagationImpl implements FlamePropagation {
     /**
      * Drops a random {@link PowerUp} at the specified {@link Position}.
      *
-     * @param pos the {@link Position} where the {@link PowerUp} is dropped
-     * @return an {@link Optional} containing the dropped {@link PowerUp} if it was dropped, an empty {@link Optional} otherwise
+     * @param pos the {@link Position} where the {@link PowerUp} is dropped.
+     * @return an {@link Optional} containing the dropped {@link PowerUp} if it was dropped, an empty {@link Optional} otherwise.
      */
     private Optional<PowerUp> dropRandomPowerUp(Position pos) {
         final Random random = new Random();
