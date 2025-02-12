@@ -49,7 +49,7 @@ public final class MainControllerImpl implements MainController, HomeParentContr
     }
 
     @Override
-    public void handleException(Exception exception) {
+    public void handleException(final Exception exception) {
         LOGGER.log(Level.SEVERE, "An unexpected error occurred", exception);
     }
 }

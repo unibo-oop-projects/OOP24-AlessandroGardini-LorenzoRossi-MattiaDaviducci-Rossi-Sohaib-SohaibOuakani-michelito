@@ -17,7 +17,7 @@ public class HomeControllerImpl implements HomeController, ViewControllerListene
      *
      * @param homeParentController the parent controller.
      */
-    public HomeControllerImpl(HomeParentController homeParentController) {
+    public HomeControllerImpl(final HomeParentController homeParentController) {
         this.homeParentController = homeParentController;
     }
 
@@ -57,7 +57,7 @@ public class HomeControllerImpl implements HomeController, ViewControllerListene
      * {@inheritDoc}
      */
     @Override
-    public void handleException(Exception exception) {
+    public void handleException(final Exception exception) {
         homeParentController.handleException(exception);
     }
 }
