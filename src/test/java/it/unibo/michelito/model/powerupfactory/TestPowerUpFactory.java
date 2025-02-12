@@ -8,12 +8,11 @@ import it.unibo.michelito.util.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 
 final class TestPowerUpFactory {
     private PowerUpFactory factory;
-    private static final int NUMBER_OF_TRIES = 10_000;
     private final Position spawn = new Position(0, 0);
     @BeforeEach
     void setUp() {

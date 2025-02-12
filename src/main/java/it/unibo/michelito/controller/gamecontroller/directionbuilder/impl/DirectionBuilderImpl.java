@@ -8,10 +8,10 @@ import it.unibo.michelito.util.Position;
 import java.util.Arrays;
 
 public class DirectionBuilderImpl implements MoveCommandBuilder {
-    private double x = 0;
-    private double y = 0;
+    private double x;
+    private double y;
     @Override
-    public MoveCommandBuilder addDirection(Direction direction) {
+    public MoveCommandBuilder addDirection(final Direction direction) {
         if (direction.isDiagonal()) {
             throw new IllegalArgumentException("Direction cannot be diagonal");
         } else {
@@ -26,7 +26,7 @@ public class DirectionBuilderImpl implements MoveCommandBuilder {
 
     @Override
     public MoveCommand build() {
-        double magnitude = Math.sqrt(x * x + y * y);
+        final double magnitude = Math.sqrt(x * x + y * y);
         if(magnitude == 0) {
             return new MoveCommand(Direction.NONE);
         }
@@ -34,8 +34,8 @@ public class DirectionBuilderImpl implements MoveCommandBuilder {
             x = x * Math.sqrt(Math.abs(0.5));
             y = y * Math.sqrt(Math.abs(0.5));
         }
-        Position position = new Position(this.x, this.y);
-        var direction = Arrays.stream(Direction.values())
+        final Position position = new Position(this.x, this.y);
+        final var direction = Arrays.stream(Direction.values())
                 .filter(p -> p.toPosition().equals(position))
                 .findAny();
         if (direction.isPresent()) {

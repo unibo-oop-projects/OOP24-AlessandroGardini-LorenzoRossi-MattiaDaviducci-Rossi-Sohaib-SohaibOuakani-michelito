@@ -29,7 +29,7 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
     private GameManager gameManager;
     private GameView gameView;
 
-    public GameControllerImpl(GameParentController gameParentController) {
+    public GameControllerImpl(final GameParentController gameParentController) {
         this.gameParentController = gameParentController;
         gameManager = new GameManagerImpl(new LevelGenerator(this));
         this.gameView = new GameViewImpl();
@@ -42,9 +42,9 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
             this.game = true;
             gameView.setViewVisibility(true);
             gameManager = new GameManagerImpl(new LevelGenerator(this));
-            Loop looper = new Loop();
+            final Loop looper = new Loop();
             looper.start();
-        } catch (Exception e) {
+        } catch (IllegalThreadStateException e) {
             gameParentController.handleException(e);
         }
     }
@@ -61,7 +61,7 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
     }
 
     @Override
-    public void handleException(Exception exception) {
+    public void handleException(final Exception exception) {
         gameParentController.handleException(exception);
     }
 
@@ -71,16 +71,17 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
     }
 
     @Override
-    public void gameControllerHandleException(Exception exception) {
+    public void gameControllerHandleException(final Exception exception) {
        handleException(exception);
     }
 
-    private class Loop extends Thread {
+    final private class Loop extends Thread {
+        @Override
         public void run() {
             long previousTime = System.currentTimeMillis();
             while (game && gameView.isViewShowing()) {
-                long currentTime = System.currentTimeMillis();
-                long deltaTime = currentTime - previousTime;
+                final long currentTime = System.currentTimeMillis();
+                final long deltaTime = currentTime - previousTime;
 
                 this.processInput(gameManager, gameView);
 
@@ -104,28 +105,28 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
             switchToHome();
         }
 
-        private void waitForNextFrame(long currentTime) {
-            long dt = System.currentTimeMillis() - currentTime;
+        private void waitForNextFrame(final long currentTime) {
+            final long dt = System.currentTimeMillis() - currentTime;
             if (dt < TIME_PER_TICK) {
                 try {
-                    Thread.sleep(TIME_PER_TICK - dt);
-                } catch (Exception ex){
-                    Thread.currentThread().interrupt();
+                    sleep(TIME_PER_TICK - dt);
+                } catch (InterruptedException ex){
+                    currentThread().interrupt();
                     gameParentController.handleException(ex);
                 }
             }
         }
 
-        private void processInput(GameManager gameManager, GameView gameView) {
-            MoveCommandBuilder commandBuilder = new DirectionBuilderImpl();
-            Set<KeyBinds> pressedKeys = gameView.getPressedKeys().stream()
+        private void processInput(final GameManager gameManager, final GameView gameView) {
+            final MoveCommandBuilder commandBuilder = new DirectionBuilderImpl();
+            final Set<KeyBinds> pressedKeys = gameView.getPressedKeys().stream()
                     .map(KeyBinds::getKeyBinds)
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .collect(Collectors.toSet());
 
-            for (KeyBinds keybindes : pressedKeys) {
-                switch (keybindes) {
+            for (final KeyBinds keyBinds : pressedKeys) {
+                switch (keyBinds) {
                     case UP -> commandBuilder.addDirection(Direction.UP);
                     case DOWN -> commandBuilder.addDirection(Direction.DOWN);
                     case RIGHT -> commandBuilder.addDirection(Direction.RIGHT);
