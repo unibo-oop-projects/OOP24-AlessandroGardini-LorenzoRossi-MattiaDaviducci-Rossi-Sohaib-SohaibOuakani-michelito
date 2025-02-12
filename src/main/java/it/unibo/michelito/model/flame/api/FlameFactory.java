@@ -1,9 +1,16 @@
 package it.unibo.michelito.model.flame.api;
 
-import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.util.Position;
 
+/**
+ * Factory for creating flames.
+ */
 public interface FlameFactory {
-
-    Flame createFlame(Position position, Maze maze);
+    /**
+     * Create a new flame.
+     *
+     * @param position The position of the flame.
+     * @return The new {@link Flame}.
+     */
+    Flame createFlame(Position position);
 }
