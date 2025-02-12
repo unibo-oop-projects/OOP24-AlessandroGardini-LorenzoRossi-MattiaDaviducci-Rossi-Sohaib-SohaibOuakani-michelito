@@ -5,7 +5,7 @@ import it.unibo.michelito.controller.gamecontroller.api.GameExceptionHandler;
 import it.unibo.michelito.controller.gamecontroller.api.Switcher;
 import it.unibo.michelito.controller.gamecontroller.directionbuilder.api.DirectionBuilder;
 import it.unibo.michelito.controller.gamecontroller.directionbuilder.impl.DirectionBuilderImpl;
-import it.unibo.michelito.controller.gamecontroller.keybinds.Keybindes;
+import it.unibo.michelito.controller.gamecontroller.keybinds.KeyBinds;
 import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.controller.maincontroller.api.GameParentController;
 import it.unibo.michelito.controller.playercommand.impl.MoveCommand;
@@ -117,13 +117,13 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
 
         private void processInput(GameManager gameManager, GameView gameView) {
             DirectionBuilder directionBuilder = new DirectionBuilderImpl();
-            Set<Keybindes> pressedKeys = gameView.getPressedKeys().stream()
-                    .map(Keybindes::getKeybindes)
+            Set<KeyBinds> pressedKeys = gameView.getPressedKeys().stream()
+                    .map(KeyBinds::getKeyBinds)
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .collect(Collectors.toSet());
 
-            for (Keybindes keybindes : pressedKeys) {
+            for (KeyBinds keybindes : pressedKeys) {
                 switch (keybindes) {
                     case UP -> directionBuilder.addDirection(Direction.UP);
                     case DOWN -> directionBuilder.addDirection(Direction.DOWN);
