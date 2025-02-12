@@ -31,6 +31,8 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
 
     public GameControllerImpl(GameParentController gameParentController) {
         this.gameParentController = gameParentController;
+        gameManager = new GameManagerImpl(new LevelGenerator(this));
+        this.gameView = new GameViewImpl();
     }
 
     @Override
