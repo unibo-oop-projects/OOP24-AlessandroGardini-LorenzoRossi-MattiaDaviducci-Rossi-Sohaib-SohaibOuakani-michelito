@@ -27,6 +27,7 @@ public class FlamePropagationImpl implements FlamePropagation {
     private static final long BLOCK_SIZE = 6;
     private final FlameFactory flameFactory;
     private static final double DROP_CHANCE = 0.2;
+    private final Random random = new Random();
 
     /**
      * Constructs a {@code FlamePropagationImpl} with the specified {@link FlameFactory}.
@@ -64,7 +65,11 @@ public class FlamePropagationImpl implements FlamePropagation {
      * @param maze        the {@link Maze} where the flames are created.
      * @return a set of {@link Flame}s created in the specified {@link Direction} from the specified {@link Position}.
      */
-    private Set<Flame> createFlames(final Position origin, final Direction direction, final int range, final boolean passThrough, final Maze maze) {
+    private Set<Flame> createFlames(final Position origin,
+                                    final Direction direction,
+                                    final int range,
+                                    final boolean passThrough,
+                                    final Maze maze) {
         final Set<Flame> flames = new HashSet<>();
         final Position delta = direction.toPosition();
         for (int i = 1; i <= range; i++) {
@@ -126,7 +131,6 @@ public class FlamePropagationImpl implements FlamePropagation {
      * @return an {@link Optional} containing the dropped {@link PowerUp} if it was dropped, an empty {@link Optional} otherwise.
      */
     private Optional<PowerUp> dropRandomPowerUp(final Position pos) {
-        final Random random = new Random();
         final double chance = random.nextDouble();
         final PowerUpFactory factory = new PowerUpFactoryImpl();
         final List<PowerUp> list = new ArrayList<>();

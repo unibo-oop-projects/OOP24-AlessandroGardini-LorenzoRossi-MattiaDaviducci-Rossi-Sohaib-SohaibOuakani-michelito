@@ -12,8 +12,13 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Test class for {@link Bomb}.
+ */
 public class TestBomb {
     private Maze maze;
     private static final double X_SPAWN = 6;
@@ -22,23 +27,32 @@ public class TestBomb {
     private static final long TOTAL_FUSE_TIME = 3000; // Tempo di esplosione della bomba
     private BombFactoryImpl bombFactory;
 
+    /**
+     * Set up the test environment.
+     */
     @BeforeEach
     void setUp() {
         this.maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
         this.bombFactory = new BombFactoryImpl();
     }
 
+    /**
+     * Test the creation of a bomb.
+     */
     @Test
     void testBombCreation() {
-        Bomb bomb = bombFactory.createStandardBomb(new Position(X_SPAWN, Y_SPAWN));
+        final Bomb bomb = bombFactory.createStandardBomb(new Position(X_SPAWN, Y_SPAWN));
         assertEquals(new Position(X_SPAWN, Y_SPAWN), bomb.position());
         assertEquals(1, bomb.getRange()); // Standard bomb range
         assertFalse(bomb.isPassThrough());
     }
 
+    /**
+     * Test the explosion of a bomb.
+     */
     @Test
     void testBombExplosionAfterFuseTime() {
-        Bomb bomb = bombFactory.createStandardBomb(new Position(X_SPAWN, Y_SPAWN));
+        final Bomb bomb = bombFactory.createStandardBomb(new Position(X_SPAWN, Y_SPAWN));
         maze.addMazeObject(bomb);
         for (long time = 0; time < TOTAL_FUSE_TIME; time += TICK) {
             bomb.update(TICK, maze);
@@ -47,14 +61,17 @@ public class TestBomb {
         assertFalse(maze.getAllObjects().contains(bomb));
     }
 
+    /**
+     * Test the generation of flames after the explosion.
+     */
     @Test
     void testFlamesGeneratedAfterExplosion() {
-        Bomb bomb = bombFactory.createStandardBomb(new Position(X_SPAWN, Y_SPAWN));
+        final Bomb bomb = bombFactory.createStandardBomb(new Position(X_SPAWN, Y_SPAWN));
         maze.addMazeObject(bomb);
         for (long time = 0; time < TOTAL_FUSE_TIME; time += TICK) {
             bomb.update(TICK, maze);
         }
-        Set<Flame> flames = maze.getAllObjects().stream()
+        final Set<Flame> flames = maze.getAllObjects().stream()
                 .filter(obj -> obj instanceof Flame)
                 .map(obj -> (Flame) obj)
                 .collect(java.util.stream.Collectors.toSet());

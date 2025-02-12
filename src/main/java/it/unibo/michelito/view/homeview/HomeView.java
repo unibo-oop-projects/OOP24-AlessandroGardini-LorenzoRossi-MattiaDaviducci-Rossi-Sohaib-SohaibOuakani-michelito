@@ -2,18 +2,48 @@ package it.unibo.michelito.view.homeview;
 
 import it.unibo.michelito.controller.homecontroller.api.ViewControllerListener;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.io.Serial;
 
 /**
  * Represents the view of the home menu.
  */
 public class HomeView extends JFrame {
+    @Serial
+    private static final long serialVersionUID = 1L;
+    /**
+     * Scaling factor for the window size.
+     */
     public static final double SCALING = 2.5;
+    /**
+     * Scaling factor for the button size.
+     */
     public static final int BUTTON_X_SCALING = 6;
+    /**
+     * Scaling factor for the button size.
+     */
     public static final int BUTTON_Y_SCALING = 16;
+    /**
+     * Font size for the title.
+     */
+    public static final int FONT_SIZE = 33;
+    /**
+     * Height of the rigid area.
+     */
+    public static final int RIGID_AREA_HEIGHT = 20;
 
     /**
      * Creates a new instance of {@link HomeView}.
@@ -21,6 +51,16 @@ public class HomeView extends JFrame {
      * @param controller the controller to be used.
      */
     public HomeView(final ViewControllerListener controller) {
+        super();
+        initializeUI(controller);
+    }
+
+    /**
+     * Initializes the user interface components.
+     *
+     * @param controller the controller handling user interactions.
+     */
+    private void initializeUI(final ViewControllerListener controller) {
         final Dimension syst = Toolkit.getDefaultToolkit().getScreenSize();
 
         final JPanel mainPanel = new JPanel();
@@ -29,15 +69,9 @@ public class HomeView extends JFrame {
         final JButton startButton = new JButton("Start Game");
         final JButton exitButton = new JButton("Quit");
 
-        this.setTitle("Michelito");
-        this.setResizable(false);
-        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        this.setContentPane(mainPanel);
-        this.setLocationRelativeTo(null);
-
         final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         final JLabel titleLabel = new JLabel("Michelito El Esqueleto Explosivo");
-        titleLabel.setFont(new Font("Papyrus", Font.BOLD, 33)); // Ingrandisci il titolo
+        titleLabel.setFont(new Font("Papyrus", Font.BOLD, FONT_SIZE));
         titlePanel.add(titleLabel);
 
         final JPanel buttonPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -55,7 +89,7 @@ public class HomeView extends JFrame {
              * {@inheritDoc}
              */
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(final WindowEvent e) {
                 final int response = JOptionPane.showConfirmDialog(
                         HomeView.this,
                         "Are you sure you want to exit?",
@@ -71,17 +105,16 @@ public class HomeView extends JFrame {
 
         mainPanel.add(Box.createVerticalGlue());
         mainPanel.add(titlePanel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        mainPanel.add(Box.createRigidArea(new Dimension(0, RIGID_AREA_HEIGHT)));
         mainPanel.add(buttonPanel1);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        mainPanel.add(Box.createRigidArea(new Dimension(0, RIGID_AREA_HEIGHT)));
         mainPanel.add(buttonPanel2);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        mainPanel.add(Box.createRigidArea(new Dimension(0, RIGID_AREA_HEIGHT)));
         mainPanel.add(Box.createVerticalGlue());
 
         startButton.addActionListener(e -> controller.switchToGame());
         exitButton.addActionListener(e -> controller.quit());
 
-        this.setSize((int) (syst.width / SCALING), (int) (syst.height / SCALING));
         mainPanel.setBackground(Color.cyan);
         buttonPanel1.setBackground(Color.cyan);
         buttonPanel2.setBackground(Color.cyan);
@@ -90,6 +123,22 @@ public class HomeView extends JFrame {
         startButton.setForeground(Color.green);
         exitButton.setForeground(Color.red);
 
+        configureFrame(mainPanel, syst);
+    }
+
+    /**
+     * Configures the main JFrame properties.
+     *
+     * @param mainPanel the main panel to be set as content pane.
+     * @param screenSize the dimensions of the screen.
+     */
+    private void configureFrame(final JPanel mainPanel, final Dimension screenSize) {
+        this.setTitle("Michelito");
+        this.setResizable(false);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.setContentPane(mainPanel);
+        this.setLocationRelativeTo(null);
+        this.setSize((int) (screenSize.width / SCALING), (int) (screenSize.height / SCALING));
         this.setVisible(true);
     }
 
