@@ -7,7 +7,7 @@ import it.unibo.michelito.model.enemy.api.ai.Movement;
 import it.unibo.michelito.model.maze.api.Maze;
 
 /**
- *Implementation of {@link MoodAI}.
+ * Implementation of {@link MoodAI}.
  */
 public final class MoodAIImpl implements MoodAI {
     private static final long SLEEP_TIME = 5_000;
@@ -19,7 +19,7 @@ public final class MoodAIImpl implements MoodAI {
     private final int initialEnemy;
 
     /**
-     *Constructor for {@link MoodAIImpl}.
+     * Constructor for {@link MoodAIImpl}.
      * @param maze the maze so it can accede information about the current state of the maze.
      */
     public MoodAIImpl(final Maze maze) {
