@@ -4,6 +4,7 @@ import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.model.maze.api.Maze;
 import it.unibo.michelito.model.maze.impl.MazeImpl;
 import it.unibo.michelito.model.player.api.Player;
+import it.unibo.michelito.model.player.impl.PlayerImpl;
 import it.unibo.michelito.util.Direction;
 import it.unibo.michelito.util.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestPlayer {
 
-    private Player player;
+    private PlayerImpl player;
     private final Maze maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
     private static final  double X_SPAWN = 6;
     private static final double Y_SPAWN = 6;
@@ -21,7 +22,7 @@ class TestPlayer {
 
     @BeforeEach
     void setUp() {
-        this.player = maze.getPlayer();
+        this.player = new PlayerImpl(new Position(X_SPAWN, Y_SPAWN));
         /*spawns at (6, 6)*/
     }
 
@@ -34,10 +35,10 @@ class TestPlayer {
 
         player.setDirection(Direction.RIGHT);
         player.update(TICK, this.maze);
-        assertEquals(new Position(X_SPAWN + 1, Y_SPAWN), player.position());
+        assertEquals(new Position(X_SPAWN + player.getSpeed(), Y_SPAWN), player.position());
 
         player.update(TICK, this.maze);
-        assertEquals(new Position(X_SPAWN + 1, Y_SPAWN), player.position());
+        assertEquals(new Position(X_SPAWN + player.getSpeed(), Y_SPAWN), player.position());
 
         player.setDirection(Direction.LEFT);
         player.update(TICK, this.maze);
@@ -45,7 +46,7 @@ class TestPlayer {
 
         player.setDirection(Direction.DOWN);
         player.update(TICK, this.maze);
-        assertEquals(new Position(X_SPAWN, Y_SPAWN + 1), player.position());
+        assertEquals(new Position(X_SPAWN, Y_SPAWN + player.getSpeed()), player.position());
 
         player.setDirection(Direction.UP);
         player.update(TICK, this.maze);
@@ -57,19 +58,19 @@ class TestPlayer {
 
 
         player.setDirection(Direction.LEFT);
-        player.update(TICK, maze);
-        assertEquals(new Position(X_SPAWN - 1, Y_SPAWN), player.position());
+        player.update(TICK * 200, maze);
+        assertEquals(new Position(X_SPAWN, Y_SPAWN), player.position());
+
+        player.setDirection(Direction.UP);
+        player.update(TICK * 100, maze);
+        assertEquals(new Position(X_SPAWN , Y_SPAWN), player.position());
 
         player.setDirection(Direction.LEFT);
         player.update(TICK, maze);
-        assertEquals(new Position(X_SPAWN - 1, Y_SPAWN), player.position());
-
-        player.setDirection(Direction.UP);
-        player.update(TICK, maze);
-        assertEquals(new Position(X_SPAWN - 1, Y_SPAWN), player.position());
+        assertEquals(new Position(X_SPAWN - player.getSpeed(), Y_SPAWN), player.position());
 
         player.setDirection(Direction.DOWN);
         player.update(TICK, maze);
-        assertEquals(new Position(X_SPAWN - 1, Y_SPAWN + 1), player.position());
+        assertEquals(new Position(X_SPAWN - player.getSpeed(), Y_SPAWN + player.getSpeed()), player.position());
     }
 }

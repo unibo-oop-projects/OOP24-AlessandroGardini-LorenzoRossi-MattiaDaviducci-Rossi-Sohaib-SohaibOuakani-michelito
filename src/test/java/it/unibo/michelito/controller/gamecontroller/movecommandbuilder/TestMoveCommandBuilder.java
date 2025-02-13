@@ -43,12 +43,13 @@ final class TestMoveCommandBuilder {
         this.directionBuilder.addDirection(Direction.UP).addDirection(Direction.RIGHT);
         directionBuilder.build().execute(player);
         player.update(TICK, maze);
+        BigDecimal deltaMovement = BigDecimal.valueOf(Math.sqrt(0.5)).multiply(BigDecimal
+                .valueOf(PLAYER_SPEED));
         assertEquals(new Position(BigDecimal.valueOf(X_SPAWN)
-                .add(BigDecimal.valueOf(Math.sqrt(0.5)).multiply(BigDecimal.valueOf(PLAYER_SPEED)))
+                .add(deltaMovement)
                 .doubleValue(),
                 BigDecimal.valueOf(Y_SPAWN).
-                        subtract(BigDecimal.valueOf(Math.sqrt(0.5)).multiply(BigDecimal
-                                .valueOf(0.01))).doubleValue()), player.position());
+                        subtract(deltaMovement).doubleValue()), player.position());
 
         this.directionBuilder = new MoveCommandBuilderImpl();
         assertThrows(IllegalArgumentException.class, () -> this.directionBuilder

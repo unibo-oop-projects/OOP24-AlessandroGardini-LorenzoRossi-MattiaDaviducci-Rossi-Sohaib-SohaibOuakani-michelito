@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 final class TestPowerUp {
+    public static final int STANDARD_COOLDOWN = 500;
     private Maze maze;
     private static final double X_SPAWN = 6;
     private static final double Y_SPAWN = 6;
@@ -34,7 +35,7 @@ final class TestPowerUp {
     void testSpeedPowerUp() {
         final PowerUp powerUp = this.factory.createPowerUp(this.spawn, PowerUpType.SPEED_POWERUP);
         final PlayerImpl player = new PlayerImpl(this.maze.getPlayer().position()); /*(6, 6)*/
-        final double expectedMovement = 1.1;
+        final double expectedMovement = 0.02;
         powerUp.applyEffect(player);
 
         player.setDirection(Direction.RIGHT);
@@ -55,7 +56,8 @@ final class TestPowerUp {
         player.notifyToPlace();
         player.update(TICK, this.maze);
         player.notifyToPlace();
-        player.update(TICK, this.maze);
+        player.setDirection(Direction.RIGHT);
+        player.update(TICK + STANDARD_COOLDOWN, this.maze);
         assertEquals(expectedBombs, this.maze.getBombs().size());
     }
 

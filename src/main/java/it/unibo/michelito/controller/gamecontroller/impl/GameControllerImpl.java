@@ -31,6 +31,11 @@ public class GameControllerImpl implements GameController, GameExceptionHandler 
     private GameManager gameManager;
     private GameView gameView;
 
+    /**
+     * Constructor for the {@link GameControllerImpl}.
+     *
+     * @param gameParentController the {@link GameParentController} associated.
+     */
     public GameControllerImpl(final GameParentController gameParentController) {
         this.gameParentController = gameParentController;
         gameManager = new GameManagerImpl(new LevelGenerator(this));
@@ -145,7 +150,7 @@ public class GameControllerImpl implements GameController, GameExceptionHandler 
                     case RIGHT -> commandBuilder.addDirection(Direction.RIGHT);
                     case LEFT -> commandBuilder.addDirection(Direction.LEFT);
                     case PLACE_BOMB -> gameManager.setCommand(new PlaceCommand());
-                    default -> {}
+                    default -> { }
                 }
             }
             gameManager.setCommand(commandBuilder.build());

@@ -12,10 +12,29 @@ import static java.awt.event.KeyEvent.VK_SPACE;
  * Enum for key binds of the game.
  */
 public enum KeyBinds {
+    /**
+     * Keybind for moving up.
+     */
     UP(VK_W),
+
+    /**
+     * Keybind for moving down.
+     */
     DOWN(VK_S),
+
+    /**
+     * Keybind for moving left.
+     */
     LEFT(VK_A),
+
+    /**
+     * Keybind for moving right.
+     */
     RIGHT(VK_D),
+
+    /**
+     * Keybind for placing a bomb.
+     */
     PLACE_BOMB(VK_SPACE);
 
     private final int keyCode;
