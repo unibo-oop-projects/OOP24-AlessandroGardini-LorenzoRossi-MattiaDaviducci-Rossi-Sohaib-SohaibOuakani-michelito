@@ -92,6 +92,7 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
      * @param file name of the file.
      * @return a set with all the game object form the file.
      */
+    // NOPMD - Suppress "ExceptionAsFlowControl" warning
     private Set<GameObject> mazeFromFile(final String file) {
         final Set<GameObject> maze = new HashSet<>();
         String objectType;
@@ -99,8 +100,8 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
         double yValue;
         GameObject readObject;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String riga;
-            while ((riga = br.readLine()) != null) {
+            String riga = br.readLine();
+            while (riga  != null) {
                 final String[] read = riga.split(" ");
                 objectType = read[0];
                 xValue = Double.parseDouble(read[1]);
@@ -111,11 +112,12 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
                     case "enemy" -> new GameObject(ObjectType.ENEMY, new Position(xValue, yValue));
                     case "door" -> new GameObject(ObjectType.DOOR, new Position(xValue, yValue));
                     case "player" -> new GameObject(ObjectType.PLAYER, new Position(xValue, yValue));
-                    default -> throw new IOException("wrong object type");
+                    default -> throw new IOException("wrong object type"); // NOPMD
                 };
                 if (cellPositions().contains(readObject.position()) && !overlap(maze, readObject)) {
                         maze.add(readObject);
                 }
+                riga = br.readLine();
             }
         } catch (IOException e) {
             this.gameExceptionHandler.gameControllerHandleException(e);
