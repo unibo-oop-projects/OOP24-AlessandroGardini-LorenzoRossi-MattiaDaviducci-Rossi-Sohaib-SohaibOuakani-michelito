@@ -133,11 +133,4 @@ public final class HomeView extends JFrame {
         this.setSize((int) (screenSize.width / SCALING), (int) (screenSize.height / SCALING));
         this.setVisible(true);
     }
-
-    /**
-     * Closes the view.
-     */
-    public void close() {
-        this.setVisible(false);
-    }
 }
