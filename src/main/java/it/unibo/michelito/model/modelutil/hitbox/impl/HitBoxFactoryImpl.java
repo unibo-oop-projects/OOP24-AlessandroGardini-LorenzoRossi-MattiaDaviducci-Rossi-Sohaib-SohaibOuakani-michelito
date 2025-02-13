@@ -38,7 +38,7 @@ public final class HitBoxFactoryImpl implements HitBoxFactory {
         }
 
         @Override
-        public boolean inner(Position position){
+        public boolean inner(final Position position) {
             return Math.abs(center.x() - position.x()) <= getHalfWidth()
                     && Math.abs(center.y() - position.y()) <= getHalfHeight();
         }

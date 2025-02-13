@@ -113,10 +113,8 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
                     case "player" -> new GameObject(ObjectType.PLAYER, new Position(xValue, yValue));
                     default -> throw new IOException("wrong object type");
                 };
-                if (cellPositions().contains(readObject.position())) {
-                    if (!overlap(maze, readObject)) {
+                if (cellPositions().contains(readObject.position()) && !overlap(maze, readObject)) {
                         maze.add(readObject);
-                    }
                 }
             }
         } catch (IOException e) {
