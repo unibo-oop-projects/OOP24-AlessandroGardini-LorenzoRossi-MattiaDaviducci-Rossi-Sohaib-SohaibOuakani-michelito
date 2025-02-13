@@ -3,20 +3,35 @@ package it.unibo.michelito.view.gameview.panel.impl;
 import it.unibo.michelito.util.GameObject;
 import it.unibo.michelito.view.gameview.panel.api.InputHandler;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.util.Objects;
 import java.util.Set;
+import javax.swing.JPanel;
 
-public class GamePanel extends JPanel {
+/**
+ * Implementation of the game panel.
+ */
+public final class GamePanel extends JPanel {
+    /**
+     * The width of the game panel.
+     */
     public static final int WIDTH = 800;
+    /**
+     * The height of the game panel.
+     */
     public static final int HEIGHT = 600;
+
     private Set<GameObject> gameObjects;
     private int currentLives;
     private int currentLevelNumber;
-    final private InputHandler inputHandler = new InputHandlerImpl();
+    private final InputHandler inputHandler = new InputHandlerImpl();
 
+    /**
+     * Constructor for the game panel.
+     */
     public GamePanel() {
+        super();
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.addKeyListener(inputHandler);
         this.setFocusable(true);
@@ -24,7 +39,7 @@ public class GamePanel extends JPanel {
     }
 
     @Override
-    public void paint(Graphics g) {
+    public void paint(final Graphics g) {
         super.paintComponent(g);
         if (Objects.nonNull(gameObjects)) {
             for (GameObject gameObject : gameObjects) {
@@ -34,7 +49,14 @@ public class GamePanel extends JPanel {
         GameStatisticRenderer.render(g, this, this.currentLives, this.currentLevelNumber);
     }
 
-    public void display(Set<GameObject> gameObjects, int lives, int levelNumber) {
+    /**
+     * Displays the game objects.
+     *
+     * @param gameObjects the game objects to display.
+     * @param lives the number of lives.
+     * @param levelNumber the level number.
+     */
+    public void display(final Set<GameObject> gameObjects, final int lives, final int levelNumber) {
         if (this.currentLives != lives) {
             this.currentLives = lives;
             this.repaint();
@@ -49,6 +71,11 @@ public class GamePanel extends JPanel {
         }
     }
 
+    /**
+     * Get the keys pressed.
+     *
+     * @return the keys pressed.
+     */
     public Set<Integer> getKeysPressed() {
         return inputHandler.keysPressed();
     }

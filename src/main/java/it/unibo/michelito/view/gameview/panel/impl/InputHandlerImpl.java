@@ -6,7 +6,11 @@ import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
-public class InputHandlerImpl implements InputHandler {
+/**
+ * Implementation of {@link InputHandler}.
+ * It keeps track of the keys pressed by the user.
+ */
+public final class InputHandlerImpl implements InputHandler {
     private final Set<Integer> keysPressed = new HashSet<>();
 
     @Override

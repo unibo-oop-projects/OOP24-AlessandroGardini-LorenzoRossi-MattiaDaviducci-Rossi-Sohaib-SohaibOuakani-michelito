@@ -4,19 +4,30 @@ import it.unibo.michelito.util.GameObject;
 import it.unibo.michelito.view.gameview.panel.impl.GamePanel;
 import it.unibo.michelito.view.gameview.frame.api.GameView;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Set;
 
-public class GameViewImpl extends JFrame implements GameView {
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
+/**
+ * Represents the view of the game, implements {@link GameView}.
+ * Entry point for the View.
+ */
+public final class GameViewImpl extends JFrame implements GameView {
     private boolean showing = true;
     private final double aspectRatio;
     private final GamePanel gamePanel = new GamePanel();
 
+    /**
+     * Constructor for the GameViewImpl.
+     */
     public GameViewImpl() {
         setTitle("Michelito");
 
@@ -32,7 +43,7 @@ public class GameViewImpl extends JFrame implements GameView {
         setMinimumSize(size);
         addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e) {
+            public void componentResized(final ComponentEvent e) {
                 resizeDiagonally();
             }
         });
@@ -41,7 +52,7 @@ public class GameViewImpl extends JFrame implements GameView {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(final WindowEvent e) {
                 int response = JOptionPane.showConfirmDialog(
                         GameViewImpl.this,
                         "Are you sure about that?",
@@ -57,7 +68,7 @@ public class GameViewImpl extends JFrame implements GameView {
     }
 
     @Override
-    public void setViewVisibility(boolean show) {
+    public void setViewVisibility(final boolean show) {
         SwingUtilities.invokeLater(() -> {
             this.setVisible(show);
         });
@@ -69,7 +80,7 @@ public class GameViewImpl extends JFrame implements GameView {
     }
 
     @Override
-    public void display(Set<GameObject> gameObjects, int lives, int levelNumber) {
+    public void display(final Set<GameObject> gameObjects, final int lives, final int levelNumber) {
         SwingUtilities.invokeLater(() -> gamePanel.display(gameObjects, lives, levelNumber));
     }
 
@@ -83,7 +94,7 @@ public class GameViewImpl extends JFrame implements GameView {
     }
 
     private void resizeDiagonally() {
-        Dimension size = getSize();
+        final Dimension size = getSize();
         int newWidth = size.width;
         int newHeight = (int) (newWidth / aspectRatio);
         if (newHeight != size.height) {

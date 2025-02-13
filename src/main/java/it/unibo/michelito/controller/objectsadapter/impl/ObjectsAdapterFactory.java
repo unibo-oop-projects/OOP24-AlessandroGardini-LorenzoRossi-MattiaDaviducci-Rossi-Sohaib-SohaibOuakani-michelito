@@ -14,7 +14,8 @@ public final class ObjectsAdapterFactory {
     /**
      * Private constructor preventing instantiation.
      */
-    private ObjectsAdapterFactory() {}
+    private ObjectsAdapterFactory() {
+    }
 
     /**
      * Creates and returns an instance of {@link ObjectsAdapter}.
