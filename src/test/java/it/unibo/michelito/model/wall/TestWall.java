@@ -14,6 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  *  Test class for {@link WallImpl} class.
  */
 final class TestWall {
+    public static final int X = 0;
+    public static final int Y = 4;
     private WallImpl wall;
     private Position position;
 
@@ -23,7 +25,7 @@ final class TestWall {
      */
     @BeforeEach
     void setUp() {
-        this.position = new Position(0, 4);
+        this.position = new Position(X, Y);
         this.wall = new WallImpl(position);
     }
 

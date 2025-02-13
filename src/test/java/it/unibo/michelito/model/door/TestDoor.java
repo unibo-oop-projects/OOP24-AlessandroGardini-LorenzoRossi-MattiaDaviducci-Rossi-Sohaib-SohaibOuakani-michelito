@@ -22,7 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Test for the {@link DoorImpl} class.
  */
 final class TestDoor {
+    public static final int X = 0;
+    public static final int Y = 4;
     private static final int TIME = 0; //The TIME is irrelevant when updating a door
+    public static final int INITIAL_POSITION = 10;
     private Door door;
     private Position position;
 
@@ -32,7 +35,7 @@ final class TestDoor {
      */
     @BeforeEach
     void setUp() {
-        this.position = new Position(0, 4);
+        this.position = new Position(X, Y);
         this.door = new DoorImpl(position);
     }
 
@@ -58,7 +61,7 @@ final class TestDoor {
      */
     @Test
     void testOpening() {
-        final var enemy = new EnemyImpl(new Position(10, 10));
+        final var enemy = new EnemyImpl(new Position(INITIAL_POSITION, INITIAL_POSITION));
         final Maze maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
         assertFalse(this.door.isOpen());
         maze.addMazeObject(enemy);

@@ -23,6 +23,7 @@ public abstract class AbstractMovement implements Movement {
     private Direction direction = Direction.NONE;
     private static final int POSSIBILITY_TO_CHANGE = 30;
     private final Set<Direction> directions = Set.of(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT);
+    private final Random random = new Random();
 
     /**
      * @param position set the position where the movement is currently on.
@@ -30,7 +31,6 @@ public abstract class AbstractMovement implements Movement {
     @Override
     public void setPosition(final Position position) {
         this.position = position;
-        updateHitBox(position);
     }
 
     /**
@@ -39,14 +39,13 @@ public abstract class AbstractMovement implements Movement {
      */
     @Override
     public void move(final Maze maze, final long time) {
-        final Random r = new Random();
         if (direction == Direction.NONE
                 || shift(maze, time, this.direction).equals(this.position)
-                || r.nextInt(POSSIBILITY_TO_CHANGE) == 0) {
+                || random.nextInt(POSSIBILITY_TO_CHANGE) == 0) {
             final List<Direction> possibleWay = new ArrayList<>();
             possibleWay.add(Direction.NONE);
             possibleWay.addAll(directions.stream().filter(x -> !shift(maze, time, x).equals(this.position)).toList());
-            this.direction = possibleWay.get(r.nextInt(possibleWay.size()));
+            this.direction = possibleWay.get(random.nextInt(possibleWay.size()));
         }
         this.position = shift(maze, time, this.direction);
     }

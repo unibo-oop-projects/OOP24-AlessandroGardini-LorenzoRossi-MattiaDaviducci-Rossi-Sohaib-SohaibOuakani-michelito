@@ -15,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Test for the {@link BoxImpl} class.
  */
 final class TestBox {
+    public static final int X = 0;
+    public static final int Y = 4;
     private BoxImpl box;
     private Position position;
 
@@ -24,7 +26,7 @@ final class TestBox {
      */
     @BeforeEach
     void setUp() {
-        this.position = new Position(0, 4);
+        this.position = new Position(X, Y);
         this.box = new BoxImpl(position);
     }
 
