@@ -46,7 +46,7 @@ public final class MainControllerImpl implements MainController, HomeParentContr
     @Override
     public void quit() {
         java.awt.EventQueue.invokeLater(() -> {
-            for (java.awt.Window window : java.awt.Window.getWindows()) {
+            for (final java.awt.Window window : java.awt.Window.getWindows()) {
                 window.dispose();
             }
         });

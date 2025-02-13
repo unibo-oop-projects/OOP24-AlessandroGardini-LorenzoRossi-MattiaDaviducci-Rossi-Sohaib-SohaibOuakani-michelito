@@ -5,7 +5,10 @@ import it.unibo.michelito.util.GameObject;
 import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.Position;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
@@ -41,7 +44,7 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
 
      private Set<GameObject> generate(final int levelNumber) {
          final Set<GameObject> maze = new HashSet<>(baseMaze());
-         String filePath = "level/level" + levelNumber + ".txt";
+         final String filePath = "level/level" + levelNumber + ".txt";
          maze.addAll(baseMaze());
          if (levelNumber != TEST_MAZE_CODE) {
              final Set<GameObject> fileMaze = new HashSet<>(mazeFromFile(filePath));
@@ -97,10 +100,12 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
         String objectType;
         double xValue;
         double yValue;
-        InputStream is = getClass().getClassLoader().getResourceAsStream(file);
+        final InputStream is = getClass().getClassLoader().getResourceAsStream(file);
         GameObject readObject;
         try {
-            assert is != null;
+            if (is == null) {
+                throw new IOException("file not found");
+            }
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
                 String riga = br.readLine();
                 while (riga  != null) {

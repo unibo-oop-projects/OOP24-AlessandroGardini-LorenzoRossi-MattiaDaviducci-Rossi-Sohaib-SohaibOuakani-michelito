@@ -2,11 +2,11 @@ package it.unibo.michelito.controller.gamecontroller.keybinds;
 
 import java.util.Optional;
 
-import static java.awt.event.KeyEvent.VK_A;
-import static java.awt.event.KeyEvent.VK_D;
-import static java.awt.event.KeyEvent.VK_W;
-import static java.awt.event.KeyEvent.VK_S;
+import static java.awt.event.KeyEvent.VK_DOWN;
+import static java.awt.event.KeyEvent.VK_LEFT;
+import static java.awt.event.KeyEvent.VK_RIGHT;
 import static java.awt.event.KeyEvent.VK_SPACE;
+import static java.awt.event.KeyEvent.VK_UP;
 
 /**
  * Enum for key binds of the game.
@@ -15,22 +15,22 @@ public enum KeyBinds {
     /**
      * Keybind for moving up.
      */
-    UP(VK_W),
+    UP(VK_UP),
 
     /**
      * Keybind for moving down.
      */
-    DOWN(VK_S),
+    DOWN(VK_DOWN),
 
     /**
      * Keybind for moving left.
      */
-    LEFT(VK_A),
+    LEFT(VK_LEFT),
 
     /**
      * Keybind for moving right.
      */
-    RIGHT(VK_D),
+    RIGHT(VK_RIGHT),
 
     /**
      * Keybind for placing a bomb.
