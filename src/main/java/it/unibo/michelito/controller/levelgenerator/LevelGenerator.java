@@ -18,7 +18,7 @@ import java.util.function.Function;
  * A class that create the maze reading form file.
  */
 public class LevelGenerator implements Function<Integer, Set<GameObject>> {
-    private static final int MAZE_BLOCK_WIDTH = 20;
+    private static final int MAZE_BLOCK_WIDTH = 21;
     private static final int MAZE_BLOCK_HEIGHT = 15;
     private static final int BLOCK_EDGE = 6;
     private static final int TEST_MAZE_CODE = -1;
