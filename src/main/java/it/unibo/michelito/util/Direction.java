@@ -55,6 +55,10 @@ public enum Direction {
         this.position = position;
     }
 
+    /**
+     * Checks if the {@link Direction} is diagonal.
+     * @return true if the {@link Direction} is diagonal, false otherwise
+     */
     public boolean isDiagonal() {
         return this.equals(DOWN_LEFT) || this.equals(DOWN_RIGHT) || this.equals(UP_LEFT) || this.equals(UP_RIGHT);
     }

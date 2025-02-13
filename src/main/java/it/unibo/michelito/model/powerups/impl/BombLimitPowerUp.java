@@ -16,7 +16,7 @@ class BombLimitPowerUp extends AbstractPowerUp {
      *
      * @param position the {@link Position} where the power-up is located
      */
-    public BombLimitPowerUp(final Position position) {
+    BombLimitPowerUp(final Position position) {
         super(position);
     }
 

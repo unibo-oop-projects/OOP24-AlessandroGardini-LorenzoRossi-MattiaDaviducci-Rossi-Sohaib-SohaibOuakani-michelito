@@ -18,7 +18,7 @@ class SpeedPowerUp extends AbstractPowerUp {
      *
      * @param position the {@link Position} where the power-up is located
      */
-    public SpeedPowerUp(final Position position) {
+    SpeedPowerUp(final Position position) {
         super(position);
     }
 

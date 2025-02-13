@@ -52,13 +52,13 @@ public class BombManagerComponentImpl implements BombManagerComponent {
      */
     @Override
     public void place(final Maze maze, final Position position, final long deltaTime) {
+        this.lastUpdate = this.lastUpdate - deltaTime;
         if (this.lastUpdate <= 0 && this.place && maze.getBombs().size() < this.currentBombLimit) {
             final MazeObject bomb = BombFactory.createFromBombType(this.bombType, position);
             maze.addMazeObject(bomb);
             this.lastUpdate = STANDARD_COOLDOWN;
         }
         this.place = false;
-        this.lastUpdate = this.lastUpdate - deltaTime;
     }
 
     /**
