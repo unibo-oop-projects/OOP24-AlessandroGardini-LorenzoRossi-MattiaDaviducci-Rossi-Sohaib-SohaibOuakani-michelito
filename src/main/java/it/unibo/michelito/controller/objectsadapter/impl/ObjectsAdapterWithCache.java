@@ -16,7 +16,7 @@ import java.util.function.Function;
  * While this class is public, it is recommended to use the {@link ObjectsAdapterFactory} for creating instances.
  */
 public class ObjectsAdapterWithCache implements ObjectsAdapter {
-    private final ObjectsAdapter base ;
+    private final ObjectsAdapter base;
     private final Map<Integer, Set<MazeObject>> cache = new HashMap<>();
 
     /**
