@@ -91,11 +91,9 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
 
                 if (gameManager.isGameOver()) {
                     game = false;
-                    switchToHome();
                 }
                 if (gameManager.isGameWon()) {
                     game = false;
-                    switchToHome();
                 }
 
                 previousTime = currentTime;

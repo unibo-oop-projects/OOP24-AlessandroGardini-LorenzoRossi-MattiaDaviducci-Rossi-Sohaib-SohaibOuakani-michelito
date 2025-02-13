@@ -147,6 +147,5 @@ public class HomeView extends JFrame {
      */
     public void close() {
         this.setVisible(false);
-        this.dispose();
     }
 }

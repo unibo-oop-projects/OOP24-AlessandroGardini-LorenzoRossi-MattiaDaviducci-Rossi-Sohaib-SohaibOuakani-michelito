@@ -50,7 +50,6 @@ public class GameViewImpl extends JFrame implements GameView {
                         JOptionPane.WARNING_MESSAGE
                 );
                 if (response == JOptionPane.YES_OPTION) {
-                    GameViewImpl.this.dispose();
                     setShowingFalse();
                 }
             }
