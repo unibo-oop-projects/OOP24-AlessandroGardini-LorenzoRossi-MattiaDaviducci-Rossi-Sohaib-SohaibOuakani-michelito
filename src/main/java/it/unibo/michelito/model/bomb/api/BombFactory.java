@@ -14,7 +14,7 @@ public interface BombFactory {
      * @return The {@link Bomb}.
      */
     static Bomb createFromBombType(final BombType bombType, final Position position) {
-        BombFactory factory = new BombFactoryImpl();
+        final BombFactory factory = new BombFactoryImpl();
         return switch (bombType) {
             case STANDARD -> factory.createStandardBomb(position);
             case NUKE -> factory.createNukeBomb(position);

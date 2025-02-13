@@ -21,7 +21,7 @@ import java.io.Serial;
 /**
  * Represents the view of the home menu.
  */
-public class HomeView extends JFrame {
+public final class HomeView extends JFrame {
     @Serial
     private static final long serialVersionUID = 1L;
     /**
@@ -52,16 +52,7 @@ public class HomeView extends JFrame {
      */
     public HomeView(final ViewControllerListener controller) {
         super();
-        initializeUI(controller);
-    }
-
-    /**
-     * Initializes the user interface components.
-     *
-     * @param controller the controller handling user interactions.
-     */
-    private void initializeUI(final ViewControllerListener controller) {
-        final Dimension syst = Toolkit.getDefaultToolkit().getScreenSize();
+        final Dimension systemDimension = Toolkit.getDefaultToolkit().getScreenSize();
 
         final JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -77,7 +68,8 @@ public class HomeView extends JFrame {
         final JPanel buttonPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         final JPanel buttonPanel2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        final Dimension buttonSize = new Dimension(syst.width / BUTTON_X_SCALING, syst.width / BUTTON_Y_SCALING);
+        final Dimension buttonSize = new Dimension(systemDimension.width / BUTTON_X_SCALING,
+                systemDimension.width / BUTTON_Y_SCALING);
         startButton.setPreferredSize(buttonSize);
         exitButton.setPreferredSize(buttonSize);
 
@@ -123,7 +115,7 @@ public class HomeView extends JFrame {
         startButton.setForeground(Color.green);
         exitButton.setForeground(Color.red);
 
-        configureFrame(mainPanel, syst);
+        configureFrame(mainPanel, systemDimension);
     }
 
     /**

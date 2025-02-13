@@ -1,6 +1,7 @@
 package it.unibo.michelito.model.bomb.api;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -8,12 +9,13 @@ import java.util.Random;
  */
 public enum BombType {
     /**
-     * A standard bomb.
+     * A bomb that explodes in a cross shape.
      */
     STANDARD,
 
     /**
-     * A bomb that explodes in a cross shape.
+     * A bomb that explodes in a cross shape with a really long range
+     * and can go through boxes.
      */
     NUKE,
 
@@ -23,17 +25,19 @@ public enum BombType {
     PASS_THROUGH,
 
     /**
-     * A bomb that explodes in a cross shape and has a longer range.
+     * A bomb that explodes in a cross shape and has a longer range
+     * and can go through boxes.
      */
     LONG;
 
+    private static final Random RANDOM = new Random();
+    private static final List<BombType> TYPES = Arrays.asList(values());
     /**
      * Get a random bomb type.
      *
      * @return A random bomb type.
      */
     public static BombType getRandomType() {
-        final var types = Arrays.asList(values());
-        return types.get(new Random().nextInt(types.size()));
+        return TYPES.get(RANDOM.nextInt(TYPES.size()));
     }
 }
