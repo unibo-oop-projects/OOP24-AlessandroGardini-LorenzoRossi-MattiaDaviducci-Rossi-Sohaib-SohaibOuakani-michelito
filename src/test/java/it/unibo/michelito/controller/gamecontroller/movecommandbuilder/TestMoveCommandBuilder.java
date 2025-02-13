@@ -26,7 +26,7 @@ final class TestMoveCommandBuilder {
     private static final double Y_SPAWN = 6;
     private static final long TICK = 1;
     private final Player player = new PlayerImpl(new Position(X_SPAWN, Y_SPAWN));
-    final private Maze maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
+    private final Maze maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
 
     @BeforeEach
     void setUp() {
@@ -43,7 +43,7 @@ final class TestMoveCommandBuilder {
         this.directionBuilder.addDirection(Direction.UP).addDirection(Direction.RIGHT);
         directionBuilder.build().execute(player);
         player.update(TICK, maze);
-        BigDecimal deltaMovement = BigDecimal.valueOf(Math.sqrt(0.5)).multiply(BigDecimal
+        final BigDecimal deltaMovement = BigDecimal.valueOf(Math.sqrt(0.5)).multiply(BigDecimal
                 .valueOf(PLAYER_SPEED));
         assertEquals(new Position(BigDecimal.valueOf(X_SPAWN)
                 .add(deltaMovement)
