@@ -8,9 +8,9 @@ import it.unibo.michelito.model.enemy.api.ai.MovementType;
  * Implementation of {@link MovementFactory}.
  */
 public final class MovementFactoryImpl implements MovementFactory {
-    private static final double CHILLING_VELOCITY = 0.02;
     private static final double SLEEPING_VELOCITY = 0.00;
-    private static final double SEARCHING_VELOCITY = 0.05;
+    private static final double CHILLING_VELOCITY = 0.012;
+    private static final double SEARCHING_VELOCITY = 0.017;
 
     @Override
     public Movement chilling() {

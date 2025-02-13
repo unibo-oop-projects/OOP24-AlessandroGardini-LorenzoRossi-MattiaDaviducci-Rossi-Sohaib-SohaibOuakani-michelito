@@ -18,8 +18,10 @@ public final class GameObjectRenderer {
     private static final double BASE_SCALE_FACTOR = 6.68;
     private static final double TRANSLATION_FACTOR = 3;
     private static final int BASE_SQUARE_DIMENSION = 40;
-    private static final int BASE_RECTANGLE_WIDTH = 20;
-    private static final int BASE_RECTANGLE_HEIGHT = 30;
+    private static final int BASE_BOMB_DIMENSION = 30;
+    private static final int BASE_POWER_UP_DIMENSION = 20;
+    private static final int BASE_RECTANGLE_WIDTH = 19;
+    private static final int BASE_RECTANGLE_HEIGHT = 28;
 
     /**
      * Private constructor preventing instantiation.
@@ -74,8 +76,16 @@ public final class GameObjectRenderer {
                 baseDimension,
                 currentX,
                 currentY,
-                BASE_SQUARE_DIMENSION,
-                BASE_SQUARE_DIMENSION
+                BASE_BOMB_DIMENSION,
+                BASE_BOMB_DIMENSION
+        );
+        final Ellipse2D powerUpCircle = createEllipse(
+                currentDimension,
+                baseDimension,
+                currentX,
+                currentY,
+                BASE_POWER_UP_DIMENSION,
+                BASE_POWER_UP_DIMENSION
         );
 
         // Draw based on the object type
@@ -89,7 +99,7 @@ public final class GameObjectRenderer {
                 g2d.fill(square);
                 break;
             case WALL:
-                g2d.setColor(Color.GRAY);
+                g2d.setColor(new Color(139, 69, 19));
                 g2d.fill(square);
                 break;
             case ENEMY:
@@ -98,15 +108,15 @@ public final class GameObjectRenderer {
                 break;
             case SPEED_POWERUP:
                 g2d.setColor(Color.yellow);
-                g2d.fill(rectangle);
+                g2d.fill(powerUpCircle);
                 break;
             case BOMB_LIMIT_POWERUP:
                 g2d.setColor(Color.blue);
-                g2d.fill(rectangle);
+                g2d.fill(powerUpCircle);
                 break;
             case BOMB_TYPE_POWERUP:
                 g2d.setColor(Color.pink);
-                g2d.fill(rectangle);
+                g2d.fill(powerUpCircle);
                 break;
             case DOOR:
                 g2d.setColor(Color.MAGENTA);
