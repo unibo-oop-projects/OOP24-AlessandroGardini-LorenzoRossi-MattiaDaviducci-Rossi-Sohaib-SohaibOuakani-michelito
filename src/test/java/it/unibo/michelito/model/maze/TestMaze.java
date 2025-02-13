@@ -21,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
  * Test for the {@link MazeImpl} class.
  */
 final class TestMaze {
+    public static final int X = 0;
+    public static final int Y = 4;
     public static final int DELTA_TIME = 100;
     public static final int ENEMY_POSITION = 10; //used for x and y, for simplicity
     public static final int BOX_POSITION = 4; //used for x and y, for simplicity
@@ -40,7 +42,7 @@ final class TestMaze {
      */
     @Test
     void testAddAndRemove() {
-        final Temporary temporaryObject = new BoxImpl(new Position(4, 4));
+        final Temporary temporaryObject = new BoxImpl(new Position(X, Y));
         assertNotNull(this.maze);
         assertFalse(this.maze.getAllObjects().isEmpty());
         assertFalse(this.maze.getAllObjects().contains(temporaryObject));
