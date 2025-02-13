@@ -31,8 +31,9 @@ public class DirectionBuilderImpl implements MoveCommandBuilder {
             return new MoveCommand(Direction.NONE);
         }
         if (Math.abs(x) == 1 && Math.abs(y) == 1) {
-            x = x * Math.sqrt(Math.abs(0.5));
-            y = y * Math.sqrt(Math.abs(0.5));
+            final double sqr = Math.sqrt(0.5);
+            x = x * sqr;
+            y = y * sqr;
         }
         final Position position = new Position(this.x, this.y);
         final var direction = Arrays.stream(Direction.values())
