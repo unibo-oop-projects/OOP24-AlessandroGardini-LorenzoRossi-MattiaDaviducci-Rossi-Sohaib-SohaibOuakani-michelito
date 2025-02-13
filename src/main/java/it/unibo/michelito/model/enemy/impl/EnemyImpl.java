@@ -44,7 +44,7 @@ public final class EnemyImpl implements Enemy {
         this.actualposition = movement.getPosition();
         updateHitBox(actualposition);
         verifyHitPlayer(maze);
-        moodAI.update(deltaTime);
+        moodAI.update(deltaTime, maze);
     }
 
     @Override

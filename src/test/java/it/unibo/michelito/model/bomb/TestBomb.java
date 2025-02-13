@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Test class for {@link Bomb}.
  */
-public class TestBomb {
+final class TestBomb {
     private Maze maze;
     private static final double X_SPAWN = 6;
     private static final double Y_SPAWN = 6;

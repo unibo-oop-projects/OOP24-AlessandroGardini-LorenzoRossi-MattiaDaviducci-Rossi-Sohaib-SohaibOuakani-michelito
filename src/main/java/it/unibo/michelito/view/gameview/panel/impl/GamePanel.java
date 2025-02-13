@@ -20,7 +20,7 @@ public final class GamePanel extends JPanel {
     /**
      * The width of the game panel.
      */
-    public static final int WIDTH = 800;
+    public static final int WIDTH = 840;
     /**
      * The height of the game panel.
      */

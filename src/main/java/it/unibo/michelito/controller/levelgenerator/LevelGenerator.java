@@ -15,7 +15,7 @@ import java.util.function.Function;
  * A class that create the maze reading form file.
  */
 public class LevelGenerator implements Function<Integer, Set<GameObject>> {
-    private static final int MAZE_BLOCK_WIDTH = 20;
+    private static final int MAZE_BLOCK_WIDTH = 21;
     private static final int MAZE_BLOCK_HEIGHT = 15;
     private static final int BLOCK_EDGE = 6;
     private static final int TEST_MAZE_CODE = -1;
@@ -41,10 +41,10 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
 
      private Set<GameObject> generate(final int levelNumber) {
          final Set<GameObject> maze = new HashSet<>(baseMaze());
-         final String file = "src/main/resources/level/level" + levelNumber + ".txt";
+         String filePath = "level/level" + levelNumber + ".txt";
          maze.addAll(baseMaze());
          if (levelNumber != TEST_MAZE_CODE) {
-             final Set<GameObject> fileMaze = new HashSet<>(mazeFromFile(file));
+             final Set<GameObject> fileMaze = new HashSet<>(mazeFromFile(filePath));
              for (final GameObject gameObject : fileMaze) {
                  if (!overlap(maze, gameObject)) {
                      maze.add(gameObject);
@@ -91,34 +91,39 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
      * @param file name of the file.
      * @return a set with all the game object form the file.
      */
-    // NOPMD - Suppress "ExceptionAsFlowControl" warning
+
     private Set<GameObject> mazeFromFile(final String file) {
         final Set<GameObject> maze = new HashSet<>();
         String objectType;
         double xValue;
         double yValue;
+        InputStream is = getClass().getClassLoader().getResourceAsStream(file);
         GameObject readObject;
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
-            String riga = br.readLine();
-            while (riga  != null) {
-                final String[] read = riga.split(" ");
-                objectType = read[0];
-                xValue = Double.parseDouble(read[1]);
-                yValue = Double.parseDouble(read[2]);
-                readObject = switch (objectType) {
-                    case "wall" -> new GameObject(ObjectType.WALL, new Position(xValue, yValue));
-                    case "box" -> new GameObject(ObjectType.BOX, new Position(xValue, yValue));
-                    case "enemy" -> new GameObject(ObjectType.ENEMY, new Position(xValue, yValue));
-                    case "door" -> new GameObject(ObjectType.DOOR, new Position(xValue, yValue));
-                    case "player" -> new GameObject(ObjectType.PLAYER, new Position(xValue, yValue));
-                    default -> throw new IOException("wrong object type"); // NOPMD
-                };
-                if (cellPositions().contains(readObject.position()) && !overlap(maze, readObject)) {
-                        maze.add(readObject);
+        try {
+            assert is != null;
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+                String riga = br.readLine();
+                while (riga  != null) {
+                    final String[] read = riga.split(" ");
+                    objectType = read[0];
+                    xValue = Double.parseDouble(read[1]);
+                    yValue = Double.parseDouble(read[2]);
+                    readObject = switch (objectType) {
+                        case "wall" -> new GameObject(ObjectType.WALL, new Position(xValue, yValue));
+                        case "box" -> new GameObject(ObjectType.BOX, new Position(xValue, yValue));
+                        case "enemy" -> new GameObject(ObjectType.ENEMY, new Position(xValue, yValue));
+                        case "door" -> new GameObject(ObjectType.DOOR, new Position(xValue, yValue));
+                        case "player" -> new GameObject(ObjectType.PLAYER, new Position(xValue, yValue));
+                        default -> throw new IOException("wrong object type");
+                    };
+                    if (cellPositions().contains(readObject.position()) && !overlap(maze, readObject)) {
+                            maze.add(readObject);
+                    }
+                    riga = br.readLine();
                 }
-                riga = br.readLine();
+                // NOPMD - Suppress "ExceptionAsFlowControl" warning
             }
-        } catch (IOException e) {
+        } catch (IOException e) { // NOPMD
             this.gameExceptionHandler.gameControllerHandleException(e);
         }
         return maze;

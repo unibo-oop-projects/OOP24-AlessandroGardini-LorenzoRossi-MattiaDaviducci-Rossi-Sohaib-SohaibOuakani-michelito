@@ -54,10 +54,6 @@ public class PlayerImpl implements Player, ModifiablePlayer {
             this.placeBomb(maze, deltaTime);
     }
 
-    /*private boolean allowedToPlaceBomb(final Maze maze) {
-        return maze.getBombs().size() < this.bombManagerComponent.getBombLimit();
-    }*/
-
     private void move(final long time, final Maze maze) {
         final Position oldPosition = this.position();
         this.movementComponent.move(time);

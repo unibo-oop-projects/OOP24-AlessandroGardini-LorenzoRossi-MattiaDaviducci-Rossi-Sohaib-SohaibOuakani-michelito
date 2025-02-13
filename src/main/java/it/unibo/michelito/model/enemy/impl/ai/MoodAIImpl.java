@@ -7,57 +7,47 @@ import it.unibo.michelito.model.enemy.api.ai.Movement;
 import it.unibo.michelito.model.maze.api.Maze;
 
 /**
- *Implementation of {@link MoodAI}.
+ * Implementation of {@link MoodAI}.
  */
 public final class MoodAIImpl implements MoodAI {
     private static final long SLEEP_TIME = 5_000;
     private static final double DEATH_FOR_AVENGES = 0.70;
-    private Movement actualMovement;
     private final MovementFactory movementFactory = new MovementFactoryImpl();
     private long createdTime;
-    private final Maze maze;
     private final int initialEnemy;
+    private MovementType movementType;
 
     /**
-     *Constructor for {@link MoodAIImpl}.
+     * Constructor for {@link MoodAIImpl}.
      * @param maze the maze so it can accede information about the current state of the maze.
      */
     public MoodAIImpl(final Maze maze) {
         this.createdTime = 0;
-        this.maze = maze;
         initialEnemy = maze.getEnemies().size();
-        setMood(MovementType.SLEEPING);
+        movementType = MovementType.SLEEPING;
     }
 
-    private void setMood(final MovementType mood) {
-        switch (mood) {
-            case SLEEPING:
-                actualMovement = movementFactory.sleeping();
-                break;
-            case CHILLING:
-                actualMovement = movementFactory.chilling();
-                break;
-            case SEARCHING:
-                actualMovement = movementFactory.searching();
-                break;
-            default:
-                break;
-        }
+    private Movement getCurrentMovement() {
+        return switch (this.movementType) {
+            case SLEEPING -> movementFactory.sleeping();
+            case CHILLING -> movementFactory.chilling();
+            case SEARCHING -> movementFactory.searching();
+        };
     }
 
     @Override
     public Movement getMovement() {
-        return actualMovement;
+        return getCurrentMovement();
     }
 
     @Override
-    public void update(final long deltaTime) {
+    public void update(final long deltaTime, final Maze maze) {
         this.createdTime = createdTime + deltaTime;
         if (createdTime >= SLEEP_TIME) {
-            setMood(MovementType.CHILLING);
+            this.movementType = MovementType.CHILLING;
         }
         if (maze.getEnemies().size() < initialEnemy * DEATH_FOR_AVENGES) {
-            setMood(MovementType.SEARCHING);
+            this.movementType = MovementType.SEARCHING;
         }
     }
 }
