@@ -10,6 +10,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.Serial;
 import java.util.Set;
 
 import javax.swing.JFrame;
@@ -21,6 +22,8 @@ import javax.swing.SwingUtilities;
  * Entry point for the View.
  */
 public final class GameViewImpl extends JFrame implements GameView {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private boolean showing = true;
     private final double aspectRatio;
     private final GamePanel gamePanel = new GamePanel();
@@ -38,7 +41,7 @@ public final class GameViewImpl extends JFrame implements GameView {
 
         //set custom resizing
         pack();
-        Dimension size = getSize();
+        final Dimension size = getSize();
         aspectRatio = (double) size.width / size.height;
         setMinimumSize(size);
         addComponentListener(new ComponentAdapter() {
@@ -49,11 +52,11 @@ public final class GameViewImpl extends JFrame implements GameView {
         });
 
         //set custom quit closing action
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(final WindowEvent e) {
-                int response = JOptionPane.showConfirmDialog(
+                final int response = JOptionPane.showConfirmDialog(
                         GameViewImpl.this,
                         "Are you sure about that?",
                         "Quit",
@@ -95,8 +98,8 @@ public final class GameViewImpl extends JFrame implements GameView {
 
     private void resizeDiagonally() {
         final Dimension size = getSize();
-        int newWidth = size.width;
-        int newHeight = (int) (newWidth / aspectRatio);
+        final int newWidth = size.width;
+        final int newHeight = (int) (newWidth / aspectRatio);
         if (newHeight != size.height) {
             setSize(newWidth, newHeight);
         }

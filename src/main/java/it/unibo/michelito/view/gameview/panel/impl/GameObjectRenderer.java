@@ -35,12 +35,17 @@ public final class GameObjectRenderer {
      * @param component the panel component.
      */
     public static void render(final Graphics g, final GameObject gameObject, final JPanel component) {
-        final Graphics2D g2d = (Graphics2D) g;  // Cast to Graphics2D for advanced features
+        final Graphics2D g2d;
+        if (g instanceof Graphics2D) {
+            g2d = (Graphics2D) g;
+        } else {
+            throw new IllegalStateException("Graphics object is not an instance of Graphics2D");
+        }
 
         final Dimension currentDimension = component.getSize();
         final Dimension baseDimension = component.getPreferredSize();
-        final double widthScaleFactor = (currentDimension.width / (double) baseDimension.width) * BASE_SCALE_FACTOR;
-        final double heightScaleFactor = (currentDimension.height / (double) baseDimension.height) * BASE_SCALE_FACTOR;
+        final double widthScaleFactor = currentDimension.width / (double) baseDimension.width * BASE_SCALE_FACTOR;
+        final double heightScaleFactor = currentDimension.height / (double) baseDimension.height * BASE_SCALE_FACTOR;
 
         final double currentX = (gameObject.position().x() + TRANSLATION_FACTOR) * widthScaleFactor;
         final double currentY = (gameObject.position().y() + TRANSLATION_FACTOR) * heightScaleFactor;
@@ -115,6 +120,8 @@ public final class GameObjectRenderer {
                 g2d.setColor(Color.BLACK);
                 g2d.fill(bombCircle);
                 break;
+            case BLANK_SPACE:
+                break;
             default:
                 g2d.setColor(Color.BLACK);
                 g2d.fill(square);
@@ -131,10 +138,10 @@ public final class GameObjectRenderer {
             final int stdRectangle2
     ) {
         return new Rectangle2D.Double(
-                (currentX - ((double) stdRectangle * (currentDimension.width / (double) baseDimension.width) / 2.0)),
-                (currentY - ((double) stdRectangle2 * (currentDimension.height / (double) baseDimension.height) / 2.0)),
-                stdRectangle * (currentDimension.width / (double) baseDimension.width),
-                stdRectangle2 * (currentDimension.height / (double) baseDimension.height)
+                currentX - stdRectangle * currentDimension.width / (double) baseDimension.width / 2.0,
+                currentY - stdRectangle2 * currentDimension.height / (double) baseDimension.height / 2.0,
+                stdRectangle * currentDimension.width / (double) baseDimension.width,
+                stdRectangle2 * currentDimension.height / (double) baseDimension.height
         );
     }
 
@@ -147,10 +154,10 @@ public final class GameObjectRenderer {
             final int stdRectangle2
     ) {
         return new Ellipse2D.Double(
-                (currentX - ((double) stdRectangle * (currentDimension.width / (double) baseDimension.width) / 2.0)),
-                (currentY - ((double) stdRectangle2 * (currentDimension.height / (double) baseDimension.height) / 2.0)),
-                stdRectangle * (currentDimension.width / (double) baseDimension.width),
-                stdRectangle2 * (currentDimension.height / (double) baseDimension.height)
+                currentX - stdRectangle * currentDimension.width / (double) baseDimension.width / 2.0,
+                currentY - stdRectangle2 * currentDimension.height / (double) baseDimension.height / 2.0,
+                stdRectangle * currentDimension.width / (double) baseDimension.width,
+                stdRectangle2 * currentDimension.height / (double) baseDimension.height
         );
     }
 }

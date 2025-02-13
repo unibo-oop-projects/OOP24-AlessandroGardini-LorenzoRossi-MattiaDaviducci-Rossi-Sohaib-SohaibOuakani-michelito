@@ -5,7 +5,9 @@ import it.unibo.michelito.view.gameview.panel.api.InputHandler;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.Serial;
 import java.util.Objects;
+import java.util.Collections;
 import java.util.Set;
 import javax.swing.JPanel;
 
@@ -13,6 +15,8 @@ import javax.swing.JPanel;
  * Implementation of the game panel.
  */
 public final class GamePanel extends JPanel {
+    @Serial
+    private static final long serialVersionUID = 1L;
     /**
      * The width of the game panel.
      */
@@ -42,7 +46,7 @@ public final class GamePanel extends JPanel {
     public void paint(final Graphics g) {
         super.paintComponent(g);
         if (Objects.nonNull(gameObjects)) {
-            for (GameObject gameObject : gameObjects) {
+            for (final GameObject gameObject : gameObjects) {
                GameObjectRenderer.render(g, gameObject, this);
             }
         }
@@ -57,16 +61,20 @@ public final class GamePanel extends JPanel {
      * @param levelNumber the level number.
      */
     public void display(final Set<GameObject> gameObjects, final int lives, final int levelNumber) {
+        boolean needsRepaint = false;
         if (this.currentLives != lives) {
             this.currentLives = lives;
-            this.repaint();
+            needsRepaint = true;
         }
         if (this.currentLevelNumber != levelNumber) {
             this.currentLevelNumber = levelNumber;
-            this.repaint();
+            needsRepaint = true;
         }
-        this.gameObjects = gameObjects;
-        if (!gameObjects.isEmpty()) {
+        if (!Objects.equals(this.gameObjects, gameObjects)) {
+            this.gameObjects = Collections.unmodifiableSet(gameObjects);
+            needsRepaint = true;
+        }
+        if (needsRepaint) {
             this.repaint();
         }
     }
