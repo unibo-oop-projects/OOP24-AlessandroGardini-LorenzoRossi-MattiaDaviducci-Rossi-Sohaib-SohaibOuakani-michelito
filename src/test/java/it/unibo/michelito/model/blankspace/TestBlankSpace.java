@@ -14,6 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Test for the {@link BlankSpaceImpl} class.
  */
 final class TestBlankSpace {
+    public static final int X = 0;
+    public static final int Y = 4;
     private BlankSpaceImpl blankSpace;
     private Position position;
 
@@ -23,7 +25,7 @@ final class TestBlankSpace {
      */
     @BeforeEach
     void setUp() {
-        this.position = new Position(0,  4);
+        this.position = new Position(X, Y);
         this.blankSpace = new BlankSpaceImpl(position);
     }
 
