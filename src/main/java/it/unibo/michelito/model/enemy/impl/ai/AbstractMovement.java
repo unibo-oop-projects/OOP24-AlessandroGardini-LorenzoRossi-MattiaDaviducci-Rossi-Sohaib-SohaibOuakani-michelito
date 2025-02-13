@@ -40,7 +40,9 @@ public abstract class AbstractMovement implements Movement {
     @Override
     public void move(final Maze maze, final long time) {
         final Random r = new Random();
-        if (direction == Direction.NONE || shift(maze, time, this.direction).equals(this.position) || r.nextInt(POSSIBILITY_TO_CHANGE) == 0) {
+        if (direction == Direction.NONE
+                || shift(maze, time, this.direction).equals(this.position)
+                || r.nextInt(POSSIBILITY_TO_CHANGE) == 0) {
             final List<Direction> possibleWay = new ArrayList<>();
             possibleWay.add(Direction.NONE);
             possibleWay.addAll(directions.stream().filter(x -> !shift(maze, time, x).equals(this.position)).toList());
