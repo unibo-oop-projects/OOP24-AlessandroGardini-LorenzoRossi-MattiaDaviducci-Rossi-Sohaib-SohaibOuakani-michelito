@@ -5,9 +5,8 @@ import it.unibo.michelito.util.GameObject;
 import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.Position;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
@@ -99,7 +98,7 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
         double xValue;
         double yValue;
         GameObject readObject;
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
             String riga = br.readLine();
             while (riga  != null) {
                 final String[] read = riga.split(" ");
