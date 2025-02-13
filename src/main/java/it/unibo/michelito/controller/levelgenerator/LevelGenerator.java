@@ -5,7 +5,10 @@ import it.unibo.michelito.util.GameObject;
 import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.Position;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
@@ -91,7 +94,7 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
      * @param file name of the file.
      * @return a set with all the game object form the file.
      */
-    // NOPMD - Suppress "ExceptionAsFlowControl" warning
+
     private Set<GameObject> mazeFromFile(final String file) {
         final Set<GameObject> maze = new HashSet<>();
         String objectType;
@@ -111,14 +114,15 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
                     case "enemy" -> new GameObject(ObjectType.ENEMY, new Position(xValue, yValue));
                     case "door" -> new GameObject(ObjectType.DOOR, new Position(xValue, yValue));
                     case "player" -> new GameObject(ObjectType.PLAYER, new Position(xValue, yValue));
-                    default -> throw new IOException("wrong object type"); // NOPMD
+                    default -> throw new IOException("wrong object type");
                 };
                 if (cellPositions().contains(readObject.position()) && !overlap(maze, readObject)) {
                         maze.add(readObject);
                 }
                 riga = br.readLine();
             }
-        } catch (IOException e) {
+            // NOPMD - Suppress "ExceptionAsFlowControl" warning
+        } catch (IOException e) { // NOPMD
             this.gameExceptionHandler.gameControllerHandleException(e);
         }
         return maze;

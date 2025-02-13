@@ -55,7 +55,7 @@ class TestEnemy {
    void testAI() {
         final MoodAI moodAI = new MoodAIImpl(maze);
         assertEquals(MovementType.SLEEPING, moodAI.getMovement().getMovementType());
-        moodAI.update(SLEEP_TIME);
+        moodAI.update(SLEEP_TIME, maze);
         assertEquals(MovementType.CHILLING, moodAI.getMovement().getMovementType());
     }
 

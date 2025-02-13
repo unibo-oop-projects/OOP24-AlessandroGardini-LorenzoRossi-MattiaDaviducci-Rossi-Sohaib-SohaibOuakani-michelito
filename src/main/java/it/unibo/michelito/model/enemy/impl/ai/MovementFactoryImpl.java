@@ -14,7 +14,7 @@ public final class MovementFactoryImpl implements MovementFactory {
 
     @Override
     public Movement chilling() {
-        return  new AbstractMovement() {
+        return new AbstractMovement() {
             @Override
              double velocity() {
                 return CHILLING_VELOCITY;
