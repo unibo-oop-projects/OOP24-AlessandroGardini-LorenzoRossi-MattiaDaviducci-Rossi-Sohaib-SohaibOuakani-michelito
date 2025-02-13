@@ -3,10 +3,18 @@ package it.unibo.michelito.view.gameview.panel.impl;
 import it.unibo.michelito.view.gameview.panel.api.InputHandler;
 
 import java.awt.event.KeyEvent;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class InputHandlerImpl implements InputHandler {
+/**
+ * Implementation of {@link InputHandler}.
+ * It keeps track of the keys pressed by the user.
+ */
+public final class InputHandlerImpl implements InputHandler, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final Set<Integer> keysPressed = new HashSet<>();
 
     @Override

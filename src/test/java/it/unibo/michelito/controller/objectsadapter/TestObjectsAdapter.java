@@ -1,18 +1,10 @@
 package it.unibo.michelito.controller.objectsadapter;
 
 import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
-import it.unibo.michelito.controller.objectsadapter.api.ObjectsAdapter;
-import it.unibo.michelito.controller.objectsadapter.impl.ObjectsAdapterFactory;
 import it.unibo.michelito.controller.objectsadapter.impl.ObjectsAdapterImpl;
 import it.unibo.michelito.controller.objectsadapter.impl.ObjectsAdapterWithCache;
-import it.unibo.michelito.util.GameObject;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
-
-import java.util.Set;
-import java.util.function.Function;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test for the {@link ObjectsAdapterImpl} and {@link ObjectsAdapterWithCache} class.
