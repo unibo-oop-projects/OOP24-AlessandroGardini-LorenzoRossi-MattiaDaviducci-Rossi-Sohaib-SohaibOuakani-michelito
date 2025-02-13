@@ -15,7 +15,6 @@ public final class MoodAIImpl implements MoodAI {
     private Movement actualMovement;
     private final MovementFactory movementFactory = new MovementFactoryImpl();
     private long createdTime;
-    private final Maze maze;
     private final int initialEnemy;
 
     /**
@@ -24,7 +23,6 @@ public final class MoodAIImpl implements MoodAI {
      */
     public MoodAIImpl(final Maze maze) {
         this.createdTime = 0;
-        this.maze = maze;
         initialEnemy = maze.getEnemies().size();
         setMood(MovementType.SLEEPING);
     }
@@ -51,7 +49,7 @@ public final class MoodAIImpl implements MoodAI {
     }
 
     @Override
-    public void update(final long deltaTime) {
+    public void update(final long deltaTime, Maze maze) {
         this.createdTime = createdTime + deltaTime;
         if (createdTime >= SLEEP_TIME) {
             setMood(MovementType.CHILLING);
