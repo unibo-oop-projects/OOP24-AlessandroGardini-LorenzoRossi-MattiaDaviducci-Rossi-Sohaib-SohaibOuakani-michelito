@@ -6,6 +6,9 @@ import it.unibo.michelito.model.modelutil.hitbox.api.HitBox;
 import it.unibo.michelito.model.modelutil.hitbox.api.HitBoxFactory;
 import it.unibo.michelito.model.modelutil.hitbox.impl.HitBoxFactoryImpl;
 
+/**
+ * Abstract class that models a {@link PowerUp}.
+ */
 public abstract class AbstractPowerUp implements PowerUp {
     private final Position position;
     private final HitBox hitBox;

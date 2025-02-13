@@ -2,9 +2,8 @@ package it.unibo.michelito.controller.gamecontroller.impl;
 
 import it.unibo.michelito.controller.gamecontroller.api.GameController;
 import it.unibo.michelito.controller.gamecontroller.api.GameExceptionHandler;
-import it.unibo.michelito.controller.gamecontroller.api.Switcher;
-import it.unibo.michelito.controller.gamecontroller.directionbuilder.api.MoveCommandBuilder;
-import it.unibo.michelito.controller.gamecontroller.directionbuilder.impl.DirectionBuilderImpl;
+import it.unibo.michelito.controller.gamecontroller.movecommandbuilder.api.MoveCommandBuilder;
+import it.unibo.michelito.controller.gamecontroller.movecommandbuilder.impl.MoveCommandBuilderImpl;
 import it.unibo.michelito.controller.gamecontroller.keybinds.KeyBinds;
 import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.controller.maincontroller.api.GameParentController;
@@ -19,7 +18,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class GameControllerImpl implements GameController, Switcher, GameExceptionHandler {
+/**
+ * Class that implements the {@link GameController} and {@link GameExceptionHandler} interface.
+ */
+public class GameControllerImpl implements GameController, GameExceptionHandler {
     private static final int FPS = 60;
     private static final long TIME_PER_TICK = (long) 1_000.0 / FPS;
 
@@ -35,6 +37,9 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
         this.gameView = new GameViewImpl();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void startGame() {
         try {
@@ -49,33 +54,43 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void stopGame() {
         gameView.setViewVisibility(false);
         this.game = false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void quit() {
         gameParentController.quit();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void handleException(final Exception exception) {
         gameParentController.handleException(exception);
     }
 
-    @Override
-    public void switchToHome() {
-        gameParentController.switchToHome();
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void gameControllerHandleException(final Exception exception) {
        handleException(exception);
     }
 
-    final private class Loop extends Thread {
+    private final class Loop extends Thread {
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void run() {
             long previousTime = System.currentTimeMillis();
@@ -100,7 +115,7 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
 
                 this.waitForNextFrame(currentTime);
             }
-            switchToHome();
+            gameParentController.switchToHome();
         }
 
         private void waitForNextFrame(final long currentTime) {
@@ -108,7 +123,7 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
             if (dt < TIME_PER_TICK) {
                 try {
                     sleep(TIME_PER_TICK - dt);
-                } catch (InterruptedException ex){
+                } catch (InterruptedException ex) {
                     currentThread().interrupt();
                     gameParentController.handleException(ex);
                 }
@@ -116,7 +131,7 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
         }
 
         private void processInput(final GameManager gameManager, final GameView gameView) {
-            final MoveCommandBuilder commandBuilder = new DirectionBuilderImpl();
+            final MoveCommandBuilder commandBuilder = new MoveCommandBuilderImpl();
             final Set<KeyBinds> pressedKeys = gameView.getPressedKeys().stream()
                     .map(KeyBinds::getKeyBinds)
                     .filter(Optional::isPresent)
@@ -130,6 +145,7 @@ public class GameControllerImpl implements GameController, Switcher, GameExcepti
                     case RIGHT -> commandBuilder.addDirection(Direction.RIGHT);
                     case LEFT -> commandBuilder.addDirection(Direction.LEFT);
                     case PLACE_BOMB -> gameManager.setCommand(new PlaceCommand());
+                    default -> {}
                 }
             }
             gameManager.setCommand(commandBuilder.build());

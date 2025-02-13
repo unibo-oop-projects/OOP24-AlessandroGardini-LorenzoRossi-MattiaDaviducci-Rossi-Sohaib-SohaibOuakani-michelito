@@ -1,5 +1,8 @@
 package it.unibo.michelito.model.powerups.api;
 
+/**
+ * Enum for the different types of PowerUps.
+ */
 public enum PowerUpType {
     /**
      * A speed increasing powerUp.

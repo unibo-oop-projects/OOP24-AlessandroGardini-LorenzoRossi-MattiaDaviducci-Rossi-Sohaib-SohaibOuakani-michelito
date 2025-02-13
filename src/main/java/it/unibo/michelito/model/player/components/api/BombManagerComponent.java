@@ -48,7 +48,7 @@ public interface BombManagerComponent {
     BombType getBombType();
 
     /**
-     * Makes the
+     * Aborts the {@link Bomb} placement.
      */
     void abortPlace();
 }

@@ -1,7 +1,7 @@
-package it.unibo.michelito.controller.gamecontroller.directionbuilder;
+package it.unibo.michelito.controller.gamecontroller.movecommandbuilder;
 
-import it.unibo.michelito.controller.gamecontroller.directionbuilder.api.MoveCommandBuilder;
-import it.unibo.michelito.controller.gamecontroller.directionbuilder.impl.DirectionBuilderImpl;
+import it.unibo.michelito.controller.gamecontroller.movecommandbuilder.api.MoveCommandBuilder;
+import it.unibo.michelito.controller.gamecontroller.movecommandbuilder.impl.MoveCommandBuilderImpl;
 import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.controller.playercommand.api.PlayerCommand;
 import it.unibo.michelito.model.maze.api.Maze;
@@ -25,12 +25,12 @@ final class TestMoveCommandBuilder {
     private static final  double X_SPAWN = 6;
     private static final double Y_SPAWN = 6;
     private static final long TICK = 1;
-    Player player = new PlayerImpl(new Position(X_SPAWN,Y_SPAWN));
-    private Maze maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
+    private final Player player = new PlayerImpl(new Position(X_SPAWN, Y_SPAWN));
+    final private Maze maze = new MazeImpl(LevelGenerator.testLevel(), new LevelGenerator(e -> { }));
 
     @BeforeEach
     void setUp() {
-        this.directionBuilder = new DirectionBuilderImpl();
+        this.directionBuilder = new MoveCommandBuilderImpl();
     }
 
     @Test
@@ -43,20 +43,20 @@ final class TestMoveCommandBuilder {
         this.directionBuilder.addDirection(Direction.UP).addDirection(Direction.RIGHT);
         directionBuilder.build().execute(player);
         player.update(TICK, maze);
-        assertEquals(new Position(BigDecimal.valueOf(X_SPAWN )
+        assertEquals(new Position(BigDecimal.valueOf(X_SPAWN)
                 .add(BigDecimal.valueOf(Math.sqrt(0.5)).multiply(BigDecimal.valueOf(PLAYER_SPEED)))
                 .doubleValue(),
                 BigDecimal.valueOf(Y_SPAWN).
                         subtract(BigDecimal.valueOf(Math.sqrt(0.5)).multiply(BigDecimal
                                 .valueOf(0.01))).doubleValue()), player.position());
 
-        this.directionBuilder = new DirectionBuilderImpl();
+        this.directionBuilder = new MoveCommandBuilderImpl();
         assertThrows(IllegalArgumentException.class, () -> this.directionBuilder
                 .addDirection(Direction.RIGHT)
                 .addDirection(Direction.RIGHT)
         );
 
-        this.directionBuilder = new DirectionBuilderImpl();
+        this.directionBuilder = new MoveCommandBuilderImpl();
         assertThrows(IllegalArgumentException.class, () -> this.directionBuilder
                 .addDirection(Direction.LEFT)
                 .addDirection(Direction.LEFT)
