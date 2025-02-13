@@ -5,10 +5,7 @@ import it.unibo.michelito.util.GameObject;
 import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.Position;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
@@ -44,10 +41,10 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
 
      private Set<GameObject> generate(final int levelNumber) {
          final Set<GameObject> maze = new HashSet<>(baseMaze());
-         final String file = "src/main/resources/level/level" + levelNumber + ".txt";
+         String filePath = "level/level" + levelNumber + ".txt";
          maze.addAll(baseMaze());
          if (levelNumber != TEST_MAZE_CODE) {
-             final Set<GameObject> fileMaze = new HashSet<>(mazeFromFile(file));
+             final Set<GameObject> fileMaze = new HashSet<>(mazeFromFile(filePath));
              for (final GameObject gameObject : fileMaze) {
                  if (!overlap(maze, gameObject)) {
                      maze.add(gameObject);
@@ -100,28 +97,32 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
         String objectType;
         double xValue;
         double yValue;
+        InputStream is = getClass().getClassLoader().getResourceAsStream(file);
         GameObject readObject;
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
-            String riga = br.readLine();
-            while (riga  != null) {
-                final String[] read = riga.split(" ");
-                objectType = read[0];
-                xValue = Double.parseDouble(read[1]);
-                yValue = Double.parseDouble(read[2]);
-                readObject = switch (objectType) {
-                    case "wall" -> new GameObject(ObjectType.WALL, new Position(xValue, yValue));
-                    case "box" -> new GameObject(ObjectType.BOX, new Position(xValue, yValue));
-                    case "enemy" -> new GameObject(ObjectType.ENEMY, new Position(xValue, yValue));
-                    case "door" -> new GameObject(ObjectType.DOOR, new Position(xValue, yValue));
-                    case "player" -> new GameObject(ObjectType.PLAYER, new Position(xValue, yValue));
-                    default -> throw new IOException("wrong object type");
-                };
-                if (cellPositions().contains(readObject.position()) && !overlap(maze, readObject)) {
-                        maze.add(readObject);
+        try {
+            assert is != null;
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+                String riga = br.readLine();
+                while (riga  != null) {
+                    final String[] read = riga.split(" ");
+                    objectType = read[0];
+                    xValue = Double.parseDouble(read[1]);
+                    yValue = Double.parseDouble(read[2]);
+                    readObject = switch (objectType) {
+                        case "wall" -> new GameObject(ObjectType.WALL, new Position(xValue, yValue));
+                        case "box" -> new GameObject(ObjectType.BOX, new Position(xValue, yValue));
+                        case "enemy" -> new GameObject(ObjectType.ENEMY, new Position(xValue, yValue));
+                        case "door" -> new GameObject(ObjectType.DOOR, new Position(xValue, yValue));
+                        case "player" -> new GameObject(ObjectType.PLAYER, new Position(xValue, yValue));
+                        default -> throw new IOException("wrong object type");
+                    };
+                    if (cellPositions().contains(readObject.position()) && !overlap(maze, readObject)) {
+                            maze.add(readObject);
+                    }
+                    riga = br.readLine();
                 }
-                riga = br.readLine();
+                // NOPMD - Suppress "ExceptionAsFlowControl" warning
             }
-            // NOPMD - Suppress "ExceptionAsFlowControl" warning
         } catch (IOException e) { // NOPMD
             this.gameExceptionHandler.gameControllerHandleException(e);
         }
