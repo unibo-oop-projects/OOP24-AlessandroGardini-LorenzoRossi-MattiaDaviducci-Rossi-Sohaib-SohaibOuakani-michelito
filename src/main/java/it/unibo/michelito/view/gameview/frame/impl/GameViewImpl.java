@@ -32,6 +32,7 @@ public final class GameViewImpl extends JFrame implements GameView {
      * Constructor for the GameViewImpl.
      */
     public GameViewImpl() {
+        super();
         setTitle("Michelito");
 
         add(gamePanel, BorderLayout.CENTER);

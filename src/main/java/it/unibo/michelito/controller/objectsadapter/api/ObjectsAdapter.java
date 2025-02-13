@@ -9,6 +9,7 @@ import java.util.Set;
  * Represents an ObjectsAdapter.
  * Adapter for the LevelGenerator.
  */
+@FunctionalInterface
 public interface ObjectsAdapter {
     /**
      * This method retrieves a set of {@link MazeObject} from the {@link LevelGenerator}.

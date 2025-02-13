@@ -18,6 +18,8 @@ public final class GameManagerImpl implements GameManager {
     private static final int MAX_MAZE_INDEX = 3;
     private static final int STARTING_LIFE_COUNT = 5;
 
+    private final Function<Integer, Set<GameObject>> levelGenerator;
+
     private int currentLevelIndex = STARTER_MAZE;
     private int currentLives;
     private Level currentLevel;
@@ -25,12 +27,10 @@ public final class GameManagerImpl implements GameManager {
     private boolean gameOver;
     private boolean gameWon;
 
-    private final Function<Integer, Set<GameObject>> levelGenerator;
-
     /**
      * Construct a GameManager with a Function that produce the relative Set of {@link GameObject}.
      *
-     * @param levelGenerator {@link Function} that provided a number return a Set of {@link GameObject}.
+     * @param levelGenerator {@link Function} that, given a level index, generates the corresponding {@link GameObject}.
      */
     public GameManagerImpl(final Function<Integer, Set<GameObject>> levelGenerator) {
         this.currentLives = STARTING_LIFE_COUNT;
