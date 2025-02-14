@@ -42,7 +42,9 @@ public class HomeControllerImpl implements HomeController, ViewControllerListene
      */
     @Override
     public void hideMenu() {
-        homeView.dispose();
+        if (homeView != null) {
+            homeView.dispose();
+        }
     }
 
     /**

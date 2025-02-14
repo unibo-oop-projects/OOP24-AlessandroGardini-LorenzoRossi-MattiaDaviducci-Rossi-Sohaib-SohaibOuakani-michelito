@@ -5,11 +5,13 @@ import it.unibo.michelito.util.ObjectType;
 import it.unibo.michelito.util.Position;
 import it.unibo.michelito.view.gameview.panel.api.InputHandler;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.io.Serial;
-import java.util.Objects;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.Objects;
 import java.util.Set;
 import javax.swing.JPanel;
 
@@ -48,10 +50,10 @@ public final class GamePanel extends JPanel {
     public void paint(final Graphics g) {
         super.paintComponent(g);
         if (Objects.nonNull(gameObjects)) {
-            var doorPosition = doorPosition(gameObjects)
+            final var doorPosition = doorPosition(gameObjects)
                     .orElseThrow(() -> new IllegalStateException("Every maze must contain a door"));
 
-            var isDoorBlocked = isDoorBlock(gameObjects, doorPosition);
+            final var isDoorBlocked = isDoorBlock(gameObjects, doorPosition);
 
             gameObjects.stream()
                     .filter(o -> !isDoorBlocked || !o.objectType().equals(ObjectType.DOOR))
@@ -99,14 +101,14 @@ public final class GamePanel extends JPanel {
         return inputHandler.keysPressed();
     }
 
-    private static Optional<Position> doorPosition(Set<GameObject> gameObjects) {
+    private static Optional<Position> doorPosition(final Set<GameObject> gameObjects) {
         return gameObjects.stream()
                 .filter(o -> o.objectType().equals(ObjectType.DOOR))
                 .map(GameObject::position)
                 .findAny();
     }
 
-    private static boolean isDoorBlock(Set<GameObject> gameObjects, Position doorPosition) {
+    private static boolean isDoorBlock(final Set<GameObject> gameObjects, final Position doorPosition) {
         return gameObjects.stream()
                 .filter(o -> o.objectType().equals(ObjectType.BOX))
                 .anyMatch(o -> o.position().equals(doorPosition));

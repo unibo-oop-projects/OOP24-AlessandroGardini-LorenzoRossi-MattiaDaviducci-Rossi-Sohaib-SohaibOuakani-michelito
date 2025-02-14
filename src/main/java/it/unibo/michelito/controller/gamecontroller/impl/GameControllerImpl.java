@@ -47,10 +47,10 @@ public class GameControllerImpl implements GameController, GameExceptionHandler 
     public void startGame() {
         try {
             this.gameView = new GameViewImpl();
+            final Loop looper = new Loop();
+            gameManager = new GameManagerImpl(new LevelGenerator(this));
             this.game = true;
             gameView.setViewVisibility(true);
-            gameManager = new GameManagerImpl(new LevelGenerator(this));
-            final Loop looper = new Loop();
             looper.start();
         } catch (IllegalThreadStateException e) {
             gameParentController.handleException(e);
@@ -63,7 +63,9 @@ public class GameControllerImpl implements GameController, GameExceptionHandler 
     @Override
     public void stopGame() {
         this.game = false;
-        gameView.setViewVisibility(false);
+        if (gameView != null) {
+            gameView.setViewVisibility(false);
+        }
     }
 
     /**
@@ -97,6 +99,9 @@ public class GameControllerImpl implements GameController, GameExceptionHandler 
         @Override
         public void run() {
             long previousTime = System.currentTimeMillis();
+            if (gameView == null || gameManager == null) {
+                throw new IllegalStateException("GameView or GameManager not initialized before game loop started.");
+            }
             while (game && gameView.isViewShowing()) {
                 final long currentTime = System.currentTimeMillis();
                 final long deltaTime = currentTime - previousTime;

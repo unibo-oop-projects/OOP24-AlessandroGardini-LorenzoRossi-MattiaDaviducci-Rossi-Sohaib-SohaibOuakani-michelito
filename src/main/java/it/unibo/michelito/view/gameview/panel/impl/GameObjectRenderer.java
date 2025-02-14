@@ -22,6 +22,7 @@ public final class GameObjectRenderer {
     private static final int BASE_POWER_UP_DIMENSION = 20;
     private static final int BASE_RECTANGLE_WIDTH = 19;
     private static final int BASE_RECTANGLE_HEIGHT = 28;
+    private static final Color WALL_COLOR = new Color(139, 69, 19);
 
     /**
      * Private constructor preventing instantiation.
@@ -99,7 +100,7 @@ public final class GameObjectRenderer {
                 g2d.fill(square);
                 break;
             case WALL:
-                g2d.setColor(new Color(139, 69, 19));
+                g2d.setColor(WALL_COLOR);
                 g2d.fill(square);
                 break;
             case ENEMY:
