@@ -75,6 +75,9 @@ public final class GameViewImpl extends JFrame implements GameView {
     public void setViewVisibility(final boolean show) {
         SwingUtilities.invokeLater(() -> {
             this.setVisible(show);
+            if (!show) {
+                this.dispose();
+            }
         });
     }
 

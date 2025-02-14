@@ -10,7 +10,7 @@ import it.unibo.michelito.view.homeview.HomeView;
  */
 public class HomeControllerImpl implements HomeController, ViewControllerListener {
     private final HomeParentController homeParentController;
-    private final HomeView homeView;
+    private HomeView homeView;
 
     /**
      * Creates a new instance of {@link HomeControllerImpl}.
@@ -19,7 +19,6 @@ public class HomeControllerImpl implements HomeController, ViewControllerListene
      */
     public HomeControllerImpl(final HomeParentController homeParentController) {
         this.homeParentController = homeParentController;
-        homeView = new HomeView(this);
     }
 
     /**
@@ -35,7 +34,7 @@ public class HomeControllerImpl implements HomeController, ViewControllerListene
      */
     @Override
     public void showMenu() {
-        homeView.setVisible(true);
+        homeView = new HomeView(this);
     }
 
     /**
@@ -43,7 +42,7 @@ public class HomeControllerImpl implements HomeController, ViewControllerListene
      */
     @Override
     public void hideMenu() {
-        homeView.setVisible(false);
+        homeView.dispose();
     }
 
     /**

@@ -38,8 +38,6 @@ public class GameControllerImpl implements GameController, GameExceptionHandler 
      */
     public GameControllerImpl(final GameParentController gameParentController) {
         this.gameParentController = gameParentController;
-        gameManager = new GameManagerImpl(new LevelGenerator(this));
-        this.gameView = new GameViewImpl();
     }
 
     /**
@@ -64,8 +62,8 @@ public class GameControllerImpl implements GameController, GameExceptionHandler 
      */
     @Override
     public void stopGame() {
-        gameView.setViewVisibility(false);
         this.game = false;
+        gameView.setViewVisibility(false);
     }
 
     /**
