@@ -1,13 +1,15 @@
 package it.unibo.michelito.view.gameview.panel.impl;
 
 import it.unibo.michelito.util.GameObject;
+import it.unibo.michelito.util.ObjectType;
+import it.unibo.michelito.util.Position;
 import it.unibo.michelito.view.gameview.panel.api.InputHandler;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import java.io.Serial;
 import java.util.Objects;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 import javax.swing.JPanel;
 
@@ -46,11 +48,20 @@ public final class GamePanel extends JPanel {
     public void paint(final Graphics g) {
         super.paintComponent(g);
         if (Objects.nonNull(gameObjects)) {
-            for (final GameObject gameObject : gameObjects) {
-               GameObjectRenderer.render(g, gameObject, this);
-            }
+            var doorPosition = doorPosition(gameObjects)
+                    .orElseThrow(() -> new IllegalStateException("Every maze must contain a door"));
+
+            var isDoorBlocked = isDoorBlock(gameObjects, doorPosition);
+
+            gameObjects.stream()
+                    .filter(o -> !isDoorBlocked || !o.objectType().equals(ObjectType.DOOR))
+                    .forEach(o -> GameObjectRenderer.render(g, o, this));
+
+            GameStatisticRenderer.render(g, this, this.currentLives, this.currentLevelNumber);
+        } else {
+            g.setColor(Color.RED);
+            g.drawString("No game objects to display", 10, 10);
         }
-        GameStatisticRenderer.render(g, this, this.currentLives, this.currentLevelNumber);
     }
 
     /**
@@ -86,5 +97,18 @@ public final class GamePanel extends JPanel {
      */
     public Set<Integer> getKeysPressed() {
         return inputHandler.keysPressed();
+    }
+
+    private static Optional<Position> doorPosition(Set<GameObject> gameObjects) {
+        return gameObjects.stream()
+                .filter(o -> o.objectType().equals(ObjectType.DOOR))
+                .map(GameObject::position)
+                .findAny();
+    }
+
+    private static boolean isDoorBlock(Set<GameObject> gameObjects, Position doorPosition) {
+        return gameObjects.stream()
+                .filter(o -> o.objectType().equals(ObjectType.BOX))
+                .anyMatch(o -> o.position().equals(doorPosition));
     }
 }
