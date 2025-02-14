@@ -4,11 +4,11 @@ import it.unibo.michelito.controller.maincontroller.api.Controller;
 
 /**
  * Represents a controller for managing the home menu of the game.
- * Provides methods to display and hide the game menu.
+ * This controller is responsible for switching to the game view.
  */
 public interface ViewControllerListener extends Controller {
     /**
-     * Switches to the game view.
+     * Request to switch to the game.
      */
     void switchToGame();
 }
