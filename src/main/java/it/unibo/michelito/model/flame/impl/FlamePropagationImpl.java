@@ -89,7 +89,12 @@ public class FlamePropagationImpl implements FlamePropagation {
                 break;
             }
             if (isBox(maze, newPos)) {
-                maze.removeMazeObject(maze.getBoxes().stream().filter(box -> box.position().equals(newPos)).findFirst().get());
+                maze.removeMazeObject(
+                        maze.getBoxes().stream()
+                                .filter(box -> box.position().equals(newPos))
+                                .findAny()
+                                .orElseThrow()
+                );
                 dropRandomPowerUp(newPos).ifPresent(maze::addMazeObject);
                 if (!passThrough) {
                     break;
