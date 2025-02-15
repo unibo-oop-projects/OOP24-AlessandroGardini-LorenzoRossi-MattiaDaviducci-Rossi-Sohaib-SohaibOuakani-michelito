@@ -4,9 +4,12 @@ import it.unibo.michelito.controller.gamecontroller.api.GameController;
 import it.unibo.michelito.controller.gamecontroller.impl.GameControllerImpl;
 import it.unibo.michelito.controller.homecontroller.api.HomeController;
 import it.unibo.michelito.controller.homecontroller.impl.HomeControllerImpl;
+import it.unibo.michelito.controller.maincontroller.api.Controller;
 import it.unibo.michelito.controller.maincontroller.api.GameParentController;
 import it.unibo.michelito.controller.maincontroller.api.HomeParentController;
 import it.unibo.michelito.controller.maincontroller.api.MainController;
+import it.unibo.michelito.controller.soundcontroller.api.SoundController;
+import it.unibo.michelito.controller.soundcontroller.impl.SoundControllerImpl;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,26 +28,33 @@ public final class MainControllerImpl implements MainController, HomeParentContr
 
     private final HomeController homeController = new HomeControllerImpl(this);
     private final GameController gameController = new GameControllerImpl(this);
+    private final SoundController soundController = SoundControllerImpl.getInstance();
 
     @Override
     public void start() {
         homeController.showMenu();
+        soundController.playBackgroundMusic("src/main/resources/sounds/home.wav");
     }
 
     @Override
     public void switchToGame() {
         homeController.hideMenu();
+        soundController.stopBackgroundMusic();
         gameController.startGame();
+        soundController.playBackgroundMusic("src/main/resources/sounds/game.wav");
     }
 
     @Override
     public void switchToHome() {
         gameController.stopGame();
+        soundController.stopBackgroundMusic();
         homeController.showMenu();
+        soundController.playBackgroundMusic("src/main/resources/sounds/home.wav");
     }
 
     @Override
     public void quit() {
+        soundController.stopBackgroundMusic();
         homeController.hideMenu();
         gameController.stopGame();
     }

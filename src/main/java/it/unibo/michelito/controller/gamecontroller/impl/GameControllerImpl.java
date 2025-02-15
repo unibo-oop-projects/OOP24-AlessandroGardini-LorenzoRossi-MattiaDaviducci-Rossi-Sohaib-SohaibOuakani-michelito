@@ -8,12 +8,15 @@ import it.unibo.michelito.controller.gamecontroller.keybinds.KeyBinds;
 import it.unibo.michelito.controller.levelgenerator.LevelGenerator;
 import it.unibo.michelito.controller.maincontroller.api.GameParentController;
 import it.unibo.michelito.controller.playercommand.impl.PlaceCommand;
+import it.unibo.michelito.controller.soundcontroller.impl.SoundControllerImpl;
 import it.unibo.michelito.model.gamemanager.api.GameManager;
 import it.unibo.michelito.model.gamemanager.impl.GameManagerImpl;
 import it.unibo.michelito.util.Direction;
+import it.unibo.michelito.util.GameObject;
 import it.unibo.michelito.view.gameview.frame.api.GameView;
 import it.unibo.michelito.view.gameview.frame.impl.GameViewImpl;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -93,6 +96,9 @@ public class GameControllerImpl implements GameController, GameExceptionHandler 
     }
 
     private final class Loop extends Thread {
+        private final Set<GameObject> checkedBombs = new HashSet<>();
+        private final Set<GameObject> checkedFlames = new HashSet<>();
+        private final SoundControllerImpl soundController = SoundControllerImpl.getInstance();
         /**
          * {@inheritDoc}
          */
@@ -111,6 +117,27 @@ public class GameControllerImpl implements GameController, GameExceptionHandler 
                 gameManager.update(deltaTime);
 
                 gameView.display(gameManager.getObjects(), gameManager.getRemainingLives(), gameManager.getCurrentIndexLevel());
+
+                for (final GameObject obj : gameManager.getObjects()) {
+                    switch (obj.objectType()) {
+                        case BOMB:
+                            if (!checkedBombs.contains(obj)) {
+                                checkedBombs.add(obj);
+                                soundController.playSoundEffect("src/main/resources/effects/place.wav");
+                            }
+                            break;
+                        case FLAME:
+                            if (!checkedFlames.contains(obj)) {
+                                checkedFlames.add(obj);
+                                soundController.playSoundEffect("src/main/resources/effects/explosion.wav");
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                checkedBombs.retainAll(gameManager.getObjects());
+                checkedFlames.retainAll(gameManager.getObjects());
 
                 if (gameManager.isGameOver()) {
                     game = false;
