@@ -4,7 +4,6 @@ import it.unibo.michelito.controller.gamecontroller.api.GameController;
 import it.unibo.michelito.controller.gamecontroller.impl.GameControllerImpl;
 import it.unibo.michelito.controller.homecontroller.api.HomeController;
 import it.unibo.michelito.controller.homecontroller.impl.HomeControllerImpl;
-import it.unibo.michelito.controller.maincontroller.api.Controller;
 import it.unibo.michelito.controller.maincontroller.api.GameParentController;
 import it.unibo.michelito.controller.maincontroller.api.HomeParentController;
 import it.unibo.michelito.controller.maincontroller.api.MainController;
