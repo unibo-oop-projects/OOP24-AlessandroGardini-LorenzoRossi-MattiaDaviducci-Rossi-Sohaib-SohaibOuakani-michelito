@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class TestMoveCommandBuilder {
     public static final double PLAYER_SPEED = 0.01;
-    private MoveCommandBuilder directionBuilder;
+    private MoveCommandBuilder moveCommandBuilder;
     private static final  double X_SPAWN = 6;
     private static final double Y_SPAWN = 6;
     private static final long TICK = 1;
@@ -30,18 +30,18 @@ final class TestMoveCommandBuilder {
 
     @BeforeEach
     void setUp() {
-        this.directionBuilder = new MoveCommandBuilderImpl();
+        this.moveCommandBuilder = new MoveCommandBuilderImpl();
     }
 
     @Test
     void testBuild() {
-        assertInstanceOf(PlayerCommand.class, directionBuilder.build());
-        directionBuilder.build().execute(player);
+        assertInstanceOf(PlayerCommand.class, moveCommandBuilder.build());
+        moveCommandBuilder.build().execute(player);
         player.update(TICK, maze);
         assertEquals(new Position(X_SPAWN, Y_SPAWN), player.position());
 
-        this.directionBuilder.addDirection(Direction.UP).addDirection(Direction.RIGHT);
-        directionBuilder.build().execute(player);
+        this.moveCommandBuilder.addDirection(Direction.UP).addDirection(Direction.RIGHT);
+        moveCommandBuilder.build().execute(player);
         player.update(TICK, maze);
         final BigDecimal deltaMovement = BigDecimal.valueOf(Math.sqrt(0.5)).multiply(BigDecimal
                 .valueOf(PLAYER_SPEED));
@@ -51,14 +51,14 @@ final class TestMoveCommandBuilder {
                 BigDecimal.valueOf(Y_SPAWN).
                         subtract(deltaMovement).doubleValue()), player.position());
 
-        this.directionBuilder = new MoveCommandBuilderImpl();
-        assertThrows(IllegalArgumentException.class, () -> this.directionBuilder
+        this.moveCommandBuilder = new MoveCommandBuilderImpl();
+        assertThrows(IllegalArgumentException.class, () -> this.moveCommandBuilder
                 .addDirection(Direction.RIGHT)
                 .addDirection(Direction.RIGHT)
         );
 
-        this.directionBuilder = new MoveCommandBuilderImpl();
-        assertThrows(IllegalArgumentException.class, () -> this.directionBuilder
+        this.moveCommandBuilder = new MoveCommandBuilderImpl();
+        assertThrows(IllegalArgumentException.class, () -> this.moveCommandBuilder
                 .addDirection(Direction.LEFT)
                 .addDirection(Direction.LEFT)
         );

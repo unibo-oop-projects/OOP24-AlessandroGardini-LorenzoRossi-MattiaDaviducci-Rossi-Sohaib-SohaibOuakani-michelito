@@ -97,7 +97,6 @@ public class HitBoxComponentImpl implements HitBoxComponent {
                 .filter(b -> b.getHitBox().collision(this.hitBox))
                 .filter(blankSpace -> maze.getBombs().stream()
                         .noneMatch(bomb -> bomb.position().equals(blankSpace.position())))
-                //.filter(collidingBlanks -> collidingBlanks.getHitBox().inner(this.hitBox.getCenter()))
                 .findAny();
     }
 }

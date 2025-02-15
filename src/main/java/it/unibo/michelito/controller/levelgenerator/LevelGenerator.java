@@ -94,7 +94,6 @@ public class LevelGenerator implements Function<Integer, Set<GameObject>> {
      * @param file name of the file.
      * @return a set with all the game object form the file.
      */
-
     private Set<GameObject> mazeFromFile(final String file) {
         final Set<GameObject> maze = new HashSet<>();
         String objectType;
